@@ -1,5 +1,3 @@
-import { prisma } from './prisma'
-
 export interface ContactSubmission {
   name: string
   email: string
@@ -51,7 +49,7 @@ export function getBusinessHours() {
 export function isBusinessOpen() {
   const hours = getBusinessHours()
   const now = new Date()
-  const day = now.toLocaleDateString('en-US', { weekday: 'lowercase' }) as keyof typeof hours
+  const day = now.toLocaleDateString('en-US', { weekday: 'long' }) as keyof typeof hours
   const currentTime = now.toTimeString().slice(0, 5) // HH:MM format
   
   const dayHours = hours[day]

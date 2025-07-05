@@ -15,6 +15,7 @@ interface ProductFiltersProps {
 export function ProductFiltersComponent({ categories, filters, onFiltersChange }: ProductFiltersProps) {
   const [isOpen, setIsOpen] = useState(false)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFilterChange = (key: keyof ProductFilters, value: any) => {
     onFiltersChange({
       ...filters,
