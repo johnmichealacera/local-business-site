@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation'
 import { ProductDetailClient } from '@/components/products/product-detail-client'
 import { getProductById } from '@/lib/products'
 
+// Force dynamic rendering - this prevents caching and ensures fresh data
+export const dynamic = 'force-dynamic'
+
 // interface ProductDetailPageProps {
 //   params: { id: string }
 // }

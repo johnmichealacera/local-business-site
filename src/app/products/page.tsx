@@ -4,6 +4,9 @@ import { getProducts, getCategories } from '@/lib/products'
 import { ProductFilters } from '@/types/product'
 import { Loader2 } from 'lucide-react'
 
+// Force dynamic rendering - this prevents caching and ensures fresh data
+export const dynamic = 'force-dynamic'
+
 interface ProductsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }

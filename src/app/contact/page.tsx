@@ -14,6 +14,9 @@ import {
   Globe
 } from "lucide-react";
 
+// Force dynamic rendering - this prevents caching and ensures fresh data
+export const dynamic = 'force-dynamic'
+
 export default async function ContactPage() {
   const contactInfo = await getContactInfo();
   

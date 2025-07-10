@@ -6,6 +6,9 @@ import { getProducts } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
 import { Suspense } from 'react'
 
+// Force dynamic rendering for fresh product data on homepage
+export const dynamic = 'force-dynamic'
+
 async function FeaturedProducts() {
   const products = await getProducts({ sortBy: 'createdAt', sortOrder: 'desc' })
   

@@ -2,6 +2,8 @@ import { prisma } from './prisma'
 import { Product, ProductFilters } from '@/types/product'
 
 export async function getProducts(filters: ProductFilters = {}): Promise<Product[]> {
+  console.log('🔄 Fetching products from database...', new Date().toISOString(), { filters })
+  
   const {
     category,
     minPrice,
@@ -51,6 +53,7 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
       }
     })
 
+    console.log(`✅ Fetched ${products.length} products from database`)
     return products as Product[]
   } catch (error) {
     console.error('Error fetching products:', error)
@@ -59,6 +62,8 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
+  console.log('🔄 Fetching product by ID from database...', id, new Date().toISOString())
+  
   try {
     const product = await prisma.product.findUnique({
       where: { id },
@@ -67,6 +72,7 @@ export async function getProductById(id: string): Promise<Product | null> {
       }
     })
 
+    console.log('✅ Fetched product:', product ? product.name : 'Not found')
     return product as Product;
   } catch (error) {
     console.error('Error fetching product:', error)
@@ -75,6 +81,8 @@ export async function getProductById(id: string): Promise<Product | null> {
 }
 
 export async function getCategories() {
+  console.log('🔄 Fetching categories from database...', new Date().toISOString())
+  
   try {
     const categories = await prisma.category.findMany({
       orderBy: {
@@ -82,6 +90,7 @@ export async function getCategories() {
       }
     })
 
+    console.log(`✅ Fetched ${categories.length} categories from database`)
     return categories
   } catch (error) {
     console.error('Error fetching categories:', error)

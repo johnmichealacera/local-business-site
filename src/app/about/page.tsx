@@ -13,6 +13,9 @@ import {
   Globe
 } from "lucide-react";
 
+// Force dynamic rendering - this prevents caching and ensures fresh data
+export const dynamic = 'force-dynamic'
+
 export default async function AboutPage() {
   // Fetch data from database
   const aboutInfo = await getAboutInfo()
