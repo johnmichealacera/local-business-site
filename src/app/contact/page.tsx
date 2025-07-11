@@ -24,12 +24,12 @@ export default async function ContactPage() {
   const defaultContact = {
     businessName: "Thrifted Treasures",
     email: "hello@thriftedtreasures.com",
-    phone: "(555) 123-4567",
-    address: "123 Thrift St",
-    city: "Fashion City",
-    state: "FC",
-    zipCode: "12345",
-    country: "United States",
+    phone: "09123456789",
+    address: "Bingkahan",
+    city: "Manticao",
+    province: "Misamis Oriental",
+    zipCode: "9000",
+    country: "Philippines",
     socialLinks: {
       facebook: "https://facebook.com/thriftedtreasures",
       instagram: "https://instagram.com/thriftedtreasures",
@@ -44,7 +44,7 @@ export default async function ContactPage() {
   const fullAddress = [
     contact.address,
     contact.city,
-    contact.state && contact.zipCode ? `${contact.state} ${contact.zipCode}` : contact.state || contact.zipCode,
+    contact.province && contact.zipCode ? `${contact.province} ${contact.zipCode}` : contact.province || contact.zipCode,
     contact.country
   ].filter(Boolean).join(', ');
 

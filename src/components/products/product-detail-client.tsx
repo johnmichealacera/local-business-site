@@ -200,7 +200,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <div className="text-center p-4 bg-slate-50 rounded-lg">
               <Truck className="w-6 h-6 mx-auto mb-2 text-slate-600" />
               <p className="text-sm font-medium">Free Shipping</p>
-              <p className="text-xs text-slate-500">On orders over $50</p>
+              <p className="text-xs text-slate-500">On orders over ₱350</p>
             </div>
             <div className="text-center p-4 bg-slate-50 rounded-lg">
               <Shield className="w-6 h-6 mx-auto mb-2 text-slate-600" />

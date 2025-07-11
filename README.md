@@ -205,7 +205,7 @@ model Contact {
   phone        String?
   address      String?
   city         String?
-  state        String?
+  province        String?
   zipCode      String?
   country      String?
   socialLinks  Json?

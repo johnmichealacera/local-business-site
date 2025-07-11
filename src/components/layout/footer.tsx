@@ -6,11 +6,11 @@ export function Footer() {
   const contact = {
     businessName: "Thrifted Treasures",
     email: "hello@thriftedtreasures.com",
-    phone: "(555) 123-4567",
-    address: "123 Thrift St",
-    city: "Fashion City",
-    state: "FC",
-    zipCode: "12345"
+    phone: "09123456789",
+    address: "Bingkahan",
+    city: "Manticao",
+    province: "Misamis Oriental",
+    zipCode: "9000"
   }
   return (
     <footer className="bg-slate-50 border-t">
@@ -110,7 +110,7 @@ export function Footer() {
                   <span className="text-slate-600 text-sm">
                     {contact.address}
                     {contact.city && `, ${contact.city}`}
-                    {contact.state && `, ${contact.state}`}
+                    {contact.province && `, ${contact.province}`}
                     {contact.zipCode && ` ${contact.zipCode}`}
                   </span>
                 </div>
