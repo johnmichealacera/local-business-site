@@ -4,12 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getAboutInfo } from "@/lib/about";
 import { 
   Heart, 
-  Users, 
-  ShoppingBag, 
-  Recycle, 
+  ShoppingBag,
   Award, 
   Mail,
-  Phone,
   Globe
 } from "lucide-react";
 
@@ -161,8 +158,9 @@ export default async function AboutPage() {
         </div>
       </section>
 
+{/* Commented out for now. Not sure if we need it. */}
       {/* Team Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -174,7 +172,6 @@ export default async function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
             <Card className="text-center">
               <CardHeader>
                 <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
@@ -200,7 +197,6 @@ export default async function AboutPage() {
               </CardContent>
             </Card>
 
-            {/* Team Member 2 */}
             <Card className="text-center">
               <CardHeader>
                 <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
@@ -225,7 +221,6 @@ export default async function AboutPage() {
               </CardContent>
             </Card>
 
-            {/* Team Member 3 */}
             <Card className="text-center">
               <CardHeader>
                 <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
@@ -251,10 +246,10 @@ export default async function AboutPage() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Sustainability Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-green-50">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8 bg-green-50">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-8">
@@ -287,7 +282,7 @@ export default async function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

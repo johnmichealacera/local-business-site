@@ -32,6 +32,9 @@ export function Header() {
             <Link href="/products" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
               Products
             </Link>
+            <Link href="/events" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
+              Events
+            </Link>
             <Link href="/about" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
               About
             </Link>
@@ -90,6 +93,13 @@ export function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Products
+              </Link>
+              <Link 
+                href="/events" 
+                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Events
               </Link>
               <Link 
                 href="/about" 

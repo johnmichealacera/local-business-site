@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, Shield, Leaf, Heart, TrendingUp } from 'lucide-react'
+import { ArrowRight, Shield, Leaf, Heart, TrendingUp, Calendar } from 'lucide-react'
 import Link from 'next/link'
 import { getProducts } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
+import { getFeaturedEvents } from '@/lib/events'
+import { EventCard, EventCardSkeleton } from '@/components/events/event-card'
 import { Suspense } from 'react'
 
 // Force dynamic rendering for fresh product data on homepage
@@ -28,6 +30,30 @@ function FeaturedProductsSkeleton() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {Array.from({ length: 8 }).map((_, index) => (
         <ProductCardSkeleton key={index} />
+      ))}
+    </div>
+  )
+}
+
+async function FeaturedEvents() {
+  const events = await getFeaturedEvents()
+  
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {events.slice(0, 6).map((event, index) => (
+        <div key={event.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+          <EventCard event={event} priority={index < 3} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function FeaturedEventsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <EventCardSkeleton key={index} />
       ))}
     </div>
   )
@@ -63,7 +89,8 @@ export default function HomePage() {
               
               <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
                 Curated pre-owned clothing and accessories that tell a story. 
-                Sustainable fashion that doesn&apos;t compromise on style or quality.
+                Sustainable fashion that doesn&apos;t compromise on style or quality. 
+                Plus, discover exciting events and workshops in your community.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
@@ -156,6 +183,34 @@ export default function HomePage() {
             <Link href="/products">
               <Button size="lg" variant="outline" className="btn-secondary group">
                 View All Products
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Events Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Upcoming Events
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Join us for exciting events, workshops, and community gatherings. Don&apos;t miss out!
+            </p>
+          </div>
+
+          <Suspense fallback={<FeaturedEventsSkeleton />}>
+            <FeaturedEvents />
+          </Suspense>
+
+          <div className="text-center mt-12 animate-fade-in">
+            <Link href="/events">
+              <Button size="lg" variant="outline" className="btn-secondary group">
+                <Calendar className="mr-2 h-4 w-4" />
+                View All Events
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

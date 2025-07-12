@@ -47,6 +47,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/events" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Events
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">
                   About Us
                 </Link>
@@ -135,7 +140,7 @@ export function Footer() {
         <div className="border-t border-slate-200 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-600 text-sm">
-              © 2024 {contact.businessName}. All rights reserved.
+              © 2025 {contact.businessName}. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="#" className="text-slate-600 hover:text-slate-900 text-sm transition-colors">

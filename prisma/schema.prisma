@@ -73,3 +73,30 @@ model Contact {
   
   @@map("contact")
 }
+
+model Event {
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  startDate     DateTime
+  endDate       DateTime?
+  location      String?
+  address       String?
+  city          String?
+  province      String?
+  zipCode       String?
+  country       String?
+  price         Float    @default(0)
+  maxAttendees  Int?
+  imageUrls     String[] @default([])
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  tags          String[] @default([])
+  contactEmail  String?
+  contactPhone  String?
+  websiteUrl    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("events")
+}
