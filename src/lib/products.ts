@@ -40,6 +40,8 @@ export async function getProducts(filters: ProductFilters = {}): Promise<Product
     ]
   }
 
+  where.siteId = process.env.SITE_ID
+
   // Build orderBy clause
   const orderBy: Record<string, 'asc' | 'desc'> = {}
   orderBy[sortBy] = sortOrder
@@ -66,7 +68,7 @@ export async function getProductById(id: string): Promise<Product | null> {
   
   try {
     const product = await prisma.product.findUnique({
-      where: { id },
+      where: { id, siteId: process.env.SITE_ID },
       include: {
         category: true
       }
@@ -85,6 +87,9 @@ export async function getCategories() {
   
   try {
     const categories = await prisma.category.findMany({
+      where: {
+        siteId: process.env.SITE_ID
+      },
       orderBy: {
         name: 'asc'
       }
@@ -103,7 +108,8 @@ export async function getProductsByCategory(categoryId: string) {
     const products = await prisma.product.findMany({
       where: {
         categoryId,
-        isActive: true
+        isActive: true,
+        siteId: process.env.SITE_ID
       },
       include: {
         category: true

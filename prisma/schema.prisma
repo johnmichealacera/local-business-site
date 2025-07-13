@@ -13,16 +13,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Site {
+  id          String     @id @default(cuid())
+  name        String
+  domain      String     @unique
+  subdomain   String?    @unique
+  description String?
+  isActive    Boolean    @default(true)
+  
+  // Site package and features
+  packageType SitePackage @default(BASIC)
+  features    SiteFeature[] @default([DASHBOARD])
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  about       About[]
+  categories  Category[]
+  contact     Contact[]
+  events      Event[]
+  products    Product[]
+  users       UserSite[]
+
+  @@map("sites")
+}
+
+model User {
+  id          String     @id @default(cuid())
+  email       String     @unique
+  auth0UserId String     @unique
+  name        String?
+  role        UserRole   @default(ADMIN)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  sites       UserSite[]
+
+  @@map("users")
+}
+
+model UserSite {
+  id     String   @id @default(cuid())
+  userId String
+  siteId String
+  role   SiteRole @default(ADMIN)
+  site   Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, siteId])
+  @@map("user_sites")
+}
+
 model Category {
   id          String    @id @default(cuid())
-  name        String    @unique
+  name        String
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  
-  // Relations
+  siteId      String
+  site        Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
   products    Product[]
-  
+
+  @@unique([name, siteId])
   @@map("categories")
 }
 
@@ -37,66 +88,101 @@ model Product {
   categoryId  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
-  // Relations
+  siteId      String
   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
   @@map("products")
 }
 
 model About {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  mission     String?
-  vision      String?
-  values      String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  mission   String?
+  vision    String?
+  values    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
   @@map("about")
 }
 
 model Contact {
-  id          String   @id @default(cuid())
+  id           String   @id @default(cuid())
   businessName String
-  email       String
-  phone       String?
-  address     String?
-  city        String?
-  province       String?
-  zipCode     String?
-  country     String?
-  socialLinks Json?    // Store social media links as JSON
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  email        String
+  phone        String?
+  address      String?
+  city         String?
+  province     String?
+  zipCode      String?
+  country      String?
+  socialLinks  Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
   @@map("contact")
 }
 
 model Event {
-  id            String   @id @default(cuid())
-  title         String
-  description   String?
-  startDate     DateTime
-  endDate       DateTime?
-  location      String?
-  address       String?
-  city          String?
-  province      String?
-  zipCode       String?
-  country       String?
-  price         Float    @default(0)
-  maxAttendees  Int?
-  imageUrls     String[] @default([])
-  isActive      Boolean  @default(true)
-  isFeatured    Boolean  @default(false)
-  tags          String[] @default([])
-  contactEmail  String?
-  contactPhone  String?
-  websiteUrl    String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  startDate    DateTime
+  endDate      DateTime?
+  location     String?
+  address      String?
+  city         String?
+  province     String?
+  zipCode      String?
+  country      String?
+  price        Float?    @default(0)
+  maxAttendees Int?
+  imageUrls    String[]  @default([])
+  isActive     Boolean   @default(true)
+  isFeatured   Boolean   @default(false)
+  tags         String[]  @default([])
+  contactEmail String?
+  contactPhone String?
+  websiteUrl   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  siteId       String
+  site         Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
   @@map("events")
 }
+
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum SiteRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum SitePackage {
+  BASIC
+  STANDARD
+  PREMIUM
+  ENTERPRISE
+}
+
+enum SiteFeature {
+  DASHBOARD
+  PRODUCTS
+  CATEGORIES
+  EVENTS
+  ABOUT
+  CONTACT
+}
+

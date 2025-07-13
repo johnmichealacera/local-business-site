@@ -5,6 +5,9 @@ export async function getAboutInfo() {
   
   try {
     const about = await prisma.about.findFirst({
+      where: {
+        siteId: process.env.SITE_ID,
+      },
       orderBy: {
         updatedAt: 'desc'
       }
@@ -24,6 +27,9 @@ export async function getContactInfo(): Promise<any | null> {
   
   try {
     const contact = await prisma.contact.findFirst({
+      where: {
+        siteId: process.env.SITE_ID,
+      },
       orderBy: {
         updatedAt: 'desc'
       }

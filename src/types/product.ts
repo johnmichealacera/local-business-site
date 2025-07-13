@@ -20,8 +20,9 @@ export interface Product {
   updatedAt: Date 
   sizes?: string[]
   salePrice?: number
-  featured: boolean
+  featured?: boolean
   discountPercentage?: number
+  siteId: string
 }
 
 export interface ProductFilters {
