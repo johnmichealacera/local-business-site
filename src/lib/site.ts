@@ -16,6 +16,9 @@ export async function getSiteInfo(): Promise<Site | null> {
       where: { id: siteId }
     })
 
+    console.log('site', site);
+    
+
     console.log('✅ Fetched site info:', site ? site.name : 'Not found')
     return site as Site
   } catch (error) {

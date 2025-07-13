@@ -27,12 +27,13 @@ model Site {
   
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  about       About[]
-  categories  Category[]
-  contact     Contact[]
-  events      Event[]
-  products    Product[]
-  users       UserSite[]
+  about         About[]
+  categories    Category[]
+  contact       Contact[]
+  events        Event[]
+  eventServices EventService[]
+  products      Product[]
+  users         UserSite[]
 
   @@map("sites")
 }
@@ -158,6 +159,30 @@ model Event {
   @@map("events")
 }
 
+model EventService {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  basePrice    Float
+  category     String
+  duration     String
+  inclusions   String[]
+  addOns       Json     @default("[]")
+  freebies     String[]
+  tags         String[]
+  isActive     Boolean  @default(true)
+  isFeatured   Boolean  @default(false)
+  contactEmail String?
+  contactPhone String?
+  bookingUrl   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@map("event_services")
+}
+
 
 enum UserRole {
   SUPER_ADMIN
@@ -182,6 +207,7 @@ enum SiteFeature {
   PRODUCTS
   CATEGORIES
   EVENTS
+  EVENT_SERVICES
   ABOUT
   CONTACT
 }

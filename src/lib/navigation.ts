@@ -22,6 +22,11 @@ export function getNavigationLinks(features: SiteFeature[]): NavLink[] {
       href: '/events',
       feature: SiteFeature.EVENTS
     },
+    [SiteFeature.EVENT_SERVICES]: {
+      name: 'Event Services',
+      href: '/events-services',
+      feature: SiteFeature.EVENT_SERVICES
+    },
     [SiteFeature.ABOUT]: {
       name: 'About',
       href: '/about',

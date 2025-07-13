@@ -20,6 +20,8 @@ export function Header({ siteName, features }: HeaderProps) {
   // Get navigation links based on site features
   const navigationLinks = getNavigationLinks(features)
 
+  console.log('navigationLinks', navigationLinks)
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
