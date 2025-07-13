@@ -12,7 +12,8 @@ export interface EventService {
   category: string
   duration: string
   inclusions: string[]
-  addOns: EventServiceAddOn[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addOns: any[]
   freebies: string[]
   tags: string[]
   isActive: boolean
