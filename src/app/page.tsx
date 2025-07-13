@@ -6,6 +6,7 @@ import { getProducts } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
 import { getFeaturedEvents } from '@/lib/events'
 import { EventCard, EventCardSkeleton } from '@/components/events/event-card'
+import { getSiteInfo } from '@/lib/site'
 import { Suspense } from 'react'
 
 // Force dynamic rendering for fresh product data on homepage
@@ -59,7 +60,10 @@ function FeaturedEventsSkeleton() {
   )
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const siteInfo = await getSiteInfo()
+  const siteName = siteInfo?.name || 'Thrifted Treasures'
+  
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -116,7 +120,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Why Choose Thrifted Treasures?
+              Why Choose {siteName}?
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               We&apos;re committed to sustainable fashion that makes a difference for you and the planet.

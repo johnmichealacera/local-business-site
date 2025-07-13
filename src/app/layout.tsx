@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MainLayout } from "@/components/layout/main-layout";
+import { getSiteInfo } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,10 +14,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Thrifted Treasures - Quality Pre-owned Shoes & Apparel",
-  description: "Discover unique, sustainable fashion at Thrifted Treasures. Shop our curated collection of pre-owned shoes and apparel.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteInfo = await getSiteInfo();
+  const siteName = siteInfo?.name || 'Thrifted Treasures';
+  
+  return {
+    title: `${siteName} - Quality Pre-owned Shoes & Apparel`,
+    description: `Discover unique, sustainable fashion at ${siteName}. Shop our curated collection of pre-owned shoes and apparel.`,
+  };
+}
 
 export default function RootLayout({
   children,

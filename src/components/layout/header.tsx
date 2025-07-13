@@ -4,11 +4,21 @@ import Link from 'next/link'
 import { ShoppingBag, Search, User, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
+import { SiteFeature } from '@/types/site'
+import { getNavigationLinks } from '@/lib/navigation'
 
-export function Header() {
+interface HeaderProps {
+  siteName: string
+  features: SiteFeature[]
+}
+
+export function Header({ siteName, features }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  
+  // Get navigation links based on site features
+  const navigationLinks = getNavigationLinks(features)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md shadow-sm">
@@ -20,7 +30,7 @@ export function Header() {
               <ShoppingBag className="h-8 w-8 text-slate-900 group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-xl font-bold text-slate-900 group-hover:text-gradient transition-all duration-300">
-              Thrifted Treasures
+              {siteName}
             </span>
           </Link>
 
@@ -29,18 +39,15 @@ export function Header() {
             <Link href="/" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
               Home
             </Link>
-            <Link href="/products" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              Products
-            </Link>
-            <Link href="/events" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              Events
-            </Link>
-            <Link href="/about" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              About
-            </Link>
-            <Link href="/contact" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
-              Contact
-            </Link>
+            {navigationLinks.map((link) => (
+              <Link 
+                key={link.feature} 
+                href={link.href} 
+                className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium"
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Desktop Actions with enhanced buttons */}
@@ -87,34 +94,16 @@ export function Header() {
               >
                 Home
               </Link>
-              <Link 
-                href="/products" 
-                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Products
-              </Link>
-              <Link 
-                href="/events" 
-                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Events
-              </Link>
-              <Link 
-                href="/about" 
-                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link 
-                href="/contact" 
-                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
+              {navigationLinks.map((link) => (
+                <Link 
+                  key={link.feature}
+                  href={link.href} 
+                  className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
               <div className="flex items-center space-x-2 pt-4 border-t">
                 <Button variant="ghost" size="sm" className="hover-lift h-10 w-10 rounded-full hover:bg-slate-100">
                   <Search className="h-4 w-4" />

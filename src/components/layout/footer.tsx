@@ -1,17 +1,29 @@
 import Link from 'next/link'
 import { ShoppingBag, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react'
+import { ContactInfo } from '@/lib/contact'
+import { SiteFeature } from '@/types/site'
+import { getQuickLinks } from '@/lib/navigation'
 
-export function Footer() {
-  // Default contact info - will be updated to use database in a future version
+interface FooterProps {
+  siteName: string
+  contactInfo: ContactInfo | null
+  features: SiteFeature[]
+}
+
+export function Footer({ siteName, contactInfo, features }: FooterProps) {
+  // Use database contact info or fallback to defaults
   const contact = {
-    businessName: "Thrifted Treasures",
-    email: "hello@thriftedtreasures.com",
-    phone: "09123456789",
-    address: "Bingkahan",
-    city: "Manticao",
-    province: "Misamis Oriental",
-    zipCode: "9000"
+    businessName: contactInfo?.businessName || siteName,
+    email: contactInfo?.email || "hello@thriftedtreasures.com",
+    phone: contactInfo?.phone || "09123456789",
+    address: contactInfo?.address || "Bingkahan",
+    city: contactInfo?.city || "Manticao",
+    province: contactInfo?.province || "Misamis Oriental",
+    zipCode: contactInfo?.zipCode || "9000"
   }
+
+  // Get quick links based on site features
+  const quickLinks = getQuickLinks(features)
   return (
     <footer className="bg-slate-50 border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -41,26 +53,13 @@ export function Footer() {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link href="/products" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/events" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Events
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Contact
-                </Link>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.feature}>
+                  <Link href={link.href} className="text-slate-600 hover:text-slate-900 transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -124,15 +123,35 @@ export function Footer() {
             
             {/* Social Media */}
             <div className="flex space-x-4 pt-4">
-              <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </Link>
+              {contactInfo?.socialLinks?.facebook && (
+                <Link href={contactInfo.socialLinks.facebook} className="text-slate-400 hover:text-slate-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="h-5 w-5" />
+                </Link>
+              )}
+              {contactInfo?.socialLinks?.instagram && (
+                <Link href={contactInfo.socialLinks.instagram} className="text-slate-400 hover:text-slate-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="h-5 w-5" />
+                </Link>
+              )}
+              {contactInfo?.socialLinks?.twitter && (
+                <Link href={contactInfo.socialLinks.twitter} className="text-slate-400 hover:text-slate-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <Twitter className="h-5 w-5" />
+                </Link>
+              )}
+              {/* Show fallback social links if no database social links exist */}
+              {!contactInfo?.socialLinks && (
+                <>
+                  <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
+                    <Facebook className="h-5 w-5" />
+                  </Link>
+                  <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                  <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
+                    <Twitter className="h-5 w-5" />
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,9 +1,49 @@
+import { prisma } from './prisma'
+
 export interface ContactSubmission {
   name: string
   email: string
   phone?: string
   subject: string
   message: string
+}
+
+export interface ContactInfo {
+  id: string
+  businessName: string
+  email: string
+  phone?: string
+  address?: string
+  city?: string
+  province?: string
+  zipCode?: string
+  country?: string
+  socialLinks?: Record<string, string> | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export async function getContactInfo(): Promise<ContactInfo | null> {
+  console.log('🔄 Fetching contact info from database...', new Date().toISOString())
+  
+  const siteId = process.env.SITE_ID
+  
+  if (!siteId) {
+    console.error('❌ SITE_ID environment variable is not set')
+    return null
+  }
+
+  try {
+    const contact = await prisma.contact.findFirst({
+      where: { siteId }
+    })
+
+    console.log('✅ Fetched contact info:', contact ? contact.businessName : 'Not found')
+    return contact as ContactInfo
+  } catch (error) {
+    console.error('Error fetching contact info:', error)
+    return null
+  }
 }
 
 export async function submitContactForm(data: ContactSubmission) {

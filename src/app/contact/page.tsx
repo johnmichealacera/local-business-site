@@ -1,4 +1,4 @@
-import { getContactInfo } from "@/lib/about";
+import { getContactInfo } from "@/lib/contact";
 import { ContactForm } from "@/components/contact/contact-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -209,7 +209,7 @@ export default async function ContactPage() {
                       <Facebook className="w-5 h-5 text-slate-600" />
                     </a>
                   )}
-                  {socialLinks.instagram && (
+                  {socialLinks?.instagram && (
                     <a 
                       href={socialLinks.instagram} 
                       target="_blank" 
@@ -219,7 +219,7 @@ export default async function ContactPage() {
                       <Instagram className="w-5 h-5 text-slate-600" />
                     </a>
                   )}
-                  {socialLinks.twitter && (
+                  {socialLinks?.twitter && (
                     <a 
                       href={socialLinks.twitter} 
                       target="_blank" 
@@ -230,7 +230,7 @@ export default async function ContactPage() {
                     </a>
                   )}
                   {/* Default social links if none in database */}
-                  {(!socialLinks.facebook && !socialLinks.instagram && !socialLinks.twitter) && (
+                  {(!socialLinks?.facebook && !socialLinks?.instagram && !socialLinks?.twitter) && (
                     <>
                       <a 
                         href="#" 
