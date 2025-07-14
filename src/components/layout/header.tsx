@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShoppingBag, Search, User, Menu, X } from 'lucide-react'
+import { ShoppingBag, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { SiteFeature } from '@/types/site'
@@ -64,8 +64,9 @@ export function Header({ siteName, logoUrl, features }: HeaderProps) {
             ))}
           </nav>
 
+          {/* Not sure if we need this */}
           {/* Desktop Actions with enhanced buttons */}
-          <div className="hidden md:flex items-center space-x-2">
+          {/* <div className="hidden md:flex items-center space-x-2">
             <Button variant="ghost" size="sm" className="hover-lift h-10 w-10 rounded-full hover:bg-slate-100">
               <Search className="h-4 w-4" />
             </Button>
@@ -74,12 +75,11 @@ export function Header({ siteName, logoUrl, features }: HeaderProps) {
             </Button>
             <Button variant="ghost" size="sm" className="hover-lift h-10 w-10 rounded-full hover:bg-slate-100 relative">
               <ShoppingBag className="h-4 w-4" />
-              {/* Optional cart badge */}
               <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-bounce-in">
                 0
               </span>
             </Button>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button with enhanced animation */}
           <div className="md:hidden">
@@ -118,7 +118,8 @@ export function Header({ siteName, logoUrl, features }: HeaderProps) {
                   {link.name}
                 </Link>
               ))}
-              <div className="flex items-center space-x-2 pt-4 border-t">
+              {/* Not sure if we need this */}
+              {/* <div className="flex items-center space-x-2 pt-4 border-t">
                 <Button variant="ghost" size="sm" className="hover-lift h-10 w-10 rounded-full hover:bg-slate-100">
                   <Search className="h-4 w-4" />
                 </Button>
@@ -131,7 +132,7 @@ export function Header({ siteName, logoUrl, features }: HeaderProps) {
                     0
                   </span>
                 </Button>
-              </div>
+              </div> */}
             </nav>
           </div>
         </div>
