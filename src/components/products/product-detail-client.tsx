@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatPrice } from '@/lib/utils'
 import { Product } from '@/types/product'
-import { 
-  ShoppingCart, 
+import {
   Heart, 
   Share2, 
   ArrowLeft, 
@@ -173,14 +172,15 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 </div>
 
                 <div className="space-y-3">
-                  <Button 
+                  {/* Not yet supported */}
+                  {/* <Button 
                     className="w-full" 
                     size="lg"
                     disabled={!isInStock}
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
                     Add to Cart - {formatPrice(product.price * quantity)}
-                  </Button>
+                  </Button> */}
                   
                   <Button 
                     variant="outline" 

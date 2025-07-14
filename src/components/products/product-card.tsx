@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Heart, ShoppingCart, Eye, Star } from 'lucide-react'
+import { Heart, Eye, Star } from 'lucide-react'
 import { Product } from '@/types/product'
 import { formatPrice } from '@/lib/utils'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
@@ -39,10 +39,11 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               View
             </Button>
           </Link>
-          <Button size="sm" variant="outline" className="hover-lift">
+          {/* Not yet supported */}
+          {/* <Button size="sm" variant="outline" className="hover-lift">
             <ShoppingCart className="h-4 w-4 mr-1" />
             Add
-          </Button>
+          </Button> */}
         </div>
 
         {/* Badges */}
@@ -160,13 +161,14 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               View Details
             </Button>
           </Link>
-          <Button 
+          {/* Not yet supported */}
+          {/* <Button 
             className="btn-primary flex-1" 
             disabled={product.stock === 0}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
             Add to Cart
-          </Button>
+          </Button> */}
         </div>
       </CardContent>
     </Card>
