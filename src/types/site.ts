@@ -4,6 +4,7 @@ export interface Site {
   domain: string
   subdomain?: string
   description?: string
+  logoUrl?: string
   isActive: boolean
   packageType: SitePackage
   features: SiteFeature[]

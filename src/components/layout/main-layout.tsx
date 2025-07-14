@@ -14,14 +14,15 @@ export async function MainLayout({ children }: MainLayoutProps) {
   ])
   
   const siteName = siteInfo?.name || 'Thrifted Treasures'
+  const logoUrl = siteInfo?.logoUrl
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Header siteName={siteName} features={siteInfo?.features || []} />
+      <Header siteName={siteName} logoUrl={logoUrl} features={siteInfo?.features || []} />
       <main className="flex-1">
         {children}
       </main>
-      <Footer siteName={siteName} contactInfo={contactInfo} features={siteInfo?.features || []} />
+      <Footer siteName={siteName} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} />
     </div>
   )
 } 

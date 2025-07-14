@@ -13,7 +13,7 @@ import {
   MapPin, 
   Clock,
   Users,
-  DollarSign,
+  PhilippinePeso,
   Share2, 
   Heart,
   Phone,
@@ -233,7 +233,7 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
                   </div>
                   
                   <Button className="w-full" size="lg">
-                    <DollarSign className="w-5 h-5 mr-2" />
+                    <PhilippinePeso className="w-5 h-5 mr-2" />
                     {isFree ? 'Register Now' : `Register - ${formatPrice(event.price)}`}
                   </Button>
                 </div>

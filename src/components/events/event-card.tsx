@@ -1,9 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Calendar, MapPin, Eye, Clock, Users, DollarSign } from 'lucide-react'
+import { Calendar, MapPin, Eye, Clock, Users, PhilippinePeso, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Event } from '@/types/event'
 import { formatPrice } from '@/lib/utils'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
@@ -14,10 +17,43 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, priority = false }: EventCardProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const hasMultipleImages = event.imageUrls.length > 1
+  const images = event.imageUrls.length > 0 ? event.imageUrls : ['/placeholder-event.jpg']
+
   const isUpcoming = new Date(event.startDate) > new Date()
   const isFree = event.price === 0
   const eventDate = new Date(event.startDate)
   const eventEndDate = event.endDate ? new Date(event.endDate) : null
+
+  // Auto-advance carousel every 4 seconds when there are multiple images
+  useEffect(() => {
+    if (hasMultipleImages) {
+      const timer = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => 
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        )
+      }, 4000)
+
+      return () => clearInterval(timer)
+    }
+  }, [hasMultipleImages, images.length])
+
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const goToPreviousImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    )
+  }
+
+  const goToImage = (index: number) => {
+    setCurrentImageIndex(index)
+  }
   
   const formatEventDate = (date: Date) => {
     return date.toLocaleDateString('en-US', {
@@ -39,13 +75,55 @@ export function EventCard({ event, priority = false }: EventCardProps) {
     <Card hover variant="elevated" className="group overflow-hidden">
       <div className="relative aspect-video overflow-hidden">
         <Image
-          src={event.imageUrls[0] ? event.imageUrls[0] : '/placeholder-event.jpg'}
+          src={images[currentImageIndex]}
           alt={event.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
           priority={priority}
-          unoptimized={event.imageUrls[0] ? false : true}
+          unoptimized={images[currentImageIndex] === '/placeholder-event.jpg'}
         />
+        
+        {/* Carousel Navigation - Only show if multiple images */}
+        {hasMultipleImages && (
+          <>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                goToPreviousImage()
+              }}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+            >
+              <ChevronLeft className="w-4 h-4 text-slate-700" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                goToNextImage()
+              }}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+            >
+              <ChevronRight className="w-4 h-4 text-slate-700" />
+            </button>
+
+            {/* Image indicators */}
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    goToImage(index)
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex 
+                      ? 'bg-white shadow-md' 
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
         
         {/* Overlay with action buttons */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
@@ -87,6 +165,15 @@ export function EventCard({ event, priority = false }: EventCardProps) {
             </div>
           </div>
         </div>
+
+        {/* Image counter badge - Only show if multiple images */}
+        {hasMultipleImages && (
+          <div className="absolute bottom-2 right-2">
+            <div className="bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 text-xs text-white">
+              {currentImageIndex + 1}/{images.length}
+            </div>
+          </div>
+        )}
       </div>
 
       <CardHeader className="pb-3">
@@ -118,7 +205,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
           
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <DollarSign className="h-4 w-4 text-slate-600" />
+              <PhilippinePeso className="h-4 w-4 text-slate-600" />
               <span className="text-lg font-bold text-slate-900">
                 {isFree ? 'Free' : formatPrice(event.price)}
               </span>
@@ -161,11 +248,12 @@ export function EventCard({ event, priority = false }: EventCardProps) {
               View Details
             </Button>
           </Link>
-          {isUpcoming && (
+          {/* Not sure if we need this */}
+          {/* {isUpcoming && (
             <Button className="btn-primary flex-1">
               Register
             </Button>
-          )}
+          )} */}
         </div>
 
         {/* Event duration */}

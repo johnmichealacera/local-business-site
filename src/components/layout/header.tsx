@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShoppingBag, Search, User, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
@@ -9,10 +10,11 @@ import { getNavigationLinks } from '@/lib/navigation'
 
 interface HeaderProps {
   siteName: string
+  logoUrl?: string
   features: SiteFeature[]
 }
 
-export function Header({ siteName, features }: HeaderProps) {
+export function Header({ siteName, logoUrl, features }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -29,7 +31,17 @@ export function Header({ siteName, features }: HeaderProps) {
           {/* Logo with enhanced animation */}
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="p-1 rounded-lg group-hover:bg-slate-100 transition-all duration-300">
-              <ShoppingBag className="h-8 w-8 text-slate-900 group-hover:scale-110 transition-transform duration-300" />
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt={`${siteName} logo`}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300"
+                />
+              ) : (
+                <ShoppingBag className="h-8 w-8 text-slate-900 group-hover:scale-110 transition-transform duration-300" />
+              )}
             </div>
             <span className="text-xl font-bold text-slate-900 group-hover:text-gradient transition-all duration-300">
               {siteName}

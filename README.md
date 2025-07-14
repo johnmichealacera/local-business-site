@@ -1,43 +1,47 @@
-# 🛍️ Thrifted Treasures - E-commerce Platform
+# 🏢 Multi-Tenant Business Platform
 
-A modern, sustainable e-commerce platform for pre-owned shoes and apparel. Built with Next.js 15, TypeScript, and PostgreSQL.
+A modern, multi-tenant web application platform that dynamically adapts to serve different businesses. Built with Next.js 15, TypeScript, and PostgreSQL with full multi-tenant architecture.
 
-![Thrifted Treasures Homepage](https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=400&fit=crop)
+![Multi-Tenant Platform](https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=400&fit=crop)
 
-## 🌟 Features
+## 🌟 Platform Features
 
-### 🎨 **Modern Design & UX**
+### 🏗️ **Multi-Tenant Architecture**
+- **Site Isolation**: Complete data isolation between tenants
+- **Domain/Subdomain Support**: Each tenant can have their own domain or subdomain
+- **Dynamic Branding**: Site-specific logos, names, and branding
+- **Feature Management**: Configurable features per tenant (BASIC, STANDARD, PREMIUM, ENTERPRISE)
+- **Tenant-Specific Content**: All content (products, events, about, contact) scoped to individual sites
+
+### 🎨 **Dynamic User Experience**
 - **Responsive Design**: Mobile-first approach with beautiful layouts
 - **Smooth Animations**: Fade-in, slide-up, bounce, and hover effects
 - **Interactive Elements**: Enhanced buttons, cards, and navigation
 - **Loading States**: Skeleton loaders and spinners for better UX
 - **Accessible**: ARIA labels, keyboard navigation, and screen reader support
 
-### 🛒 **E-commerce Functionality**
+### 🛒 **E-commerce & Event Management**
 - **Product Management**: Dynamic product catalog with database integration
+- **Event System**: Full event management with image carousels
+- **Event Services**: Service offerings and bookings
 - **Advanced Filtering**: Category, price range, search, and sorting
-- **Product Details**: Comprehensive product pages with image galleries
-- **Shopping Cart**: Add to cart functionality with badge counters
-- **Responsive Grid**: Adaptive product grid layouts
+- **Image Galleries**: Multiple image support with carousel functionality
 
-### 📱 **Pages & Components**
-- **Homepage**: Hero section, featured products, company stats
-- **Products Page**: Product listing with filters and search
-- **Product Details**: Individual product pages with full information
-- **About Page**: Company story, mission, values, and team
-- **Contact Page**: Contact form, business info, and FAQs
+### 🔧 **Tenant Configuration**
+- **Site Packages**: BASIC, STANDARD, PREMIUM, ENTERPRISE tiers
+- **Feature Toggle**: Enable/disable features per tenant
+  - Products & Categories
+  - Events & Event Services
+  - About & Contact pages
+  - Custom branding
+- **Dynamic Navigation**: Menu items based on enabled features
+- **Contact Information**: Tenant-specific business details
 
 ### 🗄️ **Database & Backend**
-- **PostgreSQL**: Production-ready database with Neon hosting
-- **Prisma ORM**: Type-safe database operations
+- **PostgreSQL**: Production-ready database with multi-tenant support
+- **Prisma ORM**: Type-safe database operations with site scoping
 - **Server Components**: Optimized server-side rendering
-- **API Routes**: RESTful API endpoints for data management
-
-### 🎯 **Business Features**
-- **Sustainable Focus**: Promoting eco-friendly fashion choices
-- **Quality Assurance**: Detailed product condition descriptions
-- **Brand Identity**: Professional "Thrifted Treasures" branding
-- **SEO Optimized**: Meta tags, structured data, and performance
+- **API Routes**: RESTful API endpoints with tenant isolation
 
 ## 🚀 Quick Start
 
@@ -48,8 +52,8 @@ A modern, sustainable e-commerce platform for pre-owned shoes and apparel. Built
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/thrifted-shoes-apparel.git
-cd thrifted-shoes-apparel
+git clone https://github.com/yourusername/multi-tenant-platform.git
+cd multi-tenant-platform
 ```
 
 ### 2. Install Dependencies
@@ -62,6 +66,9 @@ Create a `.env.local` file in the root directory:
 ```env
 # Database
 DATABASE_URL="postgresql://username:password@host:port/database?sslmode=require"
+
+# Multi-tenant Configuration
+SITE_ID="your-site-id"  # Required for tenant identification
 
 # Next.js
 NEXTAUTH_SECRET="your-secret-key"
@@ -90,29 +97,68 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000) to see your application!
 
+## 🏢 Multi-Tenant Usage
+
+### Setting Up a New Tenant
+1. Create a new site record in the database
+2. Configure the site's features and package type
+3. Set the `SITE_ID` environment variable
+4. Add tenant-specific content (products, events, about, contact)
+5. Configure domain/subdomain routing
+
+### Tenant Configuration Examples
+
+**Basic E-commerce Site:**
+```typescript
+{
+  packageType: 'BASIC',
+  features: ['PRODUCTS', 'CATEGORIES', 'ABOUT', 'CONTACT'],
+  logoUrl: 'https://example.com/logo.png',
+  name: 'My Store'
+}
+```
+
+**Full Event & Service Platform:**
+```typescript
+{
+  packageType: 'ENTERPRISE',
+  features: ['PRODUCTS', 'CATEGORIES', 'EVENTS', 'EVENT_SERVICES', 'ABOUT', 'CONTACT'],
+  logoUrl: 'https://eventcompany.com/logo.png',
+  name: 'Event Services Inc'
+}
+```
+
 ## 📁 Project Structure
 
 ```
 src/
 ├── app/                    # Next.js 15 App Router
-│   ├── (pages)/
-│   │   ├── about/         # About page
-│   │   ├── contact/       # Contact page
-│   │   └── products/      # Products and product details
+│   ├── events/            # Event management pages
+│   ├── events-services/   # Event services pages
+│   ├── products/          # Product management pages
+│   ├── about/             # About page
+│   ├── contact/           # Contact page
 │   ├── globals.css        # Global styles and animations
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Homepage
+│   ├── layout.tsx         # Root layout with tenant context
+│   └── page.tsx           # Dynamic homepage
 ├── components/            # Reusable UI components
 │   ├── layout/            # Layout components (Header, Footer)
 │   ├── products/          # Product-related components
+│   ├── events/            # Event-related components
 │   ├── contact/           # Contact form components
 │   └── ui/                # Base UI components
-├── lib/                   # Utility functions
+├── lib/                   # Utility functions and data access
 │   ├── prisma.ts          # Database connection
+│   ├── site.ts            # Site/tenant management
 │   ├── products.ts        # Product data functions
-│   ├── about.ts           # About page data functions
+│   ├── events.ts          # Event data functions
+│   ├── navigation.ts      # Dynamic navigation logic
 │   └── utils.ts           # General utilities
 ├── types/                 # TypeScript type definitions
+│   ├── site.ts            # Site/tenant types
+│   ├── product.ts         # Product types
+│   ├── event.ts           # Event types
+│   └── ...
 └── prisma/               # Database schema and migrations
 ```
 
@@ -126,111 +172,107 @@ src/
 - **Class Variance Authority**: Component variants
 
 ### **Backend**
-- **Prisma**: Type-safe database ORM
-- **PostgreSQL**: Production database
+- **Prisma**: Type-safe database ORM with multi-tenant support
+- **PostgreSQL**: Production database with row-level security
 - **Server Components**: Optimized data fetching
 
-### **Styling & Animation**
-- **Custom CSS**: Smooth animations and transitions
-- **Responsive Design**: Mobile-first approach
-- **Loading States**: Skeleton loaders and spinners
-- **Hover Effects**: Interactive animations
-
-### **Development Tools**
-- **ESLint**: Code linting
-- **TypeScript**: Type checking
-- **Git**: Version control
-
-## 🎨 Customization
-
-### **Colors & Branding**
-Edit `src/app/globals.css` to customize:
-- Brand colors and gradients
-- Animation timing and effects
-- Component styling
-
-### **Database Schema**
-Modify `prisma/schema.prisma` to add:
-- New product fields
-- User authentication
-- Order management
-- Reviews and ratings
-
-### **Components**
-Extend functionality by:
-- Adding new UI components in `src/components/ui/`
-- Creating product features in `src/components/products/`
-- Building custom layouts in `src/components/layout/`
+### **Multi-Tenant Features**
+- **Site Scoping**: All queries automatically scoped to tenant
+- **Dynamic Routing**: Domain/subdomain-based routing
+- **Feature Flags**: Conditional rendering based on tenant features
+- **Isolated Storage**: Complete data separation between tenants
 
 ## 📊 Database Schema
 
-### **Core Models**
+### **Multi-Tenant Core Models**
 ```prisma
-model Category {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  description String?
-  products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+model Site {
+  id          String      @id @default(cuid())
+  name        String
+  domain      String      @unique
+  subdomain   String?     @unique
+  logoUrl     String?     // Dynamic logo support
+  packageType SitePackage @default(BASIC)
+  features    SiteFeature[]
+  // ... relations to all tenant content
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  stock       Int
-  imageUrls   String[]
-  isActive    Boolean  @default(true)
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  price     Float
+  siteId    String   // Tenant isolation
+  site      Site     @relation(fields: [siteId], references: [id])
+  // ... other fields
 }
 
-model About {
-  id          String   @id @default(cuid())
-  mission     String
-  vision      String
-  values      String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model Contact {
-  id           String  @id @default(cuid())
-  businessName String
-  email        String
-  phone        String?
-  address      String?
-  city         String?
-  province        String?
-  zipCode      String?
-  country      String?
-  socialLinks  Json?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model Event {
+  id        String   @id @default(cuid())
+  title     String
+  imageUrls String[] // Multi-image carousel support
+  siteId    String   // Tenant isolation
+  site      Site     @relation(fields: [siteId], references: [id])
+  // ... other fields
 }
 ```
 
+## 🔐 Security & Isolation
+
+### **Data Isolation**
+- All database queries automatically scoped to `SITE_ID`
+- Row-level security prevents cross-tenant data access
+- API endpoints validate tenant context
+
+### **Multi-Tenant Security**
+- Environment-based tenant identification
+- Secure site switching mechanisms
+- Isolated user sessions per tenant
+
 ## 🚀 Deployment
 
-### **Vercel (Recommended)**
-1. Push your code to GitHub
-2. Connect your repository to [Vercel](https://vercel.com)
-3. Add environment variables in Vercel dashboard
-4. Deploy automatically on every push
+### **Single Tenant Deployment**
+1. Set `SITE_ID` environment variable
+2. Configure database connection
+3. Deploy to your preferred platform
 
-### **Other Platforms**
-- **Netlify**: Full-stack hosting with serverless functions
-- **Railway**: Database and application hosting
-- **DigitalOcean**: VPS hosting with Docker
+### **Multi-Tenant Deployment**
+1. Set up domain/subdomain routing
+2. Configure tenant detection middleware
+3. Implement tenant-specific environment management
 
-### **Database Hosting**
-- **Neon**: Serverless PostgreSQL (recommended)
-- **Supabase**: PostgreSQL with real-time features
-- **PlanetScale**: MySQL-compatible serverless database
+### **Recommended Platforms**
+- **Vercel**: Excellent for single-tenant deployments
+- **Railway**: Good for database and application hosting
+- **DigitalOcean**: VPS hosting with Docker support
+
+## 🎯 Use Cases
+
+### **E-commerce Businesses**
+- Online stores with product catalogs
+- Service-based businesses
+- Multi-location retailers
+
+### **Event Companies**
+- Event planning services
+- Venue management
+- Service marketplaces
+
+### **Service Providers**
+- Consulting firms
+- Professional services
+- Local businesses
+
+## 📈 Scalability
+
+### **Tenant Scaling**
+- Horizontal scaling with multiple sites
+- Database partitioning support
+- CDN integration for global performance
+
+### **Feature Scaling**
+- Modular feature system
+- Package-based feature unlocking
+- Custom feature development
 
 ## 🔧 Development Commands
 
@@ -247,51 +289,39 @@ npx prisma migrate dev  # Create and apply migrations
 npx prisma studio       # Open database browser
 npx prisma db seed      # Seed database with sample data
 
-# Utilities
-npm run type-check      # Check TypeScript types
-npm run format          # Format code with Prettier
+# Multi-tenant specific
+npx prisma db seed --site-id=<site-id>  # Seed specific tenant
 ```
 
-## 📈 Performance & SEO
+## 📝 Contributing
 
-### **Optimizations**
-- **Server-Side Rendering**: Fast initial page loads
-- **Image Optimization**: Next.js automatic image optimization
-- **Code Splitting**: Lazy loading for better performance
-- **Caching**: Static generation where possible
+### **Development Guidelines**
+1. Always test multi-tenant functionality
+2. Ensure proper data isolation
+3. Update tenant-specific documentation
+4. Follow semantic versioning
+5. Update CHANGELOG.md with changes
 
-### **SEO Features**
-- **Meta Tags**: Dynamic SEO meta tags
-- **Structured Data**: JSON-LD for rich snippets
-- **Sitemap**: Automatic sitemap generation
-- **Open Graph**: Social media sharing optimized
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### **Adding New Features**
+1. Consider multi-tenant implications
+2. Add feature flags to SiteFeature enum
+3. Update navigation logic
+4. Test across different package types
 
 ## 📞 Support
 
-- **Email**: hello@thriftedtreasures.com
-- **Documentation**: [Project Wiki](https://github.com/yourusername/thrifted-shoes-apparel/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/thrifted-shoes-apparel/issues)
+- **Documentation**: [Project Wiki](https://github.com/yourusername/multi-tenant-platform/wiki)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/multi-tenant-platform/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/multi-tenant-platform/discussions)
 
 ## 🙏 Acknowledgments
 
 - [Next.js](https://nextjs.org/) - The React framework
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
 - [Prisma](https://prisma.io/) - Database ORM
+- [PostgreSQL](https://postgresql.org/) - Database system
 - [Lucide](https://lucide.dev/) - Beautiful icons
-- [Unsplash](https://unsplash.com/) - Stock photos
 
 ---
 
-Made with ❤️ for sustainable fashion
+**Built for scalability, designed for flexibility, optimized for multi-tenant success.**

@@ -19,6 +19,7 @@ model Site {
   domain      String     @unique
   subdomain   String?    @unique
   description String?
+  logoUrl     String?    // Cloudinary URL for site logo
   isActive    Boolean    @default(true)
   
   // Site package and features

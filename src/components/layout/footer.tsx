@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShoppingBag, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react'
 import { ContactInfo } from '@/lib/contact'
 import { SiteFeature } from '@/types/site'
@@ -6,11 +7,12 @@ import { getQuickLinks } from '@/lib/navigation'
 
 interface FooterProps {
   siteName: string
+  logoUrl?: string
   contactInfo: ContactInfo | null
   features: SiteFeature[]
 }
 
-export function Footer({ siteName, contactInfo, features }: FooterProps) {
+export function Footer({ siteName, logoUrl, contactInfo, features }: FooterProps) {
   // Use database contact info or fallback to defaults
   const contact = {
     businessName: contactInfo?.businessName || siteName,
@@ -31,7 +33,17 @@ export function Footer({ siteName, contactInfo, features }: FooterProps) {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-              <ShoppingBag className="h-8 w-8 text-slate-900" />
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt={`${contact.businessName} logo`}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 object-contain"
+                />
+              ) : (
+                <ShoppingBag className="h-8 w-8 text-slate-900" />
+              )}
               <span className="text-xl font-bold text-slate-900">
                 {contact.businessName}
               </span>
@@ -63,8 +75,9 @@ export function Footer({ siteName, contactInfo, features }: FooterProps) {
             </ul>
           </div>
 
+          {/* Not sure if we need this */}
           {/* Categories */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">
               Categories
             </h3>
@@ -90,7 +103,7 @@ export function Footer({ siteName, contactInfo, features }: FooterProps) {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div className="space-y-4">
