@@ -20,6 +20,7 @@ model Site {
   subdomain   String?    @unique
   description String?
   logoUrl     String?    // Cloudinary URL for site logo
+  colorPalette String[]  @default(["#F59E0B", "#000000", "#FFFFFF"]) // [primary, secondary, tertiary]
   isActive    Boolean    @default(true)
   
   // Site package and features

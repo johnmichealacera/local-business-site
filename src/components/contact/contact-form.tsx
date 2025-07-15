@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Send, CheckCircle, AlertCircle } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+import { CheckCircle, AlertCircle } from 'lucide-react'
 
-interface FormData {
+interface ContactFormData {
   name: string
   email: string
   phone: string
@@ -13,50 +13,35 @@ interface FormData {
   message: string
 }
 
-interface FormState {
-  isSubmitting: boolean
-  isSubmitted: boolean
-  error: string | null
+interface ContactFormProps {
+  onSubmit?: (data: ContactFormData) => Promise<void>
 }
 
-export function ContactForm() {
-  const [formData, setFormData] = useState<FormData>({
+export function ContactForm({ onSubmit }: ContactFormProps) {
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     phone: '',
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
-  const [formState, setFormState] = useState<FormState>({
-    isSubmitting: false,
-    isSubmitted: false,
-    error: null
-  })
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    setFormState({
-      isSubmitting: true,
-      isSubmitted: false,
-      error: null
-    })
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
 
     try {
-      // TODO: Implement actual form submission to database
-      // For now, simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      if (onSubmit) {
+        await onSubmit(formData)
+      } else {
+        // Simulate form submission
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }
       
-      // Reset form and show success
+      setSubmitStatus('success')
       setFormData({
         name: '',
         email: '',
@@ -64,181 +49,171 @@ export function ContactForm() {
         subject: '',
         message: ''
       })
-      
-      setFormState({
-        isSubmitting: false,
-        isSubmitted: true,
-        error: null
-      })
-      
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setFormState(prev => ({ ...prev, isSubmitted: false }))
-      }, 5000)
-      
-    } catch (error) {
-      console.error('Error submitting contact form:', error);
-      setFormState({
-        isSubmitting: false,
-        isSubmitted: false,
-        error: 'Something went wrong. Please try again.'
-      })
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  if (formState.isSubmitted) {
-    return (
-      <Card className="bg-green-50 border-green-200">
-        <CardContent className="pt-6">
-          <div className="flex items-center space-x-3 text-green-800">
-            <CheckCircle className="w-6 h-6" />
-            <div>
-              <h3 className="font-semibold">Message Sent Successfully!</h3>
-              <p className="text-sm">We&apos;ll get back to you within 24 hours.</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    )
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Contact Form</CardTitle>
-        <CardDescription>
-          Fill out the form below and we&apos;ll respond as soon as possible.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {formState.error && (
-            <div className="flex items-center space-x-3 p-4 bg-red-50 border border-red-200 rounded-md text-red-800">
-              <AlertCircle className="w-5 h-5" />
-              <span className="text-sm">{formState.error}</span>
+    <div className="max-w-2xl mx-auto">
+      {submitStatus === 'success' && (
+        <Card className="mb-6 border-2" style={{ backgroundColor: 'var(--color-primary-light)', borderColor: 'var(--color-primary)' }}>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3" style={{ color: 'var(--color-primary)' }}>
+              <CheckCircle className="h-5 w-5" />
+              <div>
+                <h3 className="font-semibold">Message sent successfully!</h3>
+                <p className="text-sm">We&apos;ll get back to you within 24 hours.</p>
+              </div>
             </div>
-          )}
+          </CardContent>
+        </Card>
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Name */}
+      {submitStatus === 'error' && (
+        <div className="mb-6">
+          <div className="flex items-center space-x-3 p-4 rounded-md" style={{ backgroundColor: '#FEF2F2', border: '1px solid #FECACA', color: '#991B1B' }}>
+            <AlertCircle className="h-5 w-5" />
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                placeholder="Your full name"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                placeholder="your.email@example.com"
-              />
+              <h3 className="font-semibold">Error sending message</h3>
+              <p className="text-sm">Please try again or contact us directly.</p>
             </div>
           </div>
+        </div>
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Phone */}
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                placeholder="(555) 123-4567"
-              />
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-secondary)' }}>
+            Full Name *
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+            style={{ 
+              borderColor: 'var(--color-secondary-light)'
+            }}
+            placeholder="Enter your full name"
+          />
+        </div>
 
-            {/* Subject */}
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">
-                Subject *
-              </label>
-              <select
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-              >
-                <option value="">Select a subject</option>
-                <option value="general">General Inquiry</option>
-                <option value="product">Product Question</option>
-                <option value="order">Order Support</option>
-                <option value="return">Returns & Exchanges</option>
-                <option value="wholesale">Wholesale Inquiry</option>
-                <option value="partnership">Partnership Opportunity</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-secondary)' }}>
+            Email Address *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+            style={{ 
+              borderColor: 'var(--color-secondary-light)'
+            }}
+            placeholder="Enter your email address"
+          />
+        </div>
 
-          {/* Message */}
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
-              Message *
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              required
-              rows={6}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none"
-              placeholder="Please provide details about your inquiry..."
-            />
-          </div>
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-secondary)' }}>
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+            style={{ 
+              borderColor: 'var(--color-secondary-light)',
+            }}
+            placeholder="Enter your phone number"
+          />
+        </div>
 
-          {/* Submit Button */}
-          <Button 
-            type="submit" 
-            className="w-full" 
-            size="lg"
-            disabled={formState.isSubmitting}
+        <div>
+          <label htmlFor="subject" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-secondary)' }}>
+            Subject *
+          </label>
+          <select
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
+            style={{ 
+              borderColor: 'var(--color-secondary-light)',
+            }}
           >
-            {formState.isSubmitting ? (
-              <div className="flex items-center space-x-2">
+            <option value="">Select a subject</option>
+            <option value="general">General Inquiry</option>
+            <option value="product">Product Question</option>
+            <option value="order">Order Support</option>
+            <option value="return">Returns & Exchanges</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="feedback">Feedback</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-secondary)' }}>
+            Message *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            rows={6}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent resize-none"
+            style={{ 
+              borderColor: 'var(--color-secondary-light)'
+            }}
+            placeholder="Tell us how we can help you..."
+          />
+        </div>
+
+        <div>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-3 text-white font-semibold"
+            style={{ backgroundColor: 'var(--color-primary)' }}
+          >
+            {isSubmitting ? (
+              <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                <span>Sending...</span>
-              </div>
+                <span className="ml-2">Sending...</span>
+              </>
             ) : (
-              <div className="flex items-center space-x-2">
-                <Send className="w-4 h-4" />
-                <span>Send Message</span>
-              </div>
+              'Send Message'
             )}
           </Button>
+        </div>
 
-          <p className="text-xs text-slate-500 text-center">
+        <div className="text-center">
+          <p className="text-xs text-center" style={{ color: 'var(--color-secondary)', opacity: 0.6 }}>
             By submitting this form, you agree to our privacy policy and terms of service.
           </p>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+      </form>
+    </div>
   )
 } 

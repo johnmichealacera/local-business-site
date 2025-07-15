@@ -1,315 +1,279 @@
-import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAboutInfo } from "@/lib/about";
+import { Badge } from "@/components/ui/badge";
+import { getSiteInfo } from "@/lib/site";
+import { parseColorPalette, generateDynamicGradientStyle } from "@/lib/colors";
 import { 
+  Leaf, 
+  Shield, 
   Heart, 
-  ShoppingBag,
-  Award, 
-  Mail,
-  Globe
+  Users
 } from "lucide-react";
 
-// Force dynamic rendering - this prevents caching and ensures fresh data
+// Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export default async function AboutPage() {
-  // Fetch data from database
-  const aboutInfo = await getAboutInfo()
+  const siteInfo = await getSiteInfo();
+  const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF']);
 
-  // Default content if no database data exists
-  const defaultAbout = {
-    title: "Our Story",
-    content: "Founded in 2020, Thrifted Treasures was born from a simple belief: beautiful, quality fashion should be accessible to everyone while protecting our planet. What started as a small passion project has grown into a thriving community of conscious consumers who believe in the power of sustainable fashion.",
-    mission: "To make sustainable fashion accessible by offering high-quality, pre-owned clothing and accessories at affordable prices while reducing textile waste and environmental impact.",
-    vision: "A world where fashion is circular, sustainable, and inclusive - where every person can express their unique style without compromising the planet's future.",
-    values: ["Quality", "Sustainability", "Inclusivity", "Community"]
-  }
-
-  const about = aboutInfo || defaultAbout
   return (
-    <div className="w-full">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-slate-50 to-slate-100 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">
-              {about.title}
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
-              {about.content}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-slate-900 hover:bg-slate-800">
-                <Link href="/products">
-                  <ShoppingBag className="w-5 h-5 mr-2" />
-                  Shop Our Collection
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg">
-                <Link href="/contact">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Get in Touch
-                </Link>
-              </Button>
-            </div>
-          </div>
+      <section 
+        className="py-20 px-4 sm:px-6 lg:px-8 text-center"
+        style={generateDynamicGradientStyle('to-br', colorPalette, 0.1, 'light')}
+      >
+        <div className="container mx-auto">
+          <Badge 
+            variant="outline" 
+            className="mb-4 border-2"
+            style={{
+              borderColor: colorPalette.primary,
+              color: colorPalette.primary,
+              backgroundColor: colorPalette.primary + '10'
+            }}
+          >
+            About Our Story
+          </Badge>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: colorPalette.secondary }}>
+            Sustainable Fashion for Everyone
+          </h1>
+          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+            We believe that great style shouldn&apos;t come at the cost of our planet. 
+            Our mission is to make sustainable fashion accessible, affordable, and absolutely beautiful.
+          </p>
+          <Button 
+            size="lg" 
+            className="text-white font-semibold"
+            style={{
+              backgroundColor: colorPalette.secondary,
+              borderColor: colorPalette.secondary
+            }}
+          >
+            Join Our Mission
+          </Button>
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
+      {/* Mission Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              What Drives Us
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
+              Our Mission
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Our mission, vision, and values guide everything we do, from the products we curate 
-              to the relationships we build with our community.
+            <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+              We&apos;re committed to creating a more sustainable future through fashion
             </p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Mission */}
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <Heart className="w-8 h-8 text-blue-600" />
+                <div 
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Leaf className="w-8 h-8" />
                 </div>
-                <CardTitle className="text-xl">Our Mission</CardTitle>
+                <CardTitle style={{ color: colorPalette.secondary }}>Environmental Impact</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  {about.mission}
-                </CardDescription>
+                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  Every purchase helps reduce textile waste and supports circular fashion economy.
+                </p>
               </CardContent>
             </Card>
-
-            {/* Vision */}
-            <Card className="text-center">
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                  <Globe className="w-8 h-8 text-green-600" />
+                <div 
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Shield className="w-8 h-8" />
                 </div>
-                <CardTitle className="text-xl">Our Vision</CardTitle>
+                <CardTitle style={{ color: colorPalette.secondary }}>Quality Assurance</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  {about.vision}
-                </CardDescription>
+                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  Each item is carefully inspected and authenticated to ensure premium quality.
+                </p>
               </CardContent>
             </Card>
-
-            {/* Values */}
-            <Card className="text-center">
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                  <Award className="w-8 h-8 text-purple-600" />
+                <div 
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Heart className="w-8 h-8" />
                 </div>
-                <CardTitle className="text-xl">Our Values</CardTitle>
+                <CardTitle style={{ color: colorPalette.secondary }}>Community First</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
-                  {Array.isArray(about.values) ? about.values.join(', ') : about.values}. We believe 
-                  in building lasting relationships with our customers and 
-                  supporting ethical fashion practices.
-                </CardDescription>
+                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  We build lasting relationships with our customers and support local communities.
+                </p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Statistics */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Our Impact
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Together with our community, we&apos;re making a real difference in sustainable fashion.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-slate-900 mb-2">10,000+</div>
-              <div className="text-slate-600">Items Rescued</div>
-              <div className="text-sm text-slate-500 mt-1">From ending up in landfills</div>
+      {/* Stats Section */}
+      <section 
+        className="py-16 px-4 sm:px-6 lg:px-8"
+        style={{
+          backgroundColor: colorPalette.tertiary,
+          backgroundImage: `linear-gradient(135deg, ${colorPalette.primary}05, ${colorPalette.tertiary})`
+        }}
+      >
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
+            Our Impact
+          </h2>
+          <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+            Numbers that tell our story of sustainable fashion and community impact
+          </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+            <div>
+              <div className="text-4xl font-bold mb-2" style={{ color: colorPalette.secondary }}>10,000+</div>
+              <div style={{ color: colorPalette.secondary, opacity: 0.8 }}>Items Rescued</div>
+              <div className="text-sm mt-1" style={{ color: colorPalette.secondary, opacity: 0.6 }}>From ending up in landfills</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-slate-900 mb-2">5,000+</div>
-              <div className="text-slate-600">Happy Customers</div>
-              <div className="text-sm text-slate-500 mt-1">Across the country</div>
+            <div>
+              <div className="text-4xl font-bold mb-2" style={{ color: colorPalette.secondary }}>5,000+</div>
+              <div style={{ color: colorPalette.secondary, opacity: 0.8 }}>Happy Customers</div>
+              <div className="text-sm mt-1" style={{ color: colorPalette.secondary, opacity: 0.6 }}>Across the country</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-slate-900 mb-2">3 Years</div>
-              <div className="text-slate-600">In Business</div>
-              <div className="text-sm text-slate-500 mt-1">Since 2020</div>
+            <div>
+              <div className="text-4xl font-bold mb-2" style={{ color: colorPalette.secondary }}>3 Years</div>
+              <div style={{ color: colorPalette.secondary, opacity: 0.8 }}>In Business</div>
+              <div className="text-sm mt-1" style={{ color: colorPalette.secondary, opacity: 0.6 }}>Since 2020</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-slate-900 mb-2">95%</div>
-              <div className="text-slate-600">Satisfaction Rate</div>
-              <div className="text-sm text-slate-500 mt-1">Based on customer reviews</div>
+            <div>
+              <div className="text-4xl font-bold mb-2" style={{ color: colorPalette.secondary }}>95%</div>
+              <div style={{ color: colorPalette.secondary, opacity: 0.8 }}>Satisfaction Rate</div>
+              <div className="text-sm mt-1" style={{ color: colorPalette.secondary, opacity: 0.6 }}>Based on customer reviews</div>
             </div>
           </div>
         </div>
       </section>
 
-{/* Commented out for now. Not sure if we need it. */}
       {/* Team Section */}
-      {/* <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
               Meet Our Team
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              The passionate people behind Thrifted Treasures who make sustainable fashion accessible to everyone.
+            <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+              Passionate individuals working together to revolutionize sustainable fashion
             </p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-12 h-12 text-slate-400" />
+                <div 
+                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Users className="w-12 h-12" />
                 </div>
-                <CardTitle>Sarah Johnson</CardTitle>
-                <CardDescription>Founder & CEO</CardDescription>
+                <CardTitle style={{ color: colorPalette.secondary }}>Sarah Johnson</CardTitle>
+                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Founder & CEO</p>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 mb-4">
-                  Sarah founded Thrifted Treasures with a vision to make sustainable fashion 
-                  accessible. With 10 years in fashion retail, she brings expertise in 
-                  curating quality pieces.
+                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  Former fashion buyer with 10+ years experience in sustainable fashion and circular economy.
                 </p>
-                <div className="flex justify-center space-x-2">
-                  <Button variant="ghost" size="sm">
-                    <Mail className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Phone className="w-4 h-4" />
-                  </Button>
-                </div>
               </CardContent>
             </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-12 h-12 text-slate-400" />
-                </div>
-                <CardTitle>Michael Chen</CardTitle>
-                <CardDescription>Head of Operations</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-600 mb-4">
-                  Michael ensures our operations run smoothly, from inventory management 
-                  to customer service. His attention to detail keeps our quality standards high.
-                </p>
-                <div className="flex justify-center space-x-2">
-                  <Button variant="ghost" size="sm">
-                    <Mail className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Phone className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-12 h-12 text-slate-400" />
-                </div>
-                <CardTitle>Emily Rodriguez</CardTitle>
-                <CardDescription>Style Curator</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-600 mb-4">
-                  Emily has an eye for unique pieces and timeless style. She curates our 
-                  collection to ensure every item meets our standards for quality and fashion.
-                </p>
-                <div className="flex justify-center space-x-2">
-                  <Button variant="ghost" size="sm">
-                    <Mail className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Phone className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Sustainability Section */}
-      {/* <section className="py-16 px-4 sm:px-6 lg:px-8 bg-green-50">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-8">
-              <Recycle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Our Commitment to Sustainability
-              </h2>
-            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">Environmental Impact</h3>
-                <ul className="space-y-2 text-slate-600">
-                  <li>• Diverting thousands of items from landfills annually</li>
-                  <li>• Reducing textile waste in the fashion industry</li>
-                  <li>• Promoting circular fashion economy</li>
-                  <li>• Carbon-neutral shipping options</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">Quality Assurance</h3>
-                <ul className="space-y-2 text-slate-600">
-                  <li>• Rigorous quality inspection process</li>
-                  <li>• Professional cleaning and conditioning</li>
-                  <li>• Accurate condition descriptions</li>
-                  <li>• 30-day satisfaction guarantee</li>
-                </ul>
-              </div>
-            </div>
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div 
+                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Users className="w-12 h-12" />
+                </div>
+                <CardTitle style={{ color: colorPalette.secondary }}>Mike Chen</CardTitle>
+                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Head of Operations</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  Supply chain expert ensuring quality and authenticity in every piece we offer.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div 
+                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
+                  style={{
+                    backgroundColor: colorPalette.primary + '20',
+                    color: colorPalette.primary
+                  }}
+                >
+                  <Users className="w-12 h-12" />
+                </div>
+                <CardTitle style={{ color: colorPalette.secondary }}>Emma Davis</CardTitle>
+                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Community Manager</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  Building connections with our community and spreading awareness about sustainable fashion.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </section> */}
+      </section>
 
-      {/* Call to Action */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-              Ready to Join Our Community?
-            </h2>
-            <p className="text-lg text-slate-600 mb-8">
-              Discover unique pieces, support sustainable fashion, and be part of a movement 
-              that&apos;s making a positive impact on our planet.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-slate-900 hover:bg-slate-800">
-                <Link href="/products">
-                  <ShoppingBag className="w-5 h-5 mr-2" />
-                  Start Shopping
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg">
-                <Link href="/contact">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Contact Us
-                </Link>
-              </Button>
-            </div>
-          </div>
+      {/* CTA Section */}
+      <section 
+        className="py-20 px-4 sm:px-6 lg:px-8 text-center"
+        style={generateDynamicGradientStyle('to-br', colorPalette, 0.1, 'light')}
+      >
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: colorPalette.secondary }}>
+            Ready to Join the Movement?
+          </h2>
+          <p className="text-lg mb-8" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+            Start your sustainable fashion journey today and make a positive impact on our planet.
+          </p>
+          <Button 
+            size="lg" 
+            className="text-white font-semibold"
+            style={{
+              backgroundColor: colorPalette.secondary,
+              borderColor: colorPalette.secondary
+            }}
+          >
+            Shop Now
+          </Button>
         </div>
       </section>
     </div>

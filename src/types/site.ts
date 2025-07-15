@@ -5,6 +5,7 @@ export interface Site {
   subdomain?: string
   description?: string
   logoUrl?: string
+  colorPalette: string[] // [primary, secondary, tertiary]
   isActive: boolean
   packageType: SitePackage
   features: SiteFeature[]

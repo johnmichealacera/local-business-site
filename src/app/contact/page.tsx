@@ -1,6 +1,8 @@
 import { getContactInfo } from "@/lib/contact";
 import { ContactForm } from "@/components/contact/contact-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getSiteInfo } from "@/lib/site";
+import { parseColorPalette, generateDynamicGradientStyle } from "@/lib/colors";
 import { 
   Mail, 
   Phone, 
@@ -18,7 +20,12 @@ import {
 export const dynamic = 'force-dynamic'
 
 export default async function ContactPage() {
-  const contactInfo = await getContactInfo();
+  const [contactInfo, siteInfo] = await Promise.all([
+    getContactInfo(),
+    getSiteInfo()
+  ]);
+
+  const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF']);
   
   // Default contact info if no database data exists
   const defaultContact = {
@@ -51,7 +58,10 @@ export default async function ContactPage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-slate-50 to-slate-100 py-16 px-4 sm:px-6 lg:px-8">
+      <section 
+        className="relative py-16 px-4 sm:px-6 lg:px-8"
+        style={generateDynamicGradientStyle('to-r', colorPalette, 0.1, 'light')}
+      >
         <div className="container mx-auto text-center">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
@@ -204,9 +214,13 @@ export default async function ContactPage() {
                       href={socialLinks.facebook} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                      className="p-2 rounded-full transition-colors"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
                     >
-                      <Facebook className="w-5 h-5 text-slate-600" />
+                      <Facebook className="w-5 h-5" />
                     </a>
                   )}
                   {socialLinks?.instagram && (
@@ -214,9 +228,13 @@ export default async function ContactPage() {
                       href={socialLinks.instagram} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                      className="p-2 rounded-full transition-colors"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
                     >
-                      <Instagram className="w-5 h-5 text-slate-600" />
+                      <Instagram className="w-5 h-5" />
                     </a>
                   )}
                   {socialLinks?.twitter && (
@@ -224,9 +242,13 @@ export default async function ContactPage() {
                       href={socialLinks.twitter} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                      className="p-2 rounded-full transition-colors"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
                     >
-                      <Twitter className="w-5 h-5 text-slate-600" />
+                      <Twitter className="w-5 h-5" />
                     </a>
                   )}
                   {/* Default social links if none in database */}
@@ -234,21 +256,33 @@ export default async function ContactPage() {
                     <>
                       <a 
                         href="#" 
-                        className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                        className="p-2 rounded-full transition-colors"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
                       >
-                        <Facebook className="w-5 h-5 text-slate-600" />
+                        <Facebook className="w-5 h-5" />
                       </a>
                       <a 
                         href="#" 
-                        className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                        className="p-2 rounded-full transition-colors"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
                       >
-                        <Instagram className="w-5 h-5 text-slate-600" />
+                        <Instagram className="w-5 h-5" />
                       </a>
                       <a 
                         href="#" 
-                        className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                        className="p-2 rounded-full transition-colors"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
                       >
-                        <Twitter className="w-5 h-5 text-slate-600" />
+                        <Twitter className="w-5 h-5" />
                       </a>
                     </>
                   )}
@@ -260,13 +294,19 @@ export default async function ContactPage() {
       </div>
 
       {/* FAQ Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50">
+      <section 
+        className="py-16 px-4 sm:px-6 lg:px-8"
+        style={{
+          backgroundColor: colorPalette.tertiary,
+          backgroundImage: `linear-gradient(135deg, ${colorPalette.primary}05, ${colorPalette.tertiary})`
+        }}
+      >
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
               Frequently Asked Questions
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
               Find answers to common questions about our products, services, and policies.
             </p>
           </div>

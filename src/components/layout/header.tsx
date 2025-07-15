@@ -29,7 +29,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
         <div className="flex h-16 items-center justify-between">
           {/* Logo with enhanced animation */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="p-1 rounded-lg group-hover:bg-slate-100 transition-all duration-300">
+            <div className="p-1 rounded-lg group-hover:bg-[var(--color-tertiary-light)] transition-all duration-300">
               {logoUrl ? (
                 <Image
                   src={logoUrl}
@@ -39,24 +39,24 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
                   className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300"
                 />
               ) : (
-                <ShoppingBag className="h-8 w-8 text-slate-900 group-hover:scale-110 transition-transform duration-300" />
+                <ShoppingBag className="h-8 w-8 text-[var(--color-secondary)] group-hover:scale-110 transition-transform duration-300" />
               )}
             </div>
-            <span className="text-xl font-bold text-slate-900 group-hover:text-gradient transition-all duration-300">
+            <span className="text-xl font-bold text-[var(--color-secondary)] group-hover:text-gradient transition-all duration-300">
               {siteName}
             </span>
           </Link>
 
           {/* Desktop Navigation with enhanced animations */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium">
+            <Link href="/" className="nav-link text-[var(--color-secondary)] opacity-70 hover:opacity-100 transition-all font-medium">
               Home
             </Link>
             {navigationLinks.map((link) => (
               <Link 
                 key={link.feature} 
                 href={link.href} 
-                className="nav-link text-slate-600 hover:text-slate-900 transition-colors font-medium"
+                className="nav-link text-[var(--color-secondary)] opacity-70 hover:opacity-100 transition-all font-medium"
               >
                 {link.name}
               </Link>
@@ -86,7 +86,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
               variant="ghost" 
               size="sm" 
               onClick={toggleMenu}
-              className="h-10 w-10 rounded-full hover:bg-slate-100 transition-all duration-300"
+              className="h-10 w-10 rounded-full hover:bg-[var(--color-tertiary-light)] transition-all duration-300"
             >
               <div className="relative">
                 <Menu className={`h-4 w-4 transition-all duration-300 ${isMenuOpen ? 'rotate-90 opacity-0' : 'rotate-0 opacity-100'}`} />
@@ -102,7 +102,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
             <nav className="flex flex-col space-y-4">
               <Link 
                 href="/" 
-                className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
+                className="text-[var(--color-secondary)] opacity-70 hover:opacity-100 transition-all font-medium py-2 px-4 rounded-lg hover:bg-[var(--color-tertiary-light)]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
@@ -111,7 +111,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
                 <Link 
                   key={link.feature}
                   href={link.href} 
-                  className="text-slate-600 hover:text-slate-900 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-slate-50"
+                  className="text-[var(--color-secondary)] opacity-70 hover:opacity-100 transition-all font-medium py-2 px-4 rounded-lg hover:bg-[var(--color-tertiary-light)]"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
