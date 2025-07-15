@@ -7,13 +7,14 @@ import { getQuickLinks } from '@/lib/navigation'
 
 interface FooterProps {
   siteName: string
+  siteDescription: string
   logoUrl?: string
   contactInfo: ContactInfo | null
   features: SiteFeature[]
   featuresOrder: SiteFeature[]
 }
 
-export function Footer({ siteName, logoUrl, contactInfo, features, featuresOrder }: FooterProps) {
+export function Footer({ siteName, siteDescription, logoUrl, contactInfo, features, featuresOrder }: FooterProps) {
   // Use database contact info or fallback to defaults
   const contact = {
     businessName: contactInfo?.businessName || siteName,
@@ -50,8 +51,7 @@ export function Footer({ siteName, logoUrl, contactInfo, features, featuresOrder
               </span>
             </Link>
             <p className="text-[var(--color-secondary)] opacity-70 text-sm">
-              Your destination for quality pre-owned shoes and apparel. 
-              Sustainable fashion that doesn&apos;t compromise on style.
+              {siteDescription}
             </p>
           </div>
 
@@ -175,7 +175,8 @@ export function Footer({ siteName, logoUrl, contactInfo, features, featuresOrder
             <p className="text-[var(--color-secondary)] opacity-70 text-sm">
               © 2025 {contact.businessName}. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            {/* TODO: Add privacy policy, terms of service, and returns */}
+            {/* <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="#" className="text-[var(--color-secondary)] opacity-70 hover:opacity-100 text-sm transition-all">
                 Privacy Policy
               </Link>
@@ -185,7 +186,7 @@ export function Footer({ siteName, logoUrl, contactInfo, features, featuresOrder
               <Link href="#" className="text-[var(--color-secondary)] opacity-70 hover:opacity-100 text-sm transition-all">
                 Returns
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

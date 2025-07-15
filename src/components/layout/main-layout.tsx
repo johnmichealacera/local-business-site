@@ -15,7 +15,8 @@ export async function MainLayout({ children }: MainLayoutProps) {
     getContactInfo()
   ])
   
-  const siteName = siteInfo?.name || 'Thrifted Treasures'
+  const siteName = siteInfo?.name || 'Local Dev Ventures'
+  const siteDescription = siteInfo?.description || 'Local Dev Ventures'
   const logoUrl = siteInfo?.logoUrl
   const colorPalette = siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF']
   const parsedPalette = parseColorPalette(colorPalette)
@@ -32,7 +33,7 @@ export async function MainLayout({ children }: MainLayoutProps) {
         <main className="flex-1">
           {children}
         </main>
-        <Footer siteName={siteName} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
+        <Footer siteName={siteName} siteDescription={siteDescription} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
       </div>
     </ColorProvider>
   )

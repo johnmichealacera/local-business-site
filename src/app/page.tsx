@@ -138,6 +138,25 @@ async function CategoriesShowcase() {
   )
 }
 
+function CategoriesShowcaseSkeleton() {
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="text-center mb-12">
+          <div className="h-8 w-8 bg-gray-200 rounded mx-auto mb-4"></div>
+          <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="h-48 bg-gray-200 rounded animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 async function FeaturedEvents() {
   const events = await getFeaturedEvents()
   
@@ -272,13 +291,48 @@ export default async function HomePage() {
   const features = siteInfo?.features || []
   const featuresOrder = siteInfo?.featuresOrder || []
   
-  // Filter features that should appear on homepage
+  // Filter features that should appear on homepage based on featuresOrder and enabled features
   const homepageFeatures = featuresOrder.filter(feature => 
     features.includes(feature) && 
-    feature !== SiteFeature.DASHBOARD && 
-    feature !== SiteFeature.ABOUT && 
-    feature !== SiteFeature.CONTACT
+    [SiteFeature.PRODUCTS, SiteFeature.CATEGORIES, SiteFeature.EVENTS, SiteFeature.EVENT_SERVICES].includes(feature)
   )
+
+  // Generate dynamic hero content based on available features
+  const generateHeroContent = () => {
+    const hasProducts = homepageFeatures.includes(SiteFeature.PRODUCTS)
+    const hasEvents = homepageFeatures.includes(SiteFeature.EVENTS)
+    const hasEventServices = homepageFeatures.includes(SiteFeature.EVENT_SERVICES)
+  
+    let subtitle = "Curated experiences for everyone."
+    let description = "Discover products, events, and services that add value to your life."
+  
+    if (hasProducts && hasEvents && hasEventServices) {
+      subtitle = "Products, Events & Services"
+      description = "Browse unique products, view exciting events, and book trusted services — all in one place."
+    } else if (hasProducts && hasEvents) {
+      subtitle = "Products & Events"
+      description = "Explore curated products and connect through local events. Everything you need in your community."
+    } else if (hasProducts && hasEventServices) {
+      subtitle = "Products & Services"
+      description = "Discover curated products and book reliable services for any need — simple and convenient."
+    } else if (hasProducts) {
+      subtitle = "Curated Products"
+      description = "Shop unique products carefully chosen for you. Quality goods at your fingertips."
+    } else if (hasEvents && hasEventServices) {
+      subtitle = "Events & Services"
+      description = "View local events and book services you can trust. Connect, celebrate, and make it happen."
+    } else if (hasEvents) {
+      subtitle = "Community Events"
+      description = "View exciting events and workshops in your area. Connect with people and create memories."
+    } else if (hasEventServices) {
+      subtitle = "Trusted Services"
+      description = "Book professional services for every occasion. Quality, reliability, and convenience."
+    }
+  
+    return { subtitle, description }
+  }  
+
+  const { subtitle, description } = generateHeroContent()
 
   // Render feature sections based on featuresOrder
   const renderFeatureSection = (feature: SiteFeature) => {
@@ -290,7 +344,11 @@ export default async function HomePage() {
           </Suspense>
         )
       case SiteFeature.CATEGORIES:
-        return <CategoriesShowcase key="categories" />
+        return (
+          <Suspense key="categories" fallback={<CategoriesShowcaseSkeleton />}>
+            <CategoriesShowcase />
+          </Suspense>
+        )
       case SiteFeature.EVENTS:
         return (
           <Suspense key="events" fallback={<FeaturedEventsSkeleton />}>
@@ -307,6 +365,25 @@ export default async function HomePage() {
         return null
     }
   }
+
+  // Generate primary CTA based on first available feature
+  const getPrimaryCTA = () => {
+    const firstFeature = homepageFeatures[0]
+    switch (firstFeature) {
+      case SiteFeature.PRODUCTS:
+        return { text: "Shop Now", href: "/products" }
+      case SiteFeature.EVENTS:
+        return { text: "View Events", href: "/events" }
+      case SiteFeature.EVENT_SERVICES:
+        return { text: "Our Services", href: "/events-services" }
+      case SiteFeature.CATEGORIES:
+        return { text: "Browse Categories", href: "/categories" }
+      default:
+        return { text: "Get Started", href: "/about" }
+    }
+  }
+
+  const primaryCTA = getPrimaryCTA()
   
   return (
     <div className="w-full">
@@ -342,32 +419,28 @@ export default async function HomePage() {
                   }}
                 >
                   <TrendingUp className="w-3 h-3 mr-1" />
-                  New Arrivals Weekly
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'New Arrivals Weekly' : 'Always Something New'}
                 </div>
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up" style={{ color: colorPalette.secondary }}>
                 Discover Your Next
                 <span className="text-gradient block mt-2">
-                  Fashion Treasure
+                  {subtitle}
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s', color: colorPalette.secondary, opacity: 0.8 }}>
-                Curated pre-owned clothing and accessories that tell a story. 
-                Sustainable fashion that doesn&apos;t compromise on style or quality. 
-                {homepageFeatures.includes(SiteFeature.EVENTS) && ' Plus, discover exciting events and workshops in your community.'}
+                {description}
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                {homepageFeatures.includes(SiteFeature.PRODUCTS) && (
-                  <Link href="/products">
-                    <Button size="lg" className="btn-primary group">
-                      Shop Now
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
-                )}
+                <Link href={primaryCTA.href}>
+                  <Button size="lg" className="btn-primary group">
+                    {primaryCTA.text}
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
                 <Link href="/about">
                   <Button size="lg" variant="outline" className="btn-secondary">
                     Our Story
@@ -387,7 +460,7 @@ export default async function HomePage() {
               Why Choose {siteName}?
             </h2>
             <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-              We&apos;re committed to sustainable fashion that makes a difference for you and the planet.
+              We&apos;re committed to quality experiences that make a difference for you and the community.
             </p>
           </div>
 
@@ -403,9 +476,14 @@ export default async function HomePage() {
                 >
                   <Leaf className="h-6 w-6" />
                 </div>
-                <CardTitle>Sustainable Fashion</CardTitle>
+                <CardTitle>
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'Sustainable Fashion' : 'Eco-Conscious'}
+                </CardTitle>
                 <CardDescription>
-                  Every purchase extends the lifecycle of clothing and reduces environmental impact.
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
+                    ? 'Every purchase extends the lifecycle of clothing and reduces environmental impact.'
+                    : 'We care about our environment and make choices that support sustainability.'
+                  }
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -423,7 +501,10 @@ export default async function HomePage() {
                 </div>
                 <CardTitle>Quality Guaranteed</CardTitle>
                 <CardDescription>
-                  Each item is carefully inspected and authenticated by our fashion experts.
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
+                    ? 'Each item is carefully inspected and authenticated by our fashion experts.'
+                    : 'Everything we offer is carefully curated and meets our high standards.'
+                  }
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -439,9 +520,14 @@ export default async function HomePage() {
                 >
                   <Heart className="h-6 w-6" />
                 </div>
-                <CardTitle>Unique Finds</CardTitle>
+                <CardTitle>
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'Unique Finds' : 'Personalized Experience'}
+                </CardTitle>
                 <CardDescription>
-                  Discover one-of-a-kind pieces that express your individual style.
+                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
+                    ? 'Discover one-of-a-kind pieces that express your individual style.'
+                    : 'We provide personalized experiences tailored to your preferences and needs.'
+                  }
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -449,11 +535,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Dynamic Feature Sections */}
+      {/* Dynamic Feature Sections - Rendered in featuresOrder */}
       {homepageFeatures.map((feature) => renderFeatureSection(feature))}
 
+      {/* Not sure if we need this section */}
       {/* Stats Section */}
-      <section 
+      {/* <section 
         className="py-16 px-4 sm:px-6 lg:px-8 text-white"
         style={{
           backgroundColor: colorPalette.secondary,
@@ -463,12 +550,20 @@ export default async function HomePage() {
         <div className="container mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="animate-scale-in">
-              <div className="text-3xl md:text-4xl font-bold mb-2">10,000+</div>
-              <div style={{ color: colorPalette.tertiary, opacity: 0.8 }}>Items Rescued</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">
+                {homepageFeatures.includes(SiteFeature.PRODUCTS) ? '10,000+' : '1,000+'}
+              </div>
+              <div style={{ color: colorPalette.tertiary, opacity: 0.8 }}>
+                {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'Items Rescued' : 'Happy Customers'}
+              </div>
             </div>
             <div className="animate-scale-in" style={{ animationDelay: '0.1s' }}>
-              <div className="text-3xl md:text-4xl font-bold mb-2">5,000+</div>
-              <div style={{ color: colorPalette.tertiary, opacity: 0.8 }}>Happy Customers</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">
+                {homepageFeatures.includes(SiteFeature.EVENTS) ? '500+' : '5,000+'}
+              </div>
+              <div style={{ color: colorPalette.tertiary, opacity: 0.8 }}>
+                {homepageFeatures.includes(SiteFeature.EVENTS) ? 'Events Hosted' : 'Happy Customers'}
+              </div>
             </div>
             <div className="animate-scale-in" style={{ animationDelay: '0.2s' }}>
               <div className="text-3xl md:text-4xl font-bold mb-2">3</div>
@@ -480,7 +575,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 text-white" style={{ 
@@ -489,20 +584,21 @@ export default async function HomePage() {
         <div className="container mx-auto text-center">
           <div className="max-w-3xl mx-auto animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Start Your Sustainable Fashion Journey?
+              Ready to Start Your Journey?
             </h2>
             <p className="mb-8 text-lg opacity-90">
-              Join thousands of fashion-conscious customers who&apos;ve made the switch to sustainable style.
+              {homepageFeatures.includes(SiteFeature.PRODUCTS) 
+                ? "Join thousands of fashion-conscious customers who've made the switch to sustainable style."
+                : "Join our community and discover what makes us special."
+              }
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              {homepageFeatures.includes(SiteFeature.PRODUCTS) && (
-                <Link href="/products">
-                  <Button size="lg" variant="outline" className="bg-[var(--color-tertiary)] text-[var(--color-secondary)] hover:bg-[var(--color-tertiary-light)] group border-[var(--color-tertiary)]">
-                    Browse Products
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-              )}
+              <Link href={primaryCTA.href}>
+                <Button size="lg" variant="outline" className="bg-[var(--color-tertiary)] text-[var(--color-secondary)] hover:bg-[var(--color-tertiary-light)] group border-[var(--color-tertiary)]">
+                  {primaryCTA.text}
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Link href="/contact">
                 <Button size="lg" variant="outline" className="border-[var(--color-tertiary)] text-[var(--color-secondary)] hover:bg-[var(--color-tertiary)] hover:text-[var(--color-secondary-light)]">
                   Get in Touch
