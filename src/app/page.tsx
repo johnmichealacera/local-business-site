@@ -151,7 +151,7 @@ async function FeaturedEvents() {
             <CalendarDays className="h-8 w-8 mr-3" style={{ color: 'var(--color-primary)' }} />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-secondary)' }}>
-            Upcoming Events
+            Events
           </h2>
           <p className="max-w-2xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
             Join us for exciting events, workshops, and community gatherings. Don&apos;t miss out!

@@ -6,9 +6,8 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Calendar, MapPin, Eye, Clock, Users, PhilippinePeso, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Calendar, MapPin, Eye, Clock, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Event } from '@/types/event'
-import { formatPrice } from '@/lib/utils'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
 
 interface EventCardProps {
@@ -22,7 +21,6 @@ export function EventCard({ event, priority = false }: EventCardProps) {
   const images = event.imageUrls.length > 0 ? event.imageUrls : ['/placeholder-event.jpg']
 
   const isUpcoming = new Date(event.startDate) > new Date()
-  const isFree = event.price === 0
   const eventDate = new Date(event.startDate)
   const eventEndDate = event.endDate ? new Date(event.endDate) : null
 
@@ -142,11 +140,6 @@ export function EventCard({ event, priority = false }: EventCardProps) {
               Featured
             </Badge>
           )}
-          {isFree && (
-            <Badge variant="secondary" className="animate-fade-in">
-              Free
-            </Badge>
-          )}
           {!isUpcoming && (
             <Badge variant="outline" className="animate-fade-in">
               Past Event
@@ -202,22 +195,6 @@ export function EventCard({ event, priority = false }: EventCardProps) {
               <span className="line-clamp-1">{event.location}</span>
             </div>
           )}
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <PhilippinePeso className="h-4 w-4 text-slate-600" />
-              <span className="text-lg font-bold text-slate-900">
-                {isFree ? 'Free' : formatPrice(event.price)}
-              </span>
-            </div>
-            
-            {event.maxAttendees && (
-              <div className="flex items-center space-x-1 text-sm text-slate-500">
-                <Users className="h-4 w-4" />
-                <span>Max {event.maxAttendees}</span>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Tags */}

@@ -6,14 +6,12 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { formatPrice } from '@/lib/utils'
 import { Event } from '@/types/event'
 import { 
   Calendar, 
   MapPin, 
   Clock,
   Users,
-  PhilippinePeso,
   Share2, 
   Heart,
   Phone,
@@ -31,7 +29,6 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
   const isUpcoming = new Date(event.startDate) > new Date()
-  const isFree = event.price === 0
   const images = event.imageUrls.length > 0 ? event.imageUrls : ['/placeholder-event.jpg']
   const eventDate = new Date(event.startDate)
   const eventEndDate = event.endDate ? new Date(event.endDate) : null
@@ -129,9 +126,6 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
                 {event.isFeatured && (
                   <Badge variant="default">Featured</Badge>
                 )}
-                {isFree && (
-                  <Badge variant="secondary">Free</Badge>
-                )}
                 {!isUpcoming && (
                   <Badge variant="outline">Past Event</Badge>
                 )}
@@ -151,9 +145,6 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
             </h1>
             
             <div className="flex items-center space-x-4 mb-6">
-              <span className="text-3xl font-bold text-slate-900">
-                {isFree ? 'Free' : formatPrice(event.price)}
-              </span>
               <div className={`w-3 h-3 rounded-full ${isUpcoming ? 'bg-green-500' : 'bg-slate-400'}`} />
               <span className={`text-sm font-medium ${isUpcoming ? 'text-green-600' : 'text-slate-600'}`}>
                 {isUpcoming ? 'Upcoming' : 'Past Event'}
@@ -231,11 +222,6 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
                       Secure your spot at this event
                     </p>
                   </div>
-                  
-                  <Button className="w-full" size="lg">
-                    <PhilippinePeso className="w-5 h-5 mr-2" />
-                    {isFree ? 'Register Now' : `Register - ${formatPrice(event.price)}`}
-                  </Button>
                 </div>
               </CardContent>
             </Card>
