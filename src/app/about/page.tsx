@@ -1,20 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getSiteInfo } from "@/lib/site";
 import { parseColorPalette, generateDynamicGradientStyle } from "@/lib/colors";
 import { 
   Leaf, 
-  Shield, 
-  Heart, 
-  Users
+  Globe, 
+  Heart,
 } from "lucide-react";
+import { getAboutInfo } from "@/lib/about";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export default async function AboutPage() {
   const siteInfo = await getSiteInfo();
+  const aboutInfo = await getAboutInfo()
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF']);
 
   return (
@@ -37,11 +38,10 @@ export default async function AboutPage() {
             About Our Story
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: colorPalette.secondary }}>
-            Sustainable Fashion for Everyone
+          {aboutInfo?.title || 'About Our Story'}
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-            We believe that great style shouldn&apos;t come at the cost of our planet. 
-            Our mission is to make sustainable fashion accessible, affordable, and absolutely beautiful.
+            {aboutInfo?.content || 'We believe that great style shouldn&apos;t come at the cost of our planet. Our mission is to make sustainable fashion accessible, affordable, and absolutely beautiful.'}
           </p>
           <Button 
             size="lg" 
@@ -51,24 +51,26 @@ export default async function AboutPage() {
               borderColor: colorPalette.secondary
             }}
           >
-            Join Our Mission
+            Get in Touch
           </Button>
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* Mission, Vision, Values */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
-              Our Mission
+            What Drives Us
             </h2>
             <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-              We&apos;re committed to creating a more sustainable future through fashion
+            Our mission, vision, and values guide everything we do, from the products we curate 
+            to the relationships we build with our community.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Mission */}
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
@@ -80,15 +82,16 @@ export default async function AboutPage() {
                 >
                   <Leaf className="w-8 h-8" />
                 </div>
-                <CardTitle style={{ color: colorPalette.secondary }}>Environmental Impact</CardTitle>
+                <CardTitle style={{ color: colorPalette.secondary }}>Our Mission</CardTitle>
               </CardHeader>
               <CardContent>
                 <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  Every purchase helps reduce textile waste and supports circular fashion economy.
+                  {aboutInfo?.mission}
                 </p>
               </CardContent>
             </Card>
             
+            {/* Vision */}
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
@@ -98,14 +101,14 @@ export default async function AboutPage() {
                     color: colorPalette.primary
                   }}
                 >
-                  <Shield className="w-8 h-8" />
+                  <Globe className="w-8 h-8" />
                 </div>
-                <CardTitle style={{ color: colorPalette.secondary }}>Quality Assurance</CardTitle>
+                <CardTitle style={{ color: colorPalette.secondary }}>Our Vision</CardTitle>
               </CardHeader>
               <CardContent>
-                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  Each item is carefully inspected and authenticated to ensure premium quality.
-                </p>
+                <CardDescription className="text-base">
+                  {aboutInfo?.vision}
+                </CardDescription>
               </CardContent>
             </Card>
             
@@ -123,9 +126,11 @@ export default async function AboutPage() {
                 <CardTitle style={{ color: colorPalette.secondary }}>Community First</CardTitle>
               </CardHeader>
               <CardContent>
-                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  We build lasting relationships with our customers and support local communities.
-                </p>
+              <CardDescription className="text-base">
+                  {Array.isArray(aboutInfo?.values) ? aboutInfo?.values.join(', ') : aboutInfo?.values}. We believe 
+                  in building lasting relationships with our customers and 
+                  supporting ethical practices.
+                </CardDescription>
               </CardContent>
             </Card>
           </div>
@@ -133,7 +138,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section 
+      {/* <section 
         className="py-16 px-4 sm:px-6 lg:px-8"
         style={{
           backgroundColor: colorPalette.tertiary,
@@ -171,89 +176,12 @@ export default async function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Team Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
-              Meet Our Team
-            </h2>
-            <p className="max-w-2xl mx-auto" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-              Passionate individuals working together to revolutionize sustainable fashion
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div 
-                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
-                  style={{
-                    backgroundColor: colorPalette.primary + '20',
-                    color: colorPalette.primary
-                  }}
-                >
-                  <Users className="w-12 h-12" />
-                </div>
-                <CardTitle style={{ color: colorPalette.secondary }}>Sarah Johnson</CardTitle>
-                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Founder & CEO</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  Former fashion buyer with 10+ years experience in sustainable fashion and circular economy.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div 
-                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
-                  style={{
-                    backgroundColor: colorPalette.primary + '20',
-                    color: colorPalette.primary
-                  }}
-                >
-                  <Users className="w-12 h-12" />
-                </div>
-                <CardTitle style={{ color: colorPalette.secondary }}>Mike Chen</CardTitle>
-                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Head of Operations</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  Supply chain expert ensuring quality and authenticity in every piece we offer.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div 
-                  className="mx-auto w-24 h-24 rounded-full flex items-center justify-center mb-4"
-                  style={{
-                    backgroundColor: colorPalette.primary + '20',
-                    color: colorPalette.primary
-                  }}
-                >
-                  <Users className="w-12 h-12" />
-                </div>
-                <CardTitle style={{ color: colorPalette.secondary }}>Emma Davis</CardTitle>
-                <p className="text-sm font-medium" style={{ color: colorPalette.primary }}>Community Manager</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  Building connections with our community and spreading awareness about sustainable fashion.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
 
+      {/* Not sure if we need this section */}
       {/* CTA Section */}
-      <section 
+      {/* <section 
         className="py-20 px-4 sm:px-6 lg:px-8 text-center"
         style={generateDynamicGradientStyle('to-br', colorPalette, 0.1, 'light')}
       >
@@ -275,7 +203,7 @@ export default async function AboutPage() {
             Shop Now
           </Button>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 } 
