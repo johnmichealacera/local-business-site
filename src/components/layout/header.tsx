@@ -12,17 +12,16 @@ interface HeaderProps {
   siteName: string
   logoUrl?: string
   features: SiteFeature[]
+  featuresOrder: SiteFeature[]
 }
 
-export function Header({ siteName, logoUrl, features }: HeaderProps) {
+export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   
   // Get navigation links based on site features
-  const navigationLinks = getNavigationLinks(features)
-
-  console.log('navigationLinks', navigationLinks)
+  const navigationLinks = getNavigationLinks(features, featuresOrder)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md shadow-sm">

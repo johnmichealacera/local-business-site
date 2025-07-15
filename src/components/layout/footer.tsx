@@ -10,22 +10,23 @@ interface FooterProps {
   logoUrl?: string
   contactInfo: ContactInfo | null
   features: SiteFeature[]
+  featuresOrder: SiteFeature[]
 }
 
-export function Footer({ siteName, logoUrl, contactInfo, features }: FooterProps) {
+export function Footer({ siteName, logoUrl, contactInfo, features, featuresOrder }: FooterProps) {
   // Use database contact info or fallback to defaults
   const contact = {
     businessName: contactInfo?.businessName || siteName,
-    email: contactInfo?.email || "hello@thriftedtreasures.com",
-    phone: contactInfo?.phone || "09123456789",
-    address: contactInfo?.address || "Bingkahan",
-    city: contactInfo?.city || "Manticao",
-    province: contactInfo?.province || "Misamis Oriental",
-    zipCode: contactInfo?.zipCode || "9000"
+    email: contactInfo?.email,
+    phone: contactInfo?.phone,
+    address: contactInfo?.address,
+    city: contactInfo?.city,
+    province: contactInfo?.province,
+    zipCode: contactInfo?.zipCode
   }
 
   // Get quick links based on site features
-  const quickLinks = getQuickLinks(features)
+  const quickLinks = getQuickLinks(features, featuresOrder)
   return (
     <footer className="bg-slate-50 border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">

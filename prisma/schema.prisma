@@ -25,6 +25,7 @@ model Site {
   // Site package and features
   packageType SitePackage @default(BASIC)
   features    SiteFeature[] @default([DASHBOARD])
+  featuresOrder SiteFeature[] @default([DASHBOARD]) // Custom order for navigation
   
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt

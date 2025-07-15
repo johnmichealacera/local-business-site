@@ -18,11 +18,11 @@ export async function MainLayout({ children }: MainLayoutProps) {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Header siteName={siteName} logoUrl={logoUrl} features={siteInfo?.features || []} />
+      <Header siteName={siteName} logoUrl={logoUrl} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
       <main className="flex-1">
         {children}
       </main>
-      <Footer siteName={siteName} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} />
+      <Footer siteName={siteName} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
     </div>
   )
 } 

@@ -62,7 +62,7 @@ function FeaturedEventsSkeleton() {
 
 export default async function HomePage() {
   const siteInfo = await getSiteInfo()
-  const siteName = siteInfo?.name || 'Thrifted Treasures'
+  const siteName = siteInfo?.name
   
   return (
     <div className="w-full">

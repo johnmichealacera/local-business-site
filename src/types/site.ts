@@ -8,6 +8,7 @@ export interface Site {
   isActive: boolean
   packageType: SitePackage
   features: SiteFeature[]
+  featuresOrder: SiteFeature[]
   createdAt: Date
   updatedAt: Date
 }

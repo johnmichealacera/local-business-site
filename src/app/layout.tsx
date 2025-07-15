@@ -16,11 +16,14 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const siteInfo = await getSiteInfo();
-  const siteName = siteInfo?.name || 'Thrifted Treasures';
+  const siteName = siteInfo?.name;
   
   return {
-    title: `${siteName} - Quality Pre-owned Shoes & Apparel`,
-    description: `Discover unique, sustainable fashion at ${siteName}. Shop our curated collection of pre-owned shoes and apparel.`,
+    title: `${siteName} - ${siteInfo?.description}`,
+    description: siteInfo?.description,
+    icons: {
+      icon: siteInfo?.logoUrl,
+    },
   };
 }
 

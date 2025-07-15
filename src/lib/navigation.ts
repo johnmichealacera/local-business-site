@@ -1,6 +1,6 @@
 import { SiteFeature, NavLink } from '@/types/site'
 
-export function getNavigationLinks(features: SiteFeature[]): NavLink[] {
+export function getNavigationLinks(features: SiteFeature[], featuresOrder: SiteFeature[]): NavLink[] {
   const featureMap: Record<SiteFeature, NavLink> = {
     [SiteFeature.DASHBOARD]: {
       name: 'Dashboard',
@@ -40,13 +40,13 @@ export function getNavigationLinks(features: SiteFeature[]): NavLink[] {
   }
 
   // Filter out DASHBOARD and return navigation links for enabled features
-  return features
+  return featuresOrder
     .filter(feature => feature !== SiteFeature.DASHBOARD)
     .map(feature => featureMap[feature])
     .filter(Boolean) // Remove any undefined entries
 }
 
-export function getQuickLinks(features: SiteFeature[]): NavLink[] {
+export function getQuickLinks(features: SiteFeature[], featuresOrder: SiteFeature[]): NavLink[] {
   // For footer quick links, we might want different ordering or selection
-  return getNavigationLinks(features)
+  return getNavigationLinks(features, featuresOrder)
 } 
