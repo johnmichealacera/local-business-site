@@ -137,7 +137,7 @@ export default async function EventServicesPage() {
                   className="text-4xl font-bold bg-clip-text text-transparent mb-2"
                   style={generateTextGradientStyle(colorPalette)}
                 >
-                  {categories.length}
+                  {categories?.length || 0}
                 </div>
                 <p className="font-medium" style={{ color: colorPalette.secondary }}>Service Categories</p>
               </div>
@@ -170,7 +170,7 @@ export default async function EventServicesPage() {
         </div>
 
         {/* Categories Section */}
-        {categories.length > 0 && (
+        {categories && categories.length > 0 && (
           <div className="mb-16">
             <div className="text-center mb-10">
               <h2 
@@ -184,7 +184,7 @@ export default async function EventServicesPage() {
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-4">
-              {categories.map((category, index) => (
+              {categories?.map((category, index) => (
                 <div 
                   key={category} 
                   className="group relative"

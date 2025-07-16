@@ -7,20 +7,24 @@ import { ProductFiltersComponent } from './product-filters'
 import { Button } from '@/components/ui/button'
 import { Product, ProductFilters } from '@/types/product'
 import { Grid, List } from 'lucide-react'
+import { Site } from '@/types/site'
 
 interface ProductsClientProps {
+  siteInfo: Site | null
   initialProducts: Product[]
   categories: { id: string; name: string }[]
   initialFilters: ProductFilters
 }
 
-export function ProductsClient({ initialProducts, categories, initialFilters }: ProductsClientProps) {
+export function ProductsClient({ siteInfo, initialProducts, categories, initialFilters }: ProductsClientProps) {
   const [products] = useState<Product[]>(initialProducts)
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts)
   const [filters, setFilters] = useState<ProductFilters>(initialFilters)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const router = useRouter()
   const searchParams = useSearchParams()
+  const productsFeature = siteInfo?.features.find(f => f.name === 'PRODUCTS')
+  const productsDescription = productsFeature?.description || "Discover our carefully curated collection of pre-owned shoes, clothing, and accessories. Each item is inspected for quality and authenticity."
 
   // Apply filters
   useEffect(() => {
@@ -113,8 +117,7 @@ export function ProductsClient({ initialProducts, categories, initialFilters }: 
           Our Products
         </h1>
         <p className="text-slate-600 max-w-2xl">
-          Discover our carefully curated collection of pre-owned shoes, clothing, and accessories. 
-          Each item is inspected for quality and authenticity.
+          {productsDescription}
         </p>
       </div>
 

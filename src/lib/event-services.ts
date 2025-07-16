@@ -114,7 +114,7 @@ export async function getFeaturedEventServices(): Promise<EventService[]> {
   }
 }
 
-export async function getEventServiceCategories(): Promise<string[]> {
+export async function getEventServiceCategories(): Promise<string[] | null> {
   console.log('🔄 Fetching event service categories from database...', new Date().toISOString())
   
   try {
@@ -129,7 +129,7 @@ export async function getEventServiceCategories(): Promise<string[]> {
       distinct: ['category']
     })
 
-    const categoryNames = categories.map(c => c.category)
+    const categoryNames = categories.map(c => c.category).filter((c): c is string => c !== null)
     console.log(`✅ Fetched ${categoryNames.length} event service categories from database`)
     return categoryNames
   } catch (error) {

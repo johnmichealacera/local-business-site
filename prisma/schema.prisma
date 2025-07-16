@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,22 +8,19 @@ datasource db {
 }
 
 model Site {
-  id          String     @id @default(cuid())
-  name        String
-  domain      String     @unique
-  subdomain   String?    @unique
-  description String?
-  logoUrl     String?    // Cloudinary URL for site logo
-  colorPalette String[]  @default(["#F59E0B", "#000000", "#FFFFFF"]) // [primary, secondary, tertiary]
-  isActive    Boolean    @default(true)
-  
-  // Site package and features
-  packageType SitePackage @default(BASIC)
-  features    SiteFeature[] @default([DASHBOARD])
-  featuresOrder SiteFeature[] @default([DASHBOARD]) // Custom order for navigation
-  
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id            String        @id @default(cuid())
+  name          String
+  domain        String        @unique
+  subdomain     String?       @unique
+  description   String?
+  logoUrl       String?
+  isActive      Boolean       @default(true)
+  packageType   SitePackage   @default(BASIC)
+  features      SiteFeature[]
+  featuresOrder FeatureName[]
+  colorPalette  String[]      @default(["#3B82F6", "#10B981", "#F59E0B"])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   about         About[]
   categories    Category[]
   contact       Contact[]
@@ -163,29 +154,39 @@ model Event {
 }
 
 model EventService {
-  id           String   @id @default(cuid())
-  name         String
-  description  String
-  basePrice    Float
-  category     String
-  duration     String
-  inclusions   String[]
-  addOns       Json     @default("[]")
-  freebies     String[]
-  tags         String[]
-  isActive     Boolean  @default(true)
-  isFeatured   Boolean  @default(false)
-  contactEmail String?
-  contactPhone String?
-  bookingUrl   String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  siteId       String
-  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  basePrice       Float?    @default(0)
+  isActive        Boolean   @default(true)
+  isFeatured      Boolean   @default(false)
+  category        String?   // e.g., "Wedding", "Corporate", "Birthday"
+  duration        String?   // e.g., "Full Day", "4 Hours", "Half Day"
+  
+  // Service inclusions
+  inclusions      String[]  @default([])
+  
+  // Add-ons with pricing
+  addOns          Json?     // JSON array of {name: string, price: number, description?: string}
+  
+  // Freebies
+  freebies        String[]  @default([])
+  
+  // Contact and booking info
+  contactEmail    String?
+  contactPhone    String?
+  bookingUrl      String?
+  
+  // SEO and tags
+  tags            String[]  @default([])
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  siteId          String
+  site            Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@map("event_services")
 }
-
 
 enum UserRole {
   SUPER_ADMIN
@@ -205,7 +206,18 @@ enum SitePackage {
   ENTERPRISE
 }
 
-enum SiteFeature {
+//enum SiteFeature {
+//  DASHBOARD
+//  PRODUCTS
+//  CATEGORIES
+//  EVENTS
+//  EVENT_SERVICES
+//  ABOUT
+//  CONTACT
+//}
+
+// 1. Add a new enum for feature names (for type safety)
+enum FeatureName {
   DASHBOARD
   PRODUCTS
   CATEGORIES
@@ -215,3 +227,12 @@ enum SiteFeature {
   CONTACT
 }
 
+// 2. Add the new SiteFeature model
+model SiteFeature {
+  id          String      @id @default(cuid())
+  site        Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  siteId      String
+  name        FeatureName
+  description String?
+  @@unique([siteId, name])
+}

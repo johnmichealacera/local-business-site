@@ -29,11 +29,11 @@ export async function MainLayout({ children }: MainLayoutProps) {
   return (
     <ColorProvider colorPalette={colorPalette}>
       <div className="min-h-screen flex flex-col" style={backgroundStyle}>
-        <Header siteName={siteName} logoUrl={logoUrl} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
+        <Header siteName={siteName} logoUrl={logoUrl} features={siteInfo?.features.map(f => f.name) || []} featuresOrder={siteInfo?.featuresOrder || []} />
         <main className="flex-1">
           {children}
         </main>
-        <Footer siteName={siteName} siteDescription={siteDescription} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features || []} featuresOrder={siteInfo?.featuresOrder || []} />
+        <Footer siteName={siteName} siteDescription={siteDescription} logoUrl={logoUrl} contactInfo={contactInfo} features={siteInfo?.features.map(f => f.name) || []} featuresOrder={siteInfo?.featuresOrder || []} />
       </div>
     </ColorProvider>
   )

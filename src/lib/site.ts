@@ -13,7 +13,22 @@ export async function getSiteInfo(): Promise<Site | null> {
 
   try {
     const site = await prisma.site.findUnique({
-      where: { id: siteId }
+      where: { id: siteId },
+      select: {
+        id: true,
+        name: true,
+        domain: true,
+        subdomain: true,
+        logoUrl: true,
+        description: true,
+        isActive: true,
+        features: { select: { siteId: true, name: true, description: true } },
+        featuresOrder: true,
+        colorPalette: true,
+        packageType: true,
+        updatedAt: true,
+        createdAt: true
+      }
     })
 
     console.log('site', site);

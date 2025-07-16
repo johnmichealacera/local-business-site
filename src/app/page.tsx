@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, Shield, Leaf, Heart, TrendingUp, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ArrowRight, Leaf, Heart, TrendingUp, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { getProducts, getCategories } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
@@ -12,6 +12,7 @@ import { getSiteInfo } from '@/lib/site'
 import { Suspense } from 'react'
 import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
+import { getAboutInfo } from '@/lib/about'
 
 // Force dynamic rendering for fresh product data on homepage
 export const dynamic = 'force-dynamic'
@@ -286,6 +287,7 @@ function FeaturedEventServicesSkeleton() {
 
 export default async function HomePage() {
   const siteInfo = await getSiteInfo()
+  const aboutInfo = await getAboutInfo()
   const siteName = siteInfo?.name
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF'])
   const features = siteInfo?.features || []
@@ -293,7 +295,7 @@ export default async function HomePage() {
   
   // Filter features that should appear on homepage based on featuresOrder and enabled features
   const homepageFeatures = featuresOrder.filter(feature => 
-    features.includes(feature) && 
+    features.some(f => f.name === feature) && 
     [SiteFeature.PRODUCTS, SiteFeature.CATEGORIES, SiteFeature.EVENTS, SiteFeature.EVENT_SERVICES].includes(feature)
   )
 
@@ -465,71 +467,68 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card hover variant="elevated" className="text-center animate-slide-in-left">
+            {/* Mission */}
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
-                  className="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-4"
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
                   style={{
                     backgroundColor: colorPalette.primary + '20',
                     color: colorPalette.primary
                   }}
                 >
-                  <Leaf className="h-6 w-6" />
+                  <Leaf className="w-8 h-8" />
                 </div>
-                <CardTitle>
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'Sustainable Fashion' : 'Eco-Conscious'}
-                </CardTitle>
-                <CardDescription>
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
-                    ? 'Every purchase extends the lifecycle of clothing and reduces environmental impact.'
-                    : 'We care about our environment and make choices that support sustainability.'
-                  }
-                </CardDescription>
+                <CardTitle style={{ color: colorPalette.secondary }}>Our Mission</CardTitle>
               </CardHeader>
+              <CardContent>
+                <p style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                  {aboutInfo?.mission}
+                </p>
+              </CardContent>
             </Card>
-
-            <Card hover variant="elevated" className="text-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            
+            {/* Vision */}
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
-                  className="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-4"
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
                   style={{
                     backgroundColor: colorPalette.primary + '20',
                     color: colorPalette.primary
                   }}
                 >
-                  <Shield className="h-6 w-6" />
+                  <Globe className="w-8 h-8" />
                 </div>
-                <CardTitle>Quality Guaranteed</CardTitle>
-                <CardDescription>
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
-                    ? 'Each item is carefully inspected and authenticated by our fashion experts.'
-                    : 'Everything we offer is carefully curated and meets our high standards.'
-                  }
-                </CardDescription>
+                <CardTitle style={{ color: colorPalette.secondary }}>Our Vision</CardTitle>
               </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">
+                  {aboutInfo?.vision}
+                </CardDescription>
+              </CardContent>
             </Card>
-
-            <Card hover variant="elevated" className="text-center animate-slide-in-right" style={{ animationDelay: '0.4s' }}>
+            
+            <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
-                  className="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-4"
+                  className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
                   style={{
                     backgroundColor: colorPalette.primary + '20',
                     color: colorPalette.primary
                   }}
                 >
-                  <Heart className="h-6 w-6" />
+                  <Heart className="w-8 h-8" />
                 </div>
-                <CardTitle>
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'Unique Finds' : 'Personalized Experience'}
-                </CardTitle>
-                <CardDescription>
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) 
-                    ? 'Discover one-of-a-kind pieces that express your individual style.'
-                    : 'We provide personalized experiences tailored to your preferences and needs.'
-                  }
-                </CardDescription>
+                <CardTitle style={{ color: colorPalette.secondary }}>Community First</CardTitle>
               </CardHeader>
+              <CardContent>
+              <CardDescription className="text-base">
+                  {Array.isArray(aboutInfo?.values) ? aboutInfo?.values.join(', ') : aboutInfo?.values}. We believe 
+                  in building lasting relationships with our customers and 
+                  supporting ethical practices.
+                </CardDescription>
+              </CardContent>
             </Card>
           </div>
         </div>

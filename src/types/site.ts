@@ -8,11 +8,20 @@ export interface Site {
   colorPalette: string[] // [primary, secondary, tertiary]
   isActive: boolean
   packageType: SitePackage
-  features: SiteFeature[]
+  features: SiteFeatureData[]
   featuresOrder: SiteFeature[]
   createdAt: Date
   updatedAt: Date
 }
+
+export interface SiteFeatureData {
+  siteId: string;
+  name: FeatureName;
+  description: string;
+}
+
+// Temporary alias for feature name type
+export type FeatureName = SiteFeature; 
 
 export interface NavLink {
   name: string

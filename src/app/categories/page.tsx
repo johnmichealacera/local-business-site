@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { getSiteInfo } from '@/lib/site'
 import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
+import { SiteFeature } from '@/types/site'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -27,8 +28,7 @@ export default async function CategoriesPage() {
             Shop by Category
           </h1>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-            Explore our curated collection of pre-owned fashion organized by category. 
-            Find exactly what you&apos;re looking for in our sustainable fashion marketplace.
+            {siteInfo?.features.find(feature => feature.name === SiteFeature.CATEGORIES)?.description}
           </p>
         </div>
 

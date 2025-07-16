@@ -3,6 +3,7 @@ import { ProductsClient } from '@/components/products/products-client'
 import { getProducts, getCategories } from '@/lib/products'
 import { ProductFilters } from '@/types/product'
 import { Loader2 } from 'lucide-react'
+import { getSiteInfo } from '@/lib/site'
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
 export const dynamic = 'force-dynamic'
@@ -34,14 +35,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   }
 
   // Fetch data from database
-  const [products, categories] = await Promise.all([
+  const [products, categories, siteInfo] = await Promise.all([
     getProducts(filters),
-    getCategories()
+    getCategories(),
+    getSiteInfo()
   ]);
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <ProductsClient 
+        siteInfo={siteInfo}
         initialProducts={products} 
         categories={categories} 
         initialFilters={filters}
