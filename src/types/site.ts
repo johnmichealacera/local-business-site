@@ -10,6 +10,13 @@ export interface Site {
   packageType: SitePackage
   features: SiteFeatureData[]
   featuresOrder: SiteFeature[]
+  heroTitle?: string
+  heroSubtitle?: string
+  heroDescription?: string
+  heroImageUrl?: string
+  heroVideoUrl?: string
+  heroCTAButton?: string
+  heroCTALink?: string
   createdAt: Date
   updatedAt: Date
 }

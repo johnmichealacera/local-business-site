@@ -19,6 +19,13 @@ model Site {
   features      SiteFeature[]
   featuresOrder FeatureName[]
   colorPalette  String[]      @default(["#3B82F6", "#10B981", "#F59E0B"])
+  heroTitle     String?
+  heroSubtitle  String?
+  heroDescription String?
+  heroImageUrl  String?
+  heroVideoUrl  String?
+  heroCTAButton String?
+  heroCTALink   String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   about         About[]

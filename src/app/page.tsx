@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, Leaf, Heart, TrendingUp, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase, Globe } from 'lucide-react'
+import { ArrowRight, Leaf, Heart, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { getProducts, getCategories } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
@@ -10,9 +10,10 @@ import { getFeaturedEventServices } from '@/lib/event-services'
 import { EventServiceCard } from '@/components/event-services/event-service-card'
 import { getSiteInfo } from '@/lib/site'
 import { Suspense } from 'react'
-import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
+import { parseColorPalette } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
 import { getAboutInfo } from '@/lib/about'
+import { Hero } from '@/components/hero/hero'
 
 // Force dynamic rendering for fresh product data on homepage
 export const dynamic = 'force-dynamic'
@@ -299,42 +300,7 @@ export default async function HomePage() {
     [SiteFeature.PRODUCTS, SiteFeature.CATEGORIES, SiteFeature.EVENTS, SiteFeature.EVENT_SERVICES].includes(feature)
   )
 
-  // Generate dynamic hero content based on available features
-  const generateHeroContent = () => {
-    const hasProducts = homepageFeatures.includes(SiteFeature.PRODUCTS)
-    const hasEvents = homepageFeatures.includes(SiteFeature.EVENTS)
-    const hasEventServices = homepageFeatures.includes(SiteFeature.EVENT_SERVICES)
-  
-    let subtitle = "Curated experiences for everyone."
-    let description = "Discover products, events, and services that add value to your life."
-  
-    if (hasProducts && hasEvents && hasEventServices) {
-      subtitle = "Products, Events & Services"
-      description = "Browse unique products, view exciting events, and book trusted services — all in one place."
-    } else if (hasProducts && hasEvents) {
-      subtitle = "Products & Events"
-      description = "Explore curated products and connect through local events. Everything you need in your community."
-    } else if (hasProducts && hasEventServices) {
-      subtitle = "Products & Services"
-      description = "Discover curated products and book reliable services for any need — simple and convenient."
-    } else if (hasProducts) {
-      subtitle = "Curated Products"
-      description = "Shop unique products carefully chosen for you. Quality goods at your fingertips."
-    } else if (hasEvents && hasEventServices) {
-      subtitle = "Events & Services"
-      description = "View local events and book services you can trust. Connect, celebrate, and make it happen."
-    } else if (hasEvents) {
-      subtitle = "Community Events"
-      description = "View exciting events and workshops in your area. Connect with people and create memories."
-    } else if (hasEventServices) {
-      subtitle = "Trusted Services"
-      description = "Book professional services for every occasion. Quality, reliability, and convenience."
-    }
-  
-    return { subtitle, description }
-  }  
 
-  const { subtitle, description } = generateHeroContent()
 
   // Render feature sections based on featuresOrder
   const renderFeatureSection = (feature: SiteFeature) => {
@@ -390,69 +356,7 @@ export default async function HomePage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section 
-        className="relative min-h-[600px] flex items-center justify-center overflow-hidden"
-        style={generateDynamicGradientStyle('to-br', colorPalette, 0.1, 'light')}
-      >
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div 
-            className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-30 animate-float"
-            style={generateDynamicGradientStyle('to-br', colorPalette, 0.3, 'light')}
-          ></div>
-          <div 
-            className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-30 animate-float"
-            style={{ 
-              animationDelay: '1s',
-              ...generateDynamicGradientStyle('to-br', colorPalette, 0.3, 'light')
-            }}
-          ></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="animate-fade-in">
-              <div className="mb-4 animate-bounce-in">
-                <div 
-                  className="inline-flex items-center rounded-full border-transparent px-2.5 py-0.5 text-xs font-semibold"
-                  style={{
-                    backgroundColor: colorPalette.primary + '20',
-                    color: colorPalette.primary
-                  }}
-                >
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  {homepageFeatures.includes(SiteFeature.PRODUCTS) ? 'New Arrivals Weekly' : 'Always Something New'}
-                </div>
-              </div>
-              
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up" style={{ color: colorPalette.secondary }}>
-                Discover Your Next
-                <span className="text-gradient block mt-2">
-                  {subtitle}
-                </span>
-              </h1>
-              
-              <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s', color: colorPalette.secondary, opacity: 0.8 }}>
-                {description}
-              </p>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                <Link href={primaryCTA.href}>
-                  <Button size="lg" className="btn-primary group">
-                    {primaryCTA.text}
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link href="/about">
-                  <Button size="lg" variant="outline" className="btn-secondary">
-                    Our Story
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero siteInfo={siteInfo} defaultCTA={primaryCTA} />
 
       {/* Features Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
