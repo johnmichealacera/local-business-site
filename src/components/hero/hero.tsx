@@ -22,14 +22,14 @@ export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/abo
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#3B82F6', '#10B981', '#F59E0B'])
   
   // Hero content with fallbacks
-  const heroTitle = siteInfo?.heroTitle || `Welcome to ${siteInfo?.name || 'Our Platform'}`
-  const heroSubtitle = siteInfo?.heroSubtitle || "Experience Excellence"
-  const heroDescription = siteInfo?.heroDescription || 
+  const heroTitle = siteInfo?.hero?.title || `Welcome to ${siteInfo?.name || 'Our Platform'}`
+  const heroSubtitle = siteInfo?.hero?.subtitle || "Experience Excellence"
+  const heroDescription = siteInfo?.hero?.description || 
     "Discover amazing products, services, and experiences that make a difference in your life."
-  const heroCTAButton = siteInfo?.heroCTAButton || defaultCTA.text
-  const heroCTALink = siteInfo?.heroCTALink || defaultCTA.href
-  const heroImageUrl = siteInfo?.heroImageUrl
-  const heroVideoUrl = siteInfo?.heroVideoUrl
+  const heroCTAButton = siteInfo?.hero?.ctaButton || defaultCTA.text
+  const heroCTALink = siteInfo?.hero?.ctaLink || defaultCTA.href
+  const heroImageUrl = siteInfo?.hero?.imageUrl
+  const heroVideoUrl = siteInfo?.hero?.videoUrl
 
   // Determine background media
   const hasVideo = heroVideoUrl && !videoError

@@ -26,13 +26,18 @@ export async function getSiteInfo(): Promise<Site | null> {
         featuresOrder: true,
         colorPalette: true,
         packageType: true,
-        heroTitle: true,
-        heroSubtitle: true,
-        heroDescription: true,
-        heroImageUrl: true,
-        heroVideoUrl: true,
-        heroCTAButton: true,
-        heroCTALink: true,
+        hero: {
+          select: {
+            id: true,
+            title: true,
+            subtitle: true,
+            description: true,
+            imageUrl: true,
+            videoUrl: true,
+            ctaButton: true,
+            ctaLink: true
+          }
+        },
         updatedAt: true,
         createdAt: true
       }

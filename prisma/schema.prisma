@@ -8,33 +8,27 @@ datasource db {
 }
 
 model Site {
-  id            String        @id @default(cuid())
-  name          String
-  domain        String        @unique
-  subdomain     String?       @unique
-  description   String?
-  logoUrl       String?
-  isActive      Boolean       @default(true)
-  packageType   SitePackage   @default(BASIC)
-  features      SiteFeature[]
-  featuresOrder FeatureName[]
-  colorPalette  String[]      @default(["#3B82F6", "#10B981", "#F59E0B"])
-  heroTitle     String?
-  heroSubtitle  String?
-  heroDescription String?
-  heroImageUrl  String?
-  heroVideoUrl  String?
-  heroCTAButton String?
-  heroCTALink   String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  about         About[]
-  categories    Category[]
-  contact       Contact[]
-  events        Event[]
-  eventServices EventService[]
-  products      Product[]
-  users         UserSite[]
+  id              String         @id @default(cuid())
+  name            String
+  domain          String         @unique
+  subdomain       String?        @unique
+  description     String?
+  logoUrl         String?
+  isActive        Boolean        @default(true)
+  packageType     SitePackage    @default(BASIC)
+  featuresOrder   FeatureName[]
+  colorPalette    String[]       @default(["#3B82F6", "#10B981", "#F59E0B"])
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  features        SiteFeature[]
+  hero            Hero?
+  about           About[]
+  categories      Category[]
+  contact         Contact[]
+  eventServices   EventService[]
+  events          Event[]
+  products        Product[]
+  users           UserSite[]
 
   @@map("sites")
 }
@@ -131,6 +125,23 @@ model Contact {
   @@map("contact")
 }
 
+model Hero {
+  id          String   @id @default(cuid())
+  title       String?
+  subtitle    String?
+  description String?
+  imageUrl    String?
+  videoUrl    String?
+  ctaButton   String?
+  ctaLink     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  siteId      String   @unique
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@map("heroes")
+}
+
 model Event {
   id           String    @id @default(cuid())
   title        String
@@ -161,38 +172,37 @@ model Event {
 }
 
 model EventService {
-  id              String    @id @default(cuid())
-  name            String
-  description     String?
-  basePrice       Float?    @default(0)
-  isActive        Boolean   @default(true)
-  isFeatured      Boolean   @default(false)
-  category        String?   // e.g., "Wedding", "Corporate", "Birthday"
-  duration        String?   // e.g., "Full Day", "4 Hours", "Half Day"
-  
-  // Service inclusions
-  inclusions      String[]  @default([])
-  
-  // Add-ons with pricing
-  addOns          Json?     // JSON array of {name: string, price: number, description?: string}
-  
-  // Freebies
-  freebies        String[]  @default([])
-  
-  // Contact and booking info
-  contactEmail    String?
-  contactPhone    String?
-  bookingUrl      String?
-  
-  // SEO and tags
-  tags            String[]  @default([])
-  
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  siteId          String
-  site            Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  basePrice    Float?   @default(0)
+  isActive     Boolean  @default(true)
+  isFeatured   Boolean  @default(false)
+  category     String?
+  duration     String?
+  inclusions   String[] @default([])
+  addOns       Json?
+  freebies     String[] @default([])
+  contactEmail String?
+  contactPhone String?
+  bookingUrl   String?
+  tags         String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@map("event_services")
+}
+
+model SiteFeature {
+  id          String      @id @default(cuid())
+  siteId      String
+  name        FeatureName
+  description String?
+  site        Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, name])
 }
 
 enum UserRole {
@@ -213,33 +223,13 @@ enum SitePackage {
   ENTERPRISE
 }
 
-//enum SiteFeature {
-//  DASHBOARD
-//  PRODUCTS
-//  CATEGORIES
-//  EVENTS
-//  EVENT_SERVICES
-//  ABOUT
-//  CONTACT
-//}
-
-// 1. Add a new enum for feature names (for type safety)
 enum FeatureName {
   DASHBOARD
+  HERO
   PRODUCTS
   CATEGORIES
   EVENTS
   EVENT_SERVICES
   ABOUT
   CONTACT
-}
-
-// 2. Add the new SiteFeature model
-model SiteFeature {
-  id          String      @id @default(cuid())
-  site        Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  siteId      String
-  name        FeatureName
-  description String?
-  @@unique([siteId, name])
 }
