@@ -131,7 +131,7 @@ export default async function EventServicesPage() {
                 </div>
                 
                 <BookingButton 
-                  zcalUrl="https://zcal.co/md-events-services"
+                  zcalUrl="/book"
                   colorPalette={siteInfo?.colorPalette}
                   variant="primary"
                   size="lg"
@@ -440,7 +440,7 @@ export default async function EventServicesPage() {
               
               <div className="space-y-6">
                 <BookingButton 
-                  zcalUrl="https://zcal.co/md-events-services"
+                  zcalUrl="/book"
                   colorPalette={siteInfo?.colorPalette}
                   variant="primary"
                   size="lg"

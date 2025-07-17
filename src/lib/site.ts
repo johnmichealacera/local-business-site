@@ -22,7 +22,7 @@ export async function getSiteInfo(): Promise<Site | null> {
         logoUrl: true,
         description: true,
         isActive: true,
-        features: { select: { siteId: true, name: true, description: true } },
+        features: { select: { siteId: true, name: true, description: true, zcalEnabled: true, zcalLink: true } },
         featuresOrder: true,
         colorPalette: true,
         packageType: true,

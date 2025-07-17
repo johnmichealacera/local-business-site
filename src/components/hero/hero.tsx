@@ -146,7 +146,7 @@ export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/abo
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
               {showBookingButton && zcalUrl ? (
                 <BookingButton 
-                  zcalUrl={zcalUrl}
+                  zcalUrl="/book"
                   colorPalette={siteInfo?.colorPalette}
                   variant={hasVideo || hasImage ? "outline" : "primary"}
                   size="lg"

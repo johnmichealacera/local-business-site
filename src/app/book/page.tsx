@@ -2,6 +2,7 @@ import { getSiteInfo } from '@/lib/site'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar, Clock, Sparkles, CheckCircle, Star, Crown, Heart } from 'lucide-react'
 import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
+import { SiteFeature } from '@/types/site'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -10,6 +11,7 @@ export default async function BookingPage() {
   const siteInfo = await getSiteInfo()
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#3B82F6', '#10B981', '#F59E0B'])
   const siteName = siteInfo?.name || 'MD Events & Services'
+  const zcalUrl = siteInfo?.features.find(f => f.name === SiteFeature.EVENT_SERVICES)?.zcalLink
 
   return (
     <div 
@@ -132,7 +134,7 @@ export default async function BookingPage() {
                 {/* Zcal Embed */}
                 <div className="w-full h-[600px] rounded-b-lg overflow-hidden">
                   <iframe
-                    src="https://zcal.co/md-events-services/book"
+                    src={zcalUrl}
                     width="100%"
                     height="100%"
                     frameBorder="0"

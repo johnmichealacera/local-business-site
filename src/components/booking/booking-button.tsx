@@ -27,7 +27,7 @@ export function BookingButton({
 
   const handleBookingClick = () => {
     // Open Zcal link in a new tab
-    window.open(zcalUrl, '_blank', 'noopener,noreferrer')
+    window.open(zcalUrl)
   }
 
   const getButtonStyles = () => {

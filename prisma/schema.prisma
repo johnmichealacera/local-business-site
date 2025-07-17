@@ -8,27 +8,27 @@ datasource db {
 }
 
 model Site {
-  id              String         @id @default(cuid())
-  name            String
-  domain          String         @unique
-  subdomain       String?        @unique
-  description     String?
-  logoUrl         String?
-  isActive        Boolean        @default(true)
-  packageType     SitePackage    @default(BASIC)
-  featuresOrder   FeatureName[]
-  colorPalette    String[]       @default(["#3B82F6", "#10B981", "#F59E0B"])
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  features        SiteFeature[]
-  hero            Hero?
-  about           About[]
-  categories      Category[]
-  contact         Contact[]
-  eventServices   EventService[]
-  events          Event[]
-  products        Product[]
-  users           UserSite[]
+  id            String         @id @default(cuid())
+  name          String
+  domain        String         @unique
+  subdomain     String?        @unique
+  description   String?
+  logoUrl       String?
+  isActive      Boolean        @default(true)
+  packageType   SitePackage    @default(BASIC)
+  featuresOrder FeatureName[]
+  colorPalette  String[]       @default(["#3B82F6", "#10B981", "#F59E0B"])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  features      SiteFeature[]
+  about         About[]
+  categories    Category[]
+  contact       Contact[]
+  eventServices EventService[]
+  events        Event[]
+  hero          Hero?
+  products      Product[]
+  users         UserSite[]
 
   @@map("sites")
 }
@@ -200,6 +200,8 @@ model SiteFeature {
   siteId      String
   name        FeatureName
   description String?
+  zcalEnabled Boolean     @default(false)
+  zcalLink    String?
   site        Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, name])

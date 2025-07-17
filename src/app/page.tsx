@@ -355,7 +355,7 @@ export default async function HomePage() {
         siteInfo={siteInfo} 
         defaultCTA={primaryCTA}
         showBookingButton={siteInfo?.name?.includes('MD Events') || siteInfo?.name?.includes('Events')}
-        zcalUrl="https://zcal.co/md-events-services"
+        zcalUrl="/book"
       />
 
 {/* Removed the about section in homepage */}

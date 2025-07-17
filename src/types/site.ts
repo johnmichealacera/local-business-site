@@ -28,6 +28,8 @@ export interface SiteFeatureData {
   siteId: string;
   name: FeatureName;
   description: string;
+  zcalEnabled?: boolean;
+  zcalLink?: string;
 }
 
 // Temporary alias for feature name type
