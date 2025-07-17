@@ -356,7 +356,12 @@ export default async function HomePage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <Hero siteInfo={siteInfo} defaultCTA={primaryCTA} />
+      <Hero 
+        siteInfo={siteInfo} 
+        defaultCTA={primaryCTA}
+        showBookingButton={siteInfo?.name?.includes('MD Events') || siteInfo?.name?.includes('Events')}
+        zcalUrl="https://zcal.co/md-events-services"
+      />
 
       {/* Features Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

@@ -5,6 +5,7 @@ import { ArrowRight, Play } from 'lucide-react'
 import Link from 'next/link'
 import { Site } from '@/types/site'
 import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
+import { BookingButton } from '@/components/booking/booking-button'
 import { useState } from 'react'
 
 interface HeroProps {
@@ -13,9 +14,11 @@ interface HeroProps {
     text: string
     href: string
   }
+  showBookingButton?: boolean
+  zcalUrl?: string
 }
 
-export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/about" } }: HeroProps) {
+export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/about" }, showBookingButton = false, zcalUrl }: HeroProps) {
   const [videoError, setVideoError] = useState(false)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
 
@@ -141,15 +144,25 @@ export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/abo
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-              <Link href={heroCTALink}>
-                <Button 
-                  size="lg" 
-                  className={`group ${hasVideo || hasImage ? 'bg-white text-gray-900 hover:bg-gray-100' : 'btn-primary'}`}
-                >
-                  {heroCTAButton}
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+              {showBookingButton && zcalUrl ? (
+                <BookingButton 
+                  zcalUrl={zcalUrl}
+                  colorPalette={siteInfo?.colorPalette}
+                  variant={hasVideo || hasImage ? "outline" : "primary"}
+                  size="lg"
+                  className={hasVideo || hasImage ? 'border-white/50 text-white hover:bg-white/20 backdrop-blur-sm' : ''}
+                />
+              ) : (
+                <Link href={heroCTALink}>
+                  <Button 
+                    size="lg" 
+                    className={`group ${hasVideo || hasImage ? 'bg-white text-gray-900 hover:bg-gray-100' : 'btn-primary'}`}
+                  >
+                    {heroCTAButton}
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              )}
               
               {hasVideo && !isVideoPlaying && (
                 <Button 
@@ -163,7 +176,19 @@ export function Hero({ siteInfo, defaultCTA = { text: "Get Started", href: "/abo
                 </Button>
               )}
               
-              {!hasVideo && (
+              {!hasVideo && !showBookingButton && (
+                <Link href="/about">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className={hasVideo || hasImage ? 'border-white/50 text-white hover:bg-white/20 backdrop-blur-sm' : 'btn-secondary'}
+                  >
+                    Learn More
+                  </Button>
+                </Link>
+              )}
+              
+              {showBookingButton && zcalUrl && (
                 <Link href="/about">
                   <Button 
                     size="lg" 

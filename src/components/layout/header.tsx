@@ -61,6 +61,15 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
                 {link.name}
               </Link>
             ))}
+            {/* Show Book Now for Event Services sites */}
+            {features.includes('EVENT_SERVICES' as SiteFeature) && (
+              <Link 
+                href="/book" 
+                className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white px-4 py-2 rounded-full text-sm font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              >
+                Book Now
+              </Link>
+            )}
           </nav>
 
           {/* Not sure if we need this */}
@@ -117,6 +126,16 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
                   {link.name}
                 </Link>
               ))}
+              {/* Show Book Now for Event Services sites */}
+              {features.includes('EVENT_SERVICES' as SiteFeature) && (
+                <Link 
+                  href="/book" 
+                  className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 text-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Book Now
+                </Link>
+              )}
               {/* Not sure if we need this */}
               {/* <div className="flex items-center space-x-2 pt-4 border-t">
                 <Button variant="ghost" size="sm" className="hover-lift h-10 w-10 rounded-full hover:bg-slate-100">
