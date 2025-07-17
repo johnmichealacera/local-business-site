@@ -71,7 +71,7 @@ export function BookingButton({
   return (
     <div className="text-center space-y-3">
       {description && (
-        <p className="text-sm font-medium" style={{ color: colors.secondary, opacity: 0.8 }}>
+        <p className="text-sm font-medium" style={{ color: colors.tertiary, opacity: 0.8 }}>
           {description}
         </p>
       )}
@@ -79,13 +79,18 @@ export function BookingButton({
         onClick={handleBookingClick}
         size={size}
         className={`group transition-all duration-300 hover:scale-105 hover:shadow-lg relative overflow-hidden ${className}`}
-        style={getButtonStyles()}
+        style={{
+          border: '1px solid white',
+          color: 'white',
+          backgroundColor: 'transparent',
+          backdropFilter: 'blur(10px)',
+        }}
       >
         {/* Background animation effect */}
         <div 
           className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300"
           style={{
-            background: `linear-gradient(45deg, ${colors.primary}, ${colors.tertiary}, ${colors.primary})`
+            background: `linear-gradient(60deg, ${colors.primary}, ${colors.tertiary}, ${colors.secondary})`
           }}
         />
         
@@ -112,12 +117,12 @@ export function BookingButton({
         <div className="flex items-center justify-center space-x-4 text-xs" style={{ color: colors.secondary, opacity: 0.7 }}>
           <div className="flex items-center">
             <Clock className="h-3 w-3 mr-1" />
-            <span>Free Consultation</span>
+            <span style={{ color: colors.tertiary }}>Free Consultation</span>
           </div>
           <div className="w-1 h-1 rounded-full" style={{ backgroundColor: colors.primary }}></div>
           <div className="flex items-center">
             <Sparkles className="h-3 w-3 mr-1" />
-            <span>Instant Booking</span>
+            <span style={{ color: colors.tertiary }}>Instant Booking</span>
           </div>
         </div>
       )}

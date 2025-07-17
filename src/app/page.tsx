@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, Leaf, Heart, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase, Globe } from 'lucide-react'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ArrowRight, Calendar, ShoppingBag, Grid3X3, CalendarDays, Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import { getProducts, getCategories } from '@/lib/products'
 import { ProductCard, ProductCardSkeleton } from '@/components/products/product-card'
@@ -10,9 +10,7 @@ import { getFeaturedEventServices } from '@/lib/event-services'
 import { EventServiceCard } from '@/components/event-services/event-service-card'
 import { getSiteInfo } from '@/lib/site'
 import { Suspense } from 'react'
-import { parseColorPalette } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
-import { getAboutInfo } from '@/lib/about'
 import { Hero } from '@/components/hero/hero'
 
 // Force dynamic rendering for fresh product data on homepage
@@ -288,9 +286,6 @@ function FeaturedEventServicesSkeleton() {
 
 export default async function HomePage() {
   const siteInfo = await getSiteInfo()
-  const aboutInfo = await getAboutInfo()
-  const siteName = siteInfo?.name
-  const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#F59E0B', '#000000', '#FFFFFF'])
   const features = siteInfo?.features || []
   const featuresOrder = siteInfo?.featuresOrder || []
   
@@ -363,8 +358,9 @@ export default async function HomePage() {
         zcalUrl="https://zcal.co/md-events-services"
       />
 
+{/* Removed the about section in homepage */}
       {/* Features Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colorPalette.secondary }}>
@@ -376,7 +372,6 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Mission */}
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
@@ -397,7 +392,6 @@ export default async function HomePage() {
               </CardContent>
             </Card>
             
-            {/* Vision */}
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div 
@@ -441,7 +435,7 @@ export default async function HomePage() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Dynamic Feature Sections - Rendered in featuresOrder */}
       {homepageFeatures.map((feature) => renderFeatureSection(feature))}
