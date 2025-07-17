@@ -98,7 +98,7 @@ export function BookingButton({
           <Calendar className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
           
           <span className="font-semibold">
-            {size === 'lg' ? 'Schedule an Event' : 'Book Now'}
+            {size === 'lg' ? 'Let\'s Plan an Unforgettable Day' : 'Book Now'}
           </span>
           
           <Sparkles className="h-4 w-4 ml-2 group-hover:animate-spin transition-transform duration-300" />
