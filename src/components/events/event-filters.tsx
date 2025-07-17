@@ -96,7 +96,7 @@ export function EventFiltersComponent({ filters, onFiltersChange }: EventFilters
         </Card>
 
         {/* Price Range */}
-        <Card>
+        {/* <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm">Price Range</CardTitle>
           </CardHeader>
@@ -120,7 +120,7 @@ export function EventFiltersComponent({ filters, onFiltersChange }: EventFilters
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Date Range */}
         <Card>
