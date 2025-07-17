@@ -11,7 +11,6 @@ import {
   Facebook, 
   Instagram, 
   Twitter,
-  MessageCircle,
   Building,
   Globe
 } from "lucide-react";
@@ -293,8 +292,9 @@ export default async function ContactPage() {
         </div>
       </div>
 
+{/* Not needed for now */}
       {/* FAQ Section */}
-      <section 
+      {/* <section 
         className="py-16 px-4 sm:px-6 lg:px-8"
         style={{
           backgroundColor: colorPalette.tertiary,
@@ -374,7 +374,7 @@ export default async function ContactPage() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 } 
