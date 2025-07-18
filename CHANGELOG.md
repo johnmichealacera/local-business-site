@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-01-15
+
+### Added
+- **Hero Image Backgrounds**: Enhanced visual appeal with dynamic hero sections
+  - About page hero with gradient overlays and floating elements
+  - Event services page hero with improved text contrast
+  - Responsive design with proper mobile optimization
+- **Philippine Peso Integration**: Complete currency system overhaul
+  - Converted all USD references to Philippine Peso (₱)
+  - Updated price formatting function for ₱ symbol
+  - Enhanced price range UI with Philippine peso amounts
+  - Quick-select buttons with local currency values
+- **Product Detail Enhancements**:
+  - Web Share API integration with clipboard fallback
+  - Local pickup messaging replacing free shipping
+  - Improved "Back to Products" button with additional actions
+  - Commented out quantity selector and buy now (coming soon)
+- **Event Services Improvements**:
+  - Redesigned booking button with better contrast and badges
+  - Fixed zcalLink integration for custom consultation
+  - Optimized spacing and margins for modern look
+  - Enhanced accessibility and visual hierarchy
+
+### Changed
+- **Currency System**: Complete migration from USD to Philippine Peso
+- **Price Range Component**: Responsive design with currency symbols
+- **Product Detail Page**: Updated messaging and functionality
+- **Event Services Page**: Improved booking flow and visual design
+- **Text Contrast**: Enhanced readability across all hero sections
+
+### Technical Improvements
+- **Accessibility**: Better contrast ratios and text readability
+- **Responsive Design**: Mobile-optimized price inputs and buttons
+- **Performance**: Optimized image loading and hero sections
+- **User Experience**: Smoother interactions and better visual feedback
+
 ## [0.2.0] - 2025-01-14
 
 ### Added
@@ -91,10 +127,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
+- **v0.3.0**: UI/UX enhancements, Philippine Peso integration, hero images, accessibility improvements
 - **v0.2.0**: Multi-tenant architecture, dynamic branding, events carousel
 - **v0.1.0**: Initial platform with core e-commerce functionality
 
 ## Migration Notes
+
+### Upgrading to v0.3.0
+- Currency system now uses Philippine Peso (₱) instead of USD
+- Price formatting function updated to include ₱ symbol
+- Hero images added to About and Event Services pages
+- Product detail page messaging updated for local pickup
+- Enhanced accessibility with better text contrast
 
 ### Upgrading to v0.2.0
 - Environment variable `SITE_ID` is now required for multi-tenant support

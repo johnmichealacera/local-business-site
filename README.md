@@ -19,6 +19,10 @@ A modern, multi-tenant web application platform that dynamically adapts to serve
 - **Interactive Elements**: Enhanced buttons, cards, and navigation
 - **Loading States**: Skeleton loaders and spinners for better UX
 - **Accessible**: ARIA labels, keyboard navigation, and screen reader support
+- **Hero Image Backgrounds**: Dynamic hero sections with gradient overlays
+- **Philippine Peso Support**: Full currency integration with ₱ symbol
+- **Share Functionality**: Web Share API with clipboard fallback
+- **Enhanced Price Range UI**: Responsive inputs with quick-select buttons
 
 ### 🛒 **E-commerce & Event Management**
 - **Product Management**: Dynamic product catalog with database integration
@@ -26,6 +30,9 @@ A modern, multi-tenant web application platform that dynamically adapts to serve
 - **Event Services**: Service offerings and bookings
 - **Advanced Filtering**: Category, price range, search, and sorting
 - **Image Galleries**: Multiple image support with carousel functionality
+- **Local Pickup Messaging**: Philippine market-optimized shipping information
+- **Product Sharing**: Social media and clipboard sharing capabilities
+- **Enhanced Booking UI**: Improved contrast and accessibility for event services
 
 ### 🔧 **Tenant Configuration**
 - **Site Packages**: BASIC, STANDARD, PREMIUM, ENTERPRISE tiers
