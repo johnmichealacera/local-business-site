@@ -69,60 +69,75 @@ export function BookingButton({
   }
 
   return (
-    <div className="text-center space-y-3">
+    <div className="text-center space-y-4">
       {description && (
-        <p className="text-sm font-medium" style={{ color: colors.tertiary, opacity: 0.8 }}>
-          {description}
-        </p>
+        <div className="flex flex-wrap items-center justify-center gap-4 text-sm font-medium">
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Clock className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>Free consultation</span>
+          </div>
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Sparkles className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>Instant booking</span>
+          </div>
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Calendar className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>24/7 availability</span>
+          </div>
+        </div>
       )}
+      
       <Button
         onClick={handleBookingClick}
         size={size}
-        className={`group transition-all duration-300 hover:scale-105 hover:shadow-lg relative overflow-hidden ${className}`}
+        className={`group transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden font-semibold ${className}`}
         style={{
-          border: '1px solid white',
+          background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
           color: 'white',
-          backgroundColor: 'transparent',
-          backdropFilter: 'blur(10px)',
+          border: 'none',
+          boxShadow: `0 4px 15px ${colors.primary}30`
         }}
       >
         {/* Background animation effect */}
         <div 
-          className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+          className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-30 transition-opacity duration-300"
           style={{
-            background: `linear-gradient(60deg, ${colors.primary}, ${colors.tertiary}, ${colors.secondary})`
+            background: `linear-gradient(60deg, ${colors.tertiary}, ${colors.primary}, ${colors.secondary})`
           }}
         />
         
         <div className="relative flex items-center">
-          <Calendar className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+          <Calendar className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-300" />
           
-          <span className="font-semibold">
+          <span className="font-bold text-lg">
             {size === 'lg' ? 'Let\'s Plan an Unforgettable Day' : 'Book Now'}
           </span>
           
-          <Sparkles className="h-4 w-4 ml-2 group-hover:animate-spin transition-transform duration-300" />
+          <Sparkles className="h-5 w-5 ml-3 group-hover:animate-spin transition-transform duration-300" />
         </div>
         
         {/* Hover glow effect */}
         <div 
-          className="absolute -inset-1 rounded-lg opacity-0 group-hover:opacity-75 blur transition-opacity duration-300"
+          className="absolute -inset-1 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity duration-300"
           style={{
-            background: `linear-gradient(135deg, ${colors.primary}40, ${colors.secondary}40)`
+            background: `linear-gradient(135deg, ${colors.primary}60, ${colors.secondary}60)`
           }}
         />
       </Button>
       
       {size === 'lg' && (
-        <div className="flex items-center justify-center space-x-4 text-xs" style={{ color: colors.secondary, opacity: 0.7 }}>
-          <div className="flex items-center">
-            <Clock className="h-3 w-3 mr-1" />
-            <span style={{ color: colors.tertiary }}>Free Consultation</span>
+        <div className="flex items-center justify-center space-x-6 text-xs font-medium">
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Clock className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>Free Consultation</span>
           </div>
-          <div className="w-1 h-1 rounded-full" style={{ backgroundColor: colors.primary }}></div>
-          <div className="flex items-center">
-            <Sparkles className="h-3 w-3 mr-1" />
-            <span style={{ color: colors.tertiary }}>Instant Booking</span>
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Sparkles className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>Instant Booking</span>
+          </div>
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+            <Calendar className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+            <span style={{ color: colors.secondary }}>24/7 Availability</span>
           </div>
         </div>
       )}

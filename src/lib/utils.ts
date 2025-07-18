@@ -13,7 +13,7 @@ export function formatPrice(price: number) {
 }
 
 export function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('en-PH', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

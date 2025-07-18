@@ -14,6 +14,7 @@ import {
   Building,
   Globe
 } from "lucide-react";
+import { SiteFeature } from "@/types/site";
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
 export const dynamic = 'force-dynamic'
@@ -53,6 +54,7 @@ export default async function ContactPage() {
     contact.province && contact.zipCode ? `${contact.province} ${contact.zipCode}` : contact.province || contact.zipCode,
     contact.country
   ].filter(Boolean).join(', ');
+  const contactDescription = siteInfo?.features?.find((feature) => feature.name === SiteFeature.CONTACT)?.description;
 
   return (
     <div className="w-full">
@@ -67,9 +69,7 @@ export default async function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8">
-              We&apos;d love to hear from you! Whether you have questions about our products, 
-              need help with an order, or want to learn more about sustainable fashion, 
-              we&apos;re here to help.
+              {contactDescription}
             </p>
           </div>
         </div>
@@ -367,7 +367,7 @@ export default async function ContactPage() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
-                  We offer free standard shipping on orders over $50. Express shipping is available 
+                  We offer free standard shipping on orders over ₱2,500. Express shipping is available 
                   for faster delivery. All orders are carefully packaged to ensure safe arrival.
                 </CardDescription>
               </CardContent>

@@ -7,6 +7,9 @@ import { Search, Filter, Star, Calendar, Users, Award, Sparkles, Crown, Zap, Hea
 import { getSiteInfo } from '@/lib/site'
 import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
 import { BookingButton } from '@/components/booking/booking-button'
+import { CustomConsultationButton } from '@/components/booking/custom-consultation-button'
+import { SiteFeature } from '@/types/site'
+import Image from "next/image"
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -22,6 +25,7 @@ export default async function EventServicesPage() {
 
   const featuredServices = eventServices.filter(service => service.isFeatured)
   const regularServices = eventServices.filter(service => !service.isFeatured)
+  const zcalUrl = siteInfo?.features.find(f => f.name === SiteFeature.EVENT_SERVICES)?.zcalLink
 
   return (
     <div 
@@ -52,94 +56,117 @@ export default async function EventServicesPage() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         
-        {/* Header Section */}
-        <div className="text-center mb-20">
-          <div className="flex items-center justify-center mb-6">
-            <div className="relative">
-              <Crown className="h-16 w-16 animate-bounce" style={{ color: colorPalette.primary }} />
-              <Sparkles className="h-6 w-6 absolute -top-2 -right-2 animate-ping" style={{ color: colorPalette.primary }} />
-            </div>
-          </div>
-          <h1 
-            className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent mb-6 leading-tight"
-            style={generateTextGradientStyle(colorPalette)}
-          >
-            Event Services
-          </h1>
-          <div className="flex items-center justify-center mb-6">
-            <Heart className="h-5 w-5 mr-2" style={{ color: colorPalette.primary }} />
-            <p className="text-xl font-medium" style={{ color: colorPalette.secondary }}>
-              Crafting Unforgettable Moments
-            </p>
-            <Heart className="h-5 w-5 ml-2" style={{ color: colorPalette.primary }} />
-          </div>
-          <p className="max-w-4xl mx-auto text-lg leading-relaxed" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-            Experience the pinnacle of event excellence with our services. From intimate celebrations to grand corporate gatherings, 
-            we transform your vision into extraordinary memories that sparkle with perfection.
-          </p>
-          
-          {/* Features Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-8 mb-12">
-            <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Quality</span>
-            </div>
-            <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <Zap className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Lightning Fast Setup</span>
-            </div>
-            <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <Crown className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>VIP Treatment</span>
-            </div>
+        {/* Header Section with Hero Image Background */}
+        <div className="text-center mb-20 relative">
+          {/* Hero Background Image */}
+          <div className="absolute inset-0 -mx-4 -my-16 z-0">
+            <Image
+              src={siteInfo?.hero?.imageUrl || '/about-hero.jpg'}
+              alt="Event Services Hero"
+              fill
+              className="object-cover rounded-3xl"
+              priority
+              quality={90}
+            />
+            {/* Gradient Overlay */}
+            <div 
+              className="absolute inset-0 rounded-3xl"
+              style={{
+                background: `linear-gradient(135deg, ${colorPalette.primary}40 0%, ${colorPalette.secondary}20 50%, ${colorPalette.tertiary}60 100%)`
+              }}
+            ></div>
+            {/* Additional overlay for better text readability */}
+            <div className="absolute inset-0 rounded-3xl bg-black/20"></div>
           </div>
 
-          {/* Booking CTA Section */}
-          <div className="relative mb-16">
-            <Card 
-              className="backdrop-blur-lg border-2 shadow-2xl relative overflow-hidden mx-auto max-w-2xl"
+          <div className="relative z-10 py-16">
+            <div className="flex items-center justify-center mb-6">
+              <div className="relative">
+                <Crown className="h-16 w-16 animate-bounce" style={{ color: colorPalette.primary }} />
+                <Sparkles className="h-6 w-6 absolute -top-2 -right-2 animate-ping" style={{ color: colorPalette.primary }} />
+              </div>
+            </div>
+            <h1 
+              className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white"
               style={{
-                ...generateDynamicGradientStyle('to-br', colorPalette, 0.08, 'light'),
-                borderColor: colorPalette.primary + '30'
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                background: `linear-gradient(135deg, white 0%, ${colorPalette.primary} 100%)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
               }}
             >
-              <div 
-                className="absolute inset-0 opacity-50"
-                style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}
-              ></div>
-              <div className="absolute top-4 right-4">
-                <Sparkles className="h-6 w-6 animate-pulse" style={{ color: colorPalette.primary }} />
+              Event Services
+            </h1>
+            <div className="flex items-center justify-center mb-6">
+              <Heart className="h-5 w-5 mr-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
+              <p className="text-xl font-medium text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
+                Crafting Unforgettable Moments
+              </p>
+              <Heart className="h-5 w-5 ml-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
+            </div>
+            <p className="max-w-4xl mx-auto text-lg leading-relaxed text-white/95" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+              Experience the pinnacle of event excellence with our services. From intimate celebrations to grand corporate gatherings, 
+              we transform your vision into extraordinary memories that sparkle with perfection.
+            </p>
+            
+            {/* Features Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 mb-12">
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Quality</span>
               </div>
-              
-              <CardContent className="py-12 px-8 text-center relative z-10">
-                <div className="mb-6">
-                  <div 
-                    className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
-                    style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
-                  >
-                    <Calendar className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 
-                    className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent mb-3"
-                    style={generateTextGradientStyle(colorPalette)}
-                  >
-                    Ready to Begin Your Event Journey?
-                  </h3>
-                  <p className="text-lg max-w-lg mx-auto leading-relaxed" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                                         Skip the back-and-forth emails. Book your consultation instantly and let&apos;s start planning your unforgettable event.
-                  </p>
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                <Zap className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Lightning Fast Setup</span>
+              </div>
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                <Crown className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>VIP Treatment</span>
+              </div>
+            </div>
+
+            {/* Booking CTA Section */}
+            <div className="relative mb-16">
+              <Card 
+                className="backdrop-blur-lg border-2 shadow-2xl relative overflow-hidden mx-auto max-w-2xl"
+                style={{
+                  ...generateDynamicGradientStyle('to-br', colorPalette, 0.08, 'light'),
+                  borderColor: colorPalette.primary + '30'
+                }}
+              >
+                <div 
+                  className="absolute inset-0 opacity-50"
+                  style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}
+                ></div>
+                <div className="absolute top-4 right-4">
+                  <Sparkles className="h-6 w-6 animate-pulse" style={{ color: colorPalette.primary }} />
                 </div>
                 
-                <BookingButton 
-                  zcalUrl="/book"
-                  colorPalette={siteInfo?.colorPalette}
-                  variant="primary"
-                  size="lg"
-                  description="Free consultation • Instant booking • 24/7 availability"
-                  className="mb-4"
-                />
-              </CardContent>
-            </Card>
+                <CardContent className="py-12 px-8 text-center relative z-10">
+                  <div className="mb-6">
+                    <h3 
+                      className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent mb-3"
+                      style={generateTextGradientStyle(colorPalette)}
+                    >
+                      Ready to Begin Your Event Journey?
+                    </h3>
+                    <p className="text-lg max-w-lg mx-auto leading-relaxed" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                      Skip the back-and-forth emails. Book your consultation instantly and let&apos;s start planning your unforgettable event.
+                    </p>
+                  </div>
+                  
+                  <BookingButton 
+                    zcalUrl={zcalUrl || "/book"}
+                    colorPalette={siteInfo?.colorPalette}
+                    variant="primary"
+                    size="lg"
+                    description="Free consultation • Instant booking • 24/7 availability"
+                    className="mb-4"
+                  />
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
 
@@ -393,7 +420,7 @@ export default async function EventServicesPage() {
         )}
 
         {/* Call to Action */}
-        <div className="text-center mt-20 relative">
+        <div className="text-center mt-12 relative">
           <div 
             className="absolute inset-0 rounded-3xl opacity-10"
             style={generateDynamicGradientStyle('to-r', colorPalette, 1, 'normal')}
@@ -410,57 +437,34 @@ export default async function EventServicesPage() {
               <Crown className="h-8 w-8 animate-pulse" style={{ color: colorPalette.primary }} />
             </div>
             
-            <CardContent className="py-16 px-8 relative z-10">
-              <div className="flex items-center justify-center mb-6">
-                <div className="relative">
-                  <div 
-                    className="w-20 h-20 rounded-full flex items-center justify-center"
-                    style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
-                  >
-                    <Heart className="h-10 w-10 text-white" />
-                  </div>
-                  <div 
-                    className="absolute -inset-4 rounded-full opacity-20 animate-ping"
-                    style={generateDynamicGradientStyle('to-r', colorPalette, 0.4, 'normal')}
-                  ></div>
-                </div>
-              </div>
-              
+            <CardContent className="py-8 px-8 relative z-10">
               <h3 
-                className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent mb-6"
+                className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent mb-4"
                 style={generateTextGradientStyle(colorPalette)}
               >
                 Dream Beyond Boundaries
               </h3>
               
-              <p className="mb-8 max-w-3xl mx-auto text-lg leading-relaxed" style={{ color: colorPalette.secondary }}>
+              <p className="mb-6 max-w-3xl mx-auto text-base leading-relaxed" style={{ color: colorPalette.secondary }}>
                 Your vision deserves nothing less than perfection. Our bespoke event services transform impossible dreams 
                 into unforgettable realities. Let us craft something extraordinary, just for you.
               </p>
               
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <BookingButton 
-                  zcalUrl="/book"
+                  zcalUrl={zcalUrl || "/book"}
                   colorPalette={siteInfo?.colorPalette}
                   variant="primary"
                   size="lg"
-                  description="Easily book a meeting or event with MD using our smart scheduler"
+                  description="Free consultation • Instant booking • 24/7 availability"
                 />
                 
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2"
-                  style={{
-                    borderColor: colorPalette.primary,
-                    color: colorPalette.primary
-                  }}
-                >
-                  <Crown className="h-5 w-5 mr-2" />
-                  Custom Consultation
-                </Button>
+                <CustomConsultationButton 
+                  zcalUrl={zcalUrl}
+                  colorPalette={colorPalette}
+                />
                 
-                <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                <div className="flex flex-wrap items-center justify-center gap-6 mt-6 text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
                     Free Consultation

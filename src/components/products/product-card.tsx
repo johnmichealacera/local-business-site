@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Heart, Eye, Star } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { Product } from '@/types/product'
 import { formatPrice } from '@/lib/utils'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
@@ -65,8 +65,9 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           )}
         </div>
 
+        {/* TODO: Add wishlist button */}
         {/* Wishlist button */}
-        <div className="absolute top-2 right-2">
+        {/* <div className="absolute top-2 right-2">
           <Button 
             size="sm" 
             variant="ghost" 
@@ -74,7 +75,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           >
             <Heart className="h-4 w-4" />
           </Button>
-        </div>
+        </div> */}
 
         {/* Quick view on mobile */}
         <div className="absolute bottom-2 right-2 md:hidden">
@@ -99,11 +100,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             <p className="text-sm text-slate-500 mt-1 capitalize">{product.category.name}</p>
           </div>
           
+          {/* TODO: Add rating */}
           {/* Rating */}
-          <div className="flex items-center space-x-1 ml-2">
+          {/* <div className="flex items-center space-x-1 ml-2">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="text-sm text-slate-600">4.5</span>
-          </div>
+          </div> */}
         </div>
       </CardHeader>
 

@@ -8,13 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatPrice } from '@/lib/utils'
 import { Product } from '@/types/product'
 import {
-  Heart, 
   Share2, 
   ArrowLeft, 
-  Truck,
   Shield,
   RotateCcw,
-  Star,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
@@ -25,7 +22,6 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const [quantity, setQuantity] = useState(1)
 
   const isInStock = product.stock > 0
   const images = product.imageUrls.length > 0 ? product.imageUrls : ['/placeholder-product.jpg']
@@ -113,10 +109,33 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 {product.category.name}
               </span>
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm">
+                {/* TODO: Wishlist functionality - Coming in next iteration */}
+                {/* <Button variant="ghost" size="sm">
                   <Heart className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="sm">
+                </Button> */}
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: product.name,
+                        text: `Check out this amazing ${product.category.name.toLowerCase()}: ${product.name}`,
+                        url: window.location.href,
+                      }).catch((error) => {
+                        console.log('Error sharing:', error);
+                        // Fallback to copying URL
+                        navigator.clipboard.writeText(window.location.href);
+                        alert('Link copied to clipboard!');
+                      });
+                    } else {
+                      // Fallback for browsers that don't support Web Share API
+                      navigator.clipboard.writeText(window.location.href);
+                      alert('Link copied to clipboard!');
+                    }
+                  }}
+                  className="hover:bg-slate-100 transition-colors"
+                >
                   <Share2 className="w-4 h-4" />
                 </Button>
               </div>
@@ -130,12 +149,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               <span className="text-3xl font-bold text-slate-900">
                 {formatPrice(product.price)}
               </span>
-              <div className="flex items-center space-x-1">
+              {/* <div className="flex items-center space-x-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
                 <span className="text-sm text-slate-600 ml-2">(12 reviews)</span>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center space-x-2 mb-6">
@@ -146,50 +165,31 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             </div>
           </div>
 
-          {/* Purchase Options */}
-          <Card>
+          {/* TODO: Purchase Options - Coming Soon */}
+          {/* 
+          TODO: Implement shopping cart and checkout functionality
+          - Add to cart functionality
+          - Quantity selector
+          - Buy now button
+          - Checkout process
+          - Payment integration
+          */}
+          <Card className="border-dashed border-2 border-slate-300 bg-slate-50/50">
             <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <label className="text-sm font-medium">Quantity:</label>
-                  <div className="flex items-center border border-slate-200 rounded-md">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-3 py-1 hover:bg-slate-100"
-                      disabled={quantity <= 1}
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 border-x border-slate-200">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                      className="px-3 py-1 hover:bg-slate-100"
-                      disabled={quantity >= product.stock || !isInStock}
-                    >
-                      +
-                    </button>
-                  </div>
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto mb-4 bg-slate-200 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
                 </div>
-
-                <div className="space-y-3">
-                  {/* Not yet supported */}
-                  {/* <Button 
-                    className="w-full" 
-                    size="lg"
-                    disabled={!isInStock}
-                  >
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Add to Cart - {formatPrice(product.price * quantity)}
-                  </Button> */}
-                  
-                  <Button 
-                    variant="outline" 
-                    className="w-full" 
-                    size="lg"
-                    disabled={!isInStock}
-                  >
-                    Buy Now
-                  </Button>
+                <h3 className="text-lg font-semibold text-slate-700 mb-2">Shopping Coming Soon</h3>
+                <p className="text-slate-600 mb-4">
+                  We&apos;re working on bringing you a seamless shopping experience. 
+                  Check back soon for the ability to purchase items directly from our store.
+                </p>
+                <div className="flex items-center justify-center space-x-2 text-sm text-slate-500">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span>In development</span>
                 </div>
               </div>
             </CardContent>
@@ -198,9 +198,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           {/* Product Features */}
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center p-4 bg-slate-50 rounded-lg">
-              <Truck className="w-6 h-6 mx-auto mb-2 text-slate-600" />
-              <p className="text-sm font-medium">Free Shipping</p>
-              <p className="text-xs text-slate-500">On orders over ₱350</p>
+              <svg className="w-6 h-6 mx-auto mb-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <p className="text-sm font-medium">Local Pickup</p>
+              <p className="text-xs text-slate-500">Visit our store</p>
             </div>
             <div className="text-center p-4 bg-slate-50 rounded-lg">
               <Shield className="w-6 h-6 mx-auto mb-2 text-slate-600" />
@@ -233,13 +236,55 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       </div>
 
       {/* Back to Products */}
-      <div className="mt-12 pt-8 border-t">
-        <Button variant="outline">
+      <div className="mt-12 pt-8 border-t border-slate-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <Link href="/products">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Products
+            <Button 
+              variant="outline" 
+              className="group hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
+              Back to Products
+            </Button>
           </Link>
-        </Button>
+          
+          {/* Additional Actions */}
+          <div className="flex items-center space-x-2">
+            <Link href={`/products?category=${product.categoryId}`}>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              >
+                View More {product.category.name}
+              </Button>
+            </Link>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({
+                    title: product.name,
+                    text: `Check out this amazing ${product.category.name.toLowerCase()}: ${product.name}`,
+                    url: window.location.href,
+                  }).catch((error) => {
+                    console.log('Error sharing:', error);
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  });
+                } else {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('Link copied to clipboard!');
+                }
+              }}
+              className="text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              Share
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )
