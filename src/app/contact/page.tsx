@@ -8,12 +8,19 @@ import {
   Phone, 
   MapPin, 
   Clock, 
-  Facebook, 
-  Instagram, 
-  Twitter,
   Building,
   Globe
 } from "lucide-react";
+import { 
+  FaFacebook, 
+  FaInstagram, 
+  FaTwitter, 
+  FaYoutube, 
+  FaLinkedin, 
+  FaSpotify, 
+  FaTiktok,
+  FaGlobe
+} from "react-icons/fa";
 import { SiteFeature } from "@/types/site";
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
@@ -40,7 +47,12 @@ export default async function ContactPage() {
     socialLinks: {
       facebook: "https://facebook.com/thriftedtreasures",
       instagram: "https://instagram.com/thriftedtreasures",
-      twitter: "https://twitter.com/thriftedtreasures"
+      twitter: "https://twitter.com/thriftedtreasures",
+      youtube: "https://youtube.com/@thriftedtreasures",
+      spotify: "https://open.spotify.com/user/thriftedtreasures",
+      linkedin: "https://linkedin.com/company/thriftedtreasures",
+      tiktok: "https://tiktok.com/@thriftedtreasures",
+      website: "https://thriftedtreasures.com"
     }
   };
 
@@ -207,19 +219,19 @@ export default async function ContactPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex space-x-4">
+                <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start">
                   {socialLinks?.facebook && (
                     <a 
                       href={socialLinks.facebook} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full transition-colors"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                       style={{
                         backgroundColor: colorPalette.primary + '20',
                         color: colorPalette.primary
                       }}
                     >
-                      <Facebook className="w-5 h-5" />
+                      <FaFacebook className="w-4 h-4 sm:w-5 sm:h-5" />
                     </a>
                   )}
                   {socialLinks?.instagram && (
@@ -227,13 +239,13 @@ export default async function ContactPage() {
                       href={socialLinks.instagram} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full transition-colors"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                       style={{
                         backgroundColor: colorPalette.primary + '20',
                         color: colorPalette.primary
                       }}
                     >
-                      <Instagram className="w-5 h-5" />
+                      <FaInstagram className="w-4 h-4 sm:w-5 sm:h-5" />
                     </a>
                   )}
                   {socialLinks?.twitter && (
@@ -241,47 +253,167 @@ export default async function ContactPage() {
                       href={socialLinks.twitter} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full transition-colors"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                       style={{
                         backgroundColor: colorPalette.primary + '20',
                         color: colorPalette.primary
                       }}
                     >
-                      <Twitter className="w-5 h-5" />
+                      <FaTwitter className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </a>
+                  )}
+                  {socialLinks?.youtube && (
+                    <a 
+                      href={socialLinks.youtube} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
+                    >
+                      <FaYoutube className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </a>
+                  )}
+                  {socialLinks?.spotify && (
+                    <a 
+                      href={socialLinks.spotify} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
+                    >
+                      <FaSpotify className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </a>
+                  )}
+                  {socialLinks?.linkedin && (
+                    <a 
+                      href={socialLinks.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
+                    >
+                      <FaLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </a>
+                  )}
+                  {socialLinks?.tiktok && (
+                    <a 
+                      href={socialLinks.tiktok} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
+                    >
+                      <FaTiktok className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </a>
+                  )}
+                  {socialLinks?.website && (
+                    <a 
+                      href={socialLinks.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      style={{
+                        backgroundColor: colorPalette.primary + '20',
+                        color: colorPalette.primary
+                      }}
+                    >
+                      <FaGlobe className="w-4 h-4 sm:w-5 sm:h-5" />
                     </a>
                   )}
                   {/* Default social links if none in database */}
-                  {(!socialLinks?.facebook && !socialLinks?.instagram && !socialLinks?.twitter) && (
+                  {(!socialLinks?.facebook && !socialLinks?.instagram && !socialLinks?.twitter && !socialLinks?.youtube && !socialLinks?.spotify && !socialLinks?.linkedin && !socialLinks?.tiktok && !socialLinks?.website) && (
                     <>
                       <a 
                         href="#" 
-                        className="p-2 rounded-full transition-colors"
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                         style={{
                           backgroundColor: colorPalette.primary + '20',
                           color: colorPalette.primary
                         }}
                       >
-                        <Facebook className="w-5 h-5" />
+                        <FaFacebook className="w-4 h-4 sm:w-5 sm:h-5" />
                       </a>
                       <a 
                         href="#" 
-                        className="p-2 rounded-full transition-colors"
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                         style={{
                           backgroundColor: colorPalette.primary + '20',
                           color: colorPalette.primary
                         }}
                       >
-                        <Instagram className="w-5 h-5" />
+                        <FaInstagram className="w-4 h-4 sm:w-5 sm:h-5" />
                       </a>
                       <a 
                         href="#" 
-                        className="p-2 rounded-full transition-colors"
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
                         style={{
                           backgroundColor: colorPalette.primary + '20',
                           color: colorPalette.primary
                         }}
                       >
-                        <Twitter className="w-5 h-5" />
+                        <FaTwitter className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
+                      >
+                        <FaYoutube className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
+                      >
+                        <FaSpotify className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
+                      >
+                        <FaLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
+                      >
+                        <FaTiktok className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="p-2.5 sm:p-3 rounded-full transition-all duration-200 hover:scale-110 hover:shadow-md"
+                        style={{
+                          backgroundColor: colorPalette.primary + '20',
+                          color: colorPalette.primary
+                        }}
+                      >
+                        <FaGlobe className="w-4 h-4 sm:w-5 sm:h-5" />
                       </a>
                     </>
                   )}

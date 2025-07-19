@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShoppingBag, Mail, Phone, MapPin, Facebook, Instagram, Twitter, ArrowUp } from 'lucide-react'
+import { ShoppingBag, Mail, Phone, MapPin, ArrowUp } from 'lucide-react'
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaLinkedin, FaSpotify, FaTiktok, FaGlobe } from 'react-icons/fa'
 import { ContactInfo } from '@/lib/contact'
 import { SiteFeature } from '@/types/site'
 import { getQuickLinks } from '@/lib/navigation'
@@ -161,33 +162,58 @@ export function Footer({ siteName, siteDescription, logoUrl, contactInfo, featur
               </div>
               
               {/* Social Media */}
-              <div className="flex space-x-4 pt-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4 pt-4">
                 {contactInfo?.socialLinks?.facebook && (
-                  <Link href={contactInfo.socialLinks.facebook} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors" target="_blank" rel="noopener noreferrer">
-                    <Facebook className="h-5 w-5" />
+                  <Link href={contactInfo.socialLinks.facebook} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaFacebook className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 )}
                 {contactInfo?.socialLinks?.instagram && (
-                  <Link href={contactInfo.socialLinks.instagram} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors" target="_blank" rel="noopener noreferrer">
-                    <Instagram className="h-5 w-5" />
+                  <Link href={contactInfo.socialLinks.instagram} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaInstagram className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 )}
                 {contactInfo?.socialLinks?.twitter && (
-                  <Link href={contactInfo.socialLinks.twitter} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors" target="_blank" rel="noopener noreferrer">
-                    <Twitter className="h-5 w-5" />
+                  <Link href={contactInfo.socialLinks.twitter} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaTwitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Link>
+                )}
+                {contactInfo?.socialLinks?.youtube && (
+                  <Link href={contactInfo.socialLinks.youtube} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaYoutube className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Link>
+                )}
+                {contactInfo?.socialLinks?.spotify && (
+                  <Link href={contactInfo.socialLinks.spotify} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaSpotify className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Link>
+                )}
+                {contactInfo?.socialLinks?.linkedin && (
+                  <Link href={contactInfo.socialLinks.linkedin} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Link>
+                )}
+                {contactInfo?.socialLinks?.tiktok && (
+                  <Link href={contactInfo.socialLinks.tiktok} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaTiktok className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Link>
+                )}
+                {contactInfo?.socialLinks?.website && (
+                  <Link href={contactInfo.socialLinks.website} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110" target="_blank" rel="noopener noreferrer">
+                    <FaGlobe className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 )}
                 {/* Show fallback social links if no database social links exist */}
                 {!contactInfo?.socialLinks && (
                   <>
-                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors">
-                      <Facebook className="h-5 w-5" />
+                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110">
+                      <FaFacebook className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
-                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors">
-                      <Instagram className="h-5 w-5" />
+                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110">
+                      <FaInstagram className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
-                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-colors">
-                      <Twitter className="h-5 w-5" />
+                    <Link href="#" className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] transition-all duration-200 hover:scale-110">
+                      <FaTwitter className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
                   </>
                 )}

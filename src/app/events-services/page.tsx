@@ -54,10 +54,10 @@ export default async function EventServicesPage() {
         ></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
         
         {/* Header Section with Hero Image Background */}
-        <div className="text-center mb-20 relative">
+        <div className="text-center mb-8 sm:mb-12 relative">
           {/* Hero Background Image */}
           <div className="absolute inset-0 -mx-4 -my-16 z-0">
             <Image
@@ -79,7 +79,7 @@ export default async function EventServicesPage() {
             <div className="absolute inset-0 rounded-3xl bg-black/20"></div>
           </div>
 
-          <div className="relative z-10 py-16">
+          <div className="relative z-10">
             <div className="flex items-center justify-center mb-6">
               <div className="relative">
                 <Crown className="h-16 w-16 animate-bounce" style={{ color: colorPalette.primary }} />
@@ -87,7 +87,7 @@ export default async function EventServicesPage() {
               </div>
             </div>
             <h1 
-              className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white"
+              className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white"
               style={{
                 textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
                 background: `linear-gradient(135deg, white 0%, ${colorPalette.primary} 100%)`,
@@ -99,35 +99,35 @@ export default async function EventServicesPage() {
               Event Services
             </h1>
             <div className="flex items-center justify-center mb-6">
-              <Heart className="h-5 w-5 mr-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
-              <p className="text-xl font-medium text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
+              <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
+              <p className="text-base sm:text-xl font-medium text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
                 Crafting Unforgettable Moments
               </p>
-              <Heart className="h-5 w-5 ml-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
+              <Heart className="h-4 w-4 sm:h-5 sm:w-5 ml-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
             </div>
-            <p className="max-w-4xl mx-auto text-lg leading-relaxed text-white/95" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+            <p className="max-w-4xl mx-auto text-sm sm:text-lg leading-relaxed text-white/95 px-4" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
               Experience the pinnacle of event excellence with our services. From intimate celebrations to grand corporate gatherings, 
               we transform your vision into extraordinary memories that sparkle with perfection.
             </p>
             
             {/* Features Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 mb-12">
-              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Quality</span>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-8 mb-12">
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg">
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-xs sm:text-sm font-medium" style={{ color: colorPalette.secondary }}>Quality</span>
               </div>
-              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                <Zap className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Lightning Fast Setup</span>
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg">
+                <Zap className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-xs sm:text-sm font-medium" style={{ color: colorPalette.secondary }}>Lightning Fast Setup</span>
               </div>
-              <div className="flex items-center bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                <Crown className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-                <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>VIP Treatment</span>
+              <div className="flex items-center bg-white/70 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg">
+                <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                <span className="text-xs sm:text-sm font-medium" style={{ color: colorPalette.secondary }}>VIP Treatment</span>
               </div>
             </div>
 
             {/* Booking CTA Section */}
-            <div className="relative mb-16">
+            <div className="relative mb-8 sm:mb-12">
               <Card 
                 className="backdrop-blur-lg border-2 shadow-2xl relative overflow-hidden mx-auto max-w-2xl"
                 style={{
@@ -143,7 +143,7 @@ export default async function EventServicesPage() {
                   <Sparkles className="h-6 w-6 animate-pulse" style={{ color: colorPalette.primary }} />
                 </div>
                 
-                <CardContent className="py-12 px-8 text-center relative z-10">
+                <CardContent className="py-8 sm:py-12 px-6 sm:px-8 text-center relative z-10">
                   <div className="mb-6">
                     <h3 
                       className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent mb-3"
@@ -171,7 +171,7 @@ export default async function EventServicesPage() {
         </div>
 
         {/* Statistics Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 mt-20">
           <Card className="group hover:shadow-2xl transition-all duration-500 border-0 hover:scale-105" style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}>
             <CardContent className="pt-8 pb-6 text-center relative overflow-hidden">
               <div 
@@ -291,7 +291,7 @@ export default async function EventServicesPage() {
 
         {/* Featured Services Section */}
         {featuredServices.length > 0 && (
-          <div className="mb-20 relative">
+          <div className="mb-16 relative">
             {/* Section Background */}
             <div 
               className="absolute inset-0 rounded-3xl -mx-4 py-12"
@@ -299,7 +299,7 @@ export default async function EventServicesPage() {
             ></div>
             
             <div className="relative z-10 px-4">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8">
                 <div className="flex items-center justify-center mb-4">
                   <div className="relative">
                     <Star className="h-12 w-12 animate-pulse" style={{ color: colorPalette.primary }} />
@@ -333,8 +333,8 @@ export default async function EventServicesPage() {
         )}
 
         {/* All Services Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
+        <div className="mb-16">
+          <div className="text-center mb-8">
             <h2 
               className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent mb-4"
               style={generateTextGradientStyle(colorPalette)}
@@ -346,11 +346,11 @@ export default async function EventServicesPage() {
             </p>
             
             {/* Filter and Search */}
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-105 transition-all duration-300 border-2"
+                className="bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-105 transition-all duration-300 border-2 w-full sm:w-auto"
                 style={{ borderColor: colorPalette.primary + '50' }}
               >
                 <Filter className="h-4 w-4 mr-2" />
@@ -359,7 +359,7 @@ export default async function EventServicesPage() {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-105 transition-all duration-300 border-2"
+                className="bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-105 transition-all duration-300 border-2 w-full sm:w-auto"
                 style={{ borderColor: colorPalette.primary + '50' }}
               >
                 <Search className="h-4 w-4 mr-2" />
@@ -420,7 +420,7 @@ export default async function EventServicesPage() {
         )}
 
         {/* Call to Action */}
-        <div className="text-center mt-12 relative">
+        <div className="text-center mt-8 relative">
           <div 
             className="absolute inset-0 rounded-3xl opacity-10"
             style={generateDynamicGradientStyle('to-r', colorPalette, 1, 'normal')}
@@ -437,7 +437,7 @@ export default async function EventServicesPage() {
               <Crown className="h-8 w-8 animate-pulse" style={{ color: colorPalette.primary }} />
             </div>
             
-            <CardContent className="py-8 px-8 relative z-10">
+            <CardContent className="py-6 sm:py-8 px-6 sm:px-8 relative z-10">
               <h3 
                 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent mb-4"
                 style={generateTextGradientStyle(colorPalette)}
@@ -464,17 +464,17 @@ export default async function EventServicesPage() {
                   colorPalette={colorPalette}
                 />
                 
-                <div className="flex flex-wrap items-center justify-center gap-6 mt-6 text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 text-xs sm:text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
                     Free Consultation
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
                     24/7 Support
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
+                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
                     Satisfaction Guarantee
                   </div>
                 </div>

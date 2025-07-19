@@ -26,13 +26,13 @@ export function CustomConsultationButton({ zcalUrl, colorPalette }: CustomConsul
       onClick={handleClick}
       size="lg" 
       variant="outline"
-      className="text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2"
+      className="text-base sm:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 w-full sm:w-auto"
       style={{
         borderColor: colorPalette.primary,
         color: colorPalette.primary
       }}
     >
-      <Crown className="h-5 w-5 mr-2" />
+      <Crown className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
       Custom Consultation
     </Button>
   )

@@ -71,17 +71,17 @@ export function BookingButton({
   return (
     <div className="text-center space-y-4">
       {description && (
-        <div className="flex flex-wrap items-center justify-center gap-4 text-sm font-medium">
-          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Clock className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-medium">
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Clock className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>Free consultation</span>
           </div>
-          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Sparkles className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Sparkles className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>Instant booking</span>
           </div>
-          <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Calendar className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+          <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Calendar className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>24/7 availability</span>
           </div>
         </div>
@@ -107,13 +107,13 @@ export function BookingButton({
         />
         
         <div className="relative flex items-center">
-          <Calendar className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-300" />
+          <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 group-hover:scale-110 transition-transform duration-300" />
           
-          <span className="font-bold text-lg">
+          <span className="font-bold text-base sm:text-lg">
             {size === 'lg' ? 'Let\'s Plan an Unforgettable Day' : 'Book Now'}
           </span>
           
-          <Sparkles className="h-5 w-5 ml-3 group-hover:animate-spin transition-transform duration-300" />
+          <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 ml-2 sm:ml-3 group-hover:animate-spin transition-transform duration-300" />
         </div>
         
         {/* Hover glow effect */}
@@ -126,17 +126,17 @@ export function BookingButton({
       </Button>
       
       {size === 'lg' && (
-        <div className="flex items-center justify-center space-x-6 text-xs font-medium">
-          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Clock className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-6 text-xs font-medium">
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Clock className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>Free Consultation</span>
           </div>
-          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Sparkles className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Sparkles className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>Instant Booking</span>
           </div>
-          <div className="flex items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
-            <Calendar className="h-3 w-3 mr-1.5" style={{ color: colors.primary }} />
+          <div className="flex items-center bg-white/80 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
+            <Calendar className="h-3 w-3 mr-1 sm:mr-1.5" style={{ color: colors.primary }} />
             <span style={{ color: colors.secondary }}>24/7 Availability</span>
           </div>
         </div>

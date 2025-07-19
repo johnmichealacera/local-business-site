@@ -24,7 +24,7 @@ export default async function AboutPage() {
   return (
     <div className="min-h-screen">
       {/* Enhanced Hero Section with Image */}
-      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -126,7 +126,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Enhanced Mission, Vision, Values */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div 
@@ -140,7 +140,7 @@ export default async function AboutPage() {
         </div>
         
         <div className="container mx-auto relative z-10">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-12 animate-fade-in">
             <Badge 
               variant="outline" 
               className="mb-4 border-2"
