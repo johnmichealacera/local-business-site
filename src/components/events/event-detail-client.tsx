@@ -12,8 +12,7 @@ import {
   MapPin, 
   Clock,
   Users,
-  Share2, 
-  Heart,
+  Share2,
   Phone,
   Mail,
   Globe,
@@ -59,7 +58,7 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
           </li>
           <li>/</li>
           <li>
-            <Link href="/events" className="hover:text-slate-900">Events</Link>
+            <Link href="/bookings" className="hover:text-slate-900">Bookings</Link>
           </li>
           <li>/</li>
           <li className="text-slate-900 font-medium">{event.title}</li>
@@ -118,7 +117,7 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
           )}
         </div>
 
-        {/* Event Details */}
+        {/* Booking Details */}
         <div className="space-y-6">
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -131,10 +130,33 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
                 )}
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm">
+                {/* TODO: Wishlist functionality - Coming in next iteration */}
+                {/* <Button variant="ghost" size="sm">
                   <Heart className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="sm">
+                </Button> */}
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: event.title,
+                        text: `Check out this amazing ${event.tags?.join(', ').toLowerCase()}: ${event.title}`,
+                        url: window.location.href,
+                      }).catch((error) => {
+                        console.log('Error sharing:', error);
+                        // Fallback to copying URL
+                        navigator.clipboard.writeText(window.location.href);
+                        alert('Link copied to clipboard!');
+                      });
+                    } else {
+                      // Fallback for browsers that don't support Web Share API
+                      navigator.clipboard.writeText(window.location.href);
+                      alert('Link copied to clipboard!');
+                    }
+                  }}
+                  className="hover:bg-slate-100 transition-colors"
+                >
                   <Share2 className="w-4 h-4" />
                 </Button>
               </div>
@@ -152,12 +174,12 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
             </div>
           </div>
 
-          {/* Event Information */}
+          {/* Booking Information */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
-                Event Details
+                Booking Details
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -211,16 +233,21 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
             </CardContent>
           </Card>
 
-          {/* Registration */}
+          {/* Booking Registration */}
           {isUpcoming && (
             <Card>
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="text-center">
-                    <p className="text-lg font-semibold mb-2">Ready to join us?</p>
+                    <p className="text-lg font-semibold mb-2">Ready to book your event?</p>
                     <p className="text-sm text-slate-600 mb-4">
-                      Secure your spot at this event
+                      Get you free consultation
                     </p>
+                    <Link href="/book">
+                      <Button className="w-full">
+                        Book Now
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </CardContent>
@@ -269,7 +296,7 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
         </div>
       </div>
 
-      {/* Event Description */}
+      {/* Booking Description */}
       <div className="mt-12">
         <Card>
           <CardHeader>

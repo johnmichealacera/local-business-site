@@ -157,11 +157,11 @@ export function EventsClient({ initialEvents, initialFilters }: EventsClientProp
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-          Events
+          Bookings
         </h1>
         <p className="text-slate-600 max-w-2xl">
-          Discover exciting events happening in your area. From workshops to markets, 
-          find something that interests you and join the community.
+          Discover exciting bookings happening in your area. From workshops to markets, 
+          find something that interests you and book your next event.
         </p>
       </div>
 
@@ -202,7 +202,7 @@ export function EventsClient({ initialEvents, initialFilters }: EventsClientProp
           {/* Events Grid */}
           {filteredEvents.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-slate-500 text-lg">No events found matching your criteria.</p>
+              <p className="text-slate-500 text-lg">No bookings found matching your criteria.</p>
               <Button
                 variant="outline"
                 onClick={clearFilters}

@@ -5,13 +5,13 @@ import Image from 'next/image'
 import { ShoppingBag, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { SiteFeature } from '@/types/site'
+import { SiteFeature, SiteFeatureData } from '@/types/site'
 import { getNavigationLinks } from '@/lib/navigation'
 
 interface HeaderProps {
   siteName: string
   logoUrl?: string
-  features: SiteFeature[]
+  features: SiteFeature | SiteFeatureData[]
   featuresOrder: SiteFeature[]
 }
 
@@ -21,7 +21,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   
   // Get navigation links based on site features
-  const navigationLinks = getNavigationLinks(features, featuresOrder)
+  const navigationLinks = getNavigationLinks(features as unknown as SiteFeature[], featuresOrder)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md shadow-sm">
@@ -62,7 +62,8 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
               </Link>
             ))}
             {/* Show Book Now for Event Services sites */}
-            {features.includes('EVENT_SERVICES' as SiteFeature) && (
+            {/* TODO: Add feature toggle zcal */}
+            {Array.isArray(features) && features?.find((f: SiteFeatureData) => f.name === SiteFeature.EVENT_SERVICES)?.zcalEnabled && (
               <Link 
                 href="/book" 
                 className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white px-4 py-2 rounded-full text-sm font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
@@ -127,7 +128,7 @@ export function Header({ siteName, logoUrl, features, featuresOrder }: HeaderPro
                 </Link>
               ))}
               {/* Show Book Now for Event Services sites */}
-              {features.includes('EVENT_SERVICES' as SiteFeature) && (
+              {Array.isArray(features) && features?.find((f: SiteFeatureData) => f.name === SiteFeature.EVENT_SERVICES)?.zcalEnabled && (
                 <Link 
                   href="/book" 
                   className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 text-center"

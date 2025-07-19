@@ -170,10 +170,10 @@ async function FeaturedEvents() {
             <CalendarDays className="h-8 w-8 mr-3" style={{ color: 'var(--color-primary)' }} />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-secondary)' }}>
-            Events
+            Bookings
           </h2>
           <p className="max-w-2xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
-            Join us for exciting events, workshops, and community gatherings. Don&apos;t miss out!
+            Book your next event with us.
           </p>
         </div>
 
@@ -186,10 +186,10 @@ async function FeaturedEvents() {
         </div>
 
         <div className="text-center mt-12 animate-fade-in">
-          <Link href="/events">
+          <Link href="/bookings">
             <Button size="lg" variant="outline" className="btn-secondary group">
               <Calendar className="mr-2 h-4 w-4" />
-              View All Events
+              View All Bookings
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -336,7 +336,7 @@ export default async function HomePage() {
       case SiteFeature.PRODUCTS:
         return { text: "Shop Now", href: "/products" }
       case SiteFeature.EVENTS:
-        return { text: "View Events", href: "/events" }
+        return { text: "View Bookings", href: "/bookings" }
       case SiteFeature.EVENT_SERVICES:
         return { text: "Our Services", href: "/events-services" }
       case SiteFeature.CATEGORIES:

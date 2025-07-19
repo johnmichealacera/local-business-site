@@ -61,7 +61,7 @@ export function EventFiltersComponent({ filters, onFiltersChange }: EventFilters
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search events..."
+                placeholder="Search bookings..."
                 value={filters.search || ''}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500"
@@ -154,10 +154,10 @@ export function EventFiltersComponent({ filters, onFiltersChange }: EventFilters
           </CardContent>
         </Card>
 
-        {/* Event Type */}
+        {/* Booking Type */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Event Type</CardTitle>
+            <CardTitle className="text-sm">Booking Type</CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
             <div className="space-y-2">
@@ -168,7 +168,7 @@ export function EventFiltersComponent({ filters, onFiltersChange }: EventFilters
                   onChange={(e) => handleFilterChange('featured', e.target.checked ? true : undefined)}
                   className="w-4 h-4 text-slate-600"
                 />
-                <span className="text-sm">Featured Events</span>
+                <span className="text-sm">Featured Bookings</span>
               </label>
             </div>
           </CardContent>

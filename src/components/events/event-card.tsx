@@ -125,7 +125,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
         
         {/* Overlay with action buttons */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
-          <Link href={`/events/${event.id}`}>
+          <Link href={`/bookings/${event.id}`}>
             <Button size="sm" variant="outline" className="hover-lift">
               <Eye className="h-4 w-4 mr-1" />
               View Details
@@ -187,7 +187,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
       </CardHeader>
 
       <CardContent className="pt-0">
-        {/* Event details */}
+        {/* Booking details */}
         <div className="space-y-2 mb-3">
           {event.location && (
             <div className="flex items-center space-x-2 text-sm text-slate-600">
@@ -220,7 +220,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
 
         {/* Action buttons */}
         <div className="flex space-x-2">
-          <Link href={`/events/${event.id}`} className="flex-1">
+          <Link href={`/bookings/${event.id}`} className="flex-1">
             <Button variant="outline" className="w-full hover-lift">
               View Details
             </Button>
@@ -233,7 +233,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
           )} */}
         </div>
 
-        {/* Event duration */}
+        {/* Booking duration */}
         {eventEndDate && (
           <div className="mt-3 text-xs text-slate-500 text-center">
             Until {formatEventDate(eventEndDate)} • {formatEventTime(eventEndDate)}

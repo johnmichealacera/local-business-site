@@ -18,8 +18,8 @@ export function getNavigationLinks(features: SiteFeature[], featuresOrder: SiteF
       feature: SiteFeature.CATEGORIES
     },
     [SiteFeature.EVENTS]: {
-      name: 'Events',
-      href: '/events',
+      name: 'Bookings',
+      href: '/bookings',
       feature: SiteFeature.EVENTS
     },
     [SiteFeature.EVENT_SERVICES]: {
