@@ -115,6 +115,7 @@ export async function getFeaturedEvents(): Promise<Event[]> {
       where: {
         isActive: true,
         isFeatured: true,
+        isConfirmed: true,
         siteId: process.env.SITE_ID
       },
       orderBy: {
