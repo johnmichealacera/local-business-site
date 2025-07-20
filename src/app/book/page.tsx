@@ -3,12 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar, Clock, Sparkles, CheckCircle, Star, Crown, Heart } from 'lucide-react'
 import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
+import LockEventButton from '@/components/booking/lock-event-button'
+import { getContactInfo } from '@/lib/contact'
+import Image from 'next/image'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 export default async function BookingPage() {
   const siteInfo = await getSiteInfo()
+  const contactInfo = await getContactInfo()
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#3B82F6', '#10B981', '#F59E0B'])
   const siteName = siteInfo?.name || 'MD Events & Services'
   const zcalUrl = siteInfo?.features.find(f => f.name === SiteFeature.EVENT_SERVICES)?.zcalLink
@@ -40,29 +44,74 @@ export default async function BookingPage() {
         ></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-        
-        {/* Header Section */}
-        <div className="text-center mb-16">
+      {/* Hero Section with Image */}
+      <div 
+        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden mb-12"
+        style={generateDynamicGradientStyle('to-br', colorPalette, 0.3, 'normal')}
+      >
+        {/* Hero Image */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/50"></div>
+          <Image 
+            src="/placeholder-event.jpg" 
+            alt="Elegant event booking and consultation"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div className="flex items-center justify-center mb-6">
-            <div className="relative">
-              <div 
-                className="w-20 h-20 rounded-full flex items-center justify-center"
-                style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
-              >
-                <Calendar className="h-10 w-10 text-white" />
-              </div>
-              <div className="absolute -inset-4 rounded-full opacity-20 animate-ping" style={{ backgroundColor: colorPalette.primary }}></div>
+            <div className="p-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
+              <Calendar className="w-8 h-8 text-white" />
             </div>
           </div>
           
           <h1 
-            className="text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent mb-6 leading-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-lg"
             style={generateTextGradientStyle(colorPalette)}
           >
             Book Your Event
           </h1>
           
+          <p className="text-xl sm:text-2xl text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+            Schedule your consultation with our expert event planners. 
+            We&apos;ll discuss your ideas, timeline, budget, and create a custom plan just for you.
+          </p>
+
+          {/* Feature Icons */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-2 text-white/90 backdrop-blur-sm bg-white/10 px-3 py-2 rounded-full">
+              <CheckCircle className="w-5 h-5" />
+              <span className="text-sm font-medium">Free Consultation</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90 backdrop-blur-sm bg-white/10 px-3 py-2 rounded-full">
+              <Clock className="w-5 h-5" />
+              <span className="text-sm font-medium">30-60 Minutes</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90 backdrop-blur-sm bg-white/10 px-3 py-2 rounded-full">
+              <Star className="w-5 h-5" />
+              <span className="text-sm font-medium">Expert Guidance</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90 backdrop-blur-sm bg-white/10 px-3 py-2 rounded-full">
+              <Crown className="w-5 h-5" />
+              <span className="text-sm font-medium">Personalized Service</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/15 rounded-full blur-lg"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+        
+        {/* Page Introduction */}
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
             <Heart className="h-5 w-5 mr-2" style={{ color: colorPalette.primary }} />
             <p className="text-xl font-medium" style={{ color: colorPalette.secondary }}>
@@ -75,26 +124,6 @@ export default async function BookingPage() {
             Ready to bring your vision to life? Book a consultation with our expert event planners. 
             We&apos;ll discuss your ideas, timeline, budget, and create a custom plan just for you.
           </p>
-
-          {/* Benefits */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
-            <div className="flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <CheckCircle className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Free Consultation</span>
-            </div>
-            <div className="flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <Clock className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>30-60 Minutes</span>
-            </div>
-            <div className="flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <Star className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Expert Guidance</span>
-            </div>
-            <div className="flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <Crown className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
-              <span className="text-sm font-medium" style={{ color: colorPalette.secondary }}>Personalized Service</span>
-            </div>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -253,13 +282,13 @@ export default async function BookingPage() {
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
                     <span style={{ color: colorPalette.secondary }}>
-                      Email: events@mdservices.com
+                      Email: {contactInfo?.email}
                     </span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="h-4 w-4 mr-2" style={{ color: colorPalette.primary }} />
                     <span style={{ color: colorPalette.secondary }}>
-                      Phone: +63 917 123 4567
+                      Phone: {contactInfo?.phone}
                     </span>
                   </div>
                   <div className="flex items-center">
@@ -272,8 +301,9 @@ export default async function BookingPage() {
               </CardContent>
             </Card>
 
+{/* TODO: Add testimonials */}
             {/* Testimonial */}
-            <Card 
+            {/* <Card 
               className="border-2 shadow-xl relative overflow-hidden"
               style={{
                 ...generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light'),
@@ -299,8 +329,48 @@ export default async function BookingPage() {
                   — Sarah & Michael, Wedding Clients
                 </cite>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
+        </div>
+
+        {/* Alternative Option Card */}
+        <div className="mt-12">
+          <Card 
+            className="border-2 shadow-2xl relative overflow-hidden max-w-2xl mx-auto"
+            style={{
+              ...generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light'),
+              borderColor: colorPalette.primary + '30'
+            }}
+          >
+            <div 
+              className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-20 transform translate-x-10 -translate-y-10"
+              style={generateDynamicGradientStyle('to-br', colorPalette, 0.3, 'normal')}
+            ></div>
+            
+            <CardHeader className="text-center relative z-10">
+              <div className="flex items-center justify-center mb-4">
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center"
+                  style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
+                >
+                  <CheckCircle className="h-6 w-6 text-white" />
+                </div>
+              </div>
+              <CardTitle 
+                className="text-2xl font-bold bg-clip-text text-transparent"
+                style={generateTextGradientStyle(colorPalette)}
+              >
+                Already Have a Plan?
+              </CardTitle>
+              <p className="mt-2" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                Skip the call — submit your event details now.
+              </p>
+            </CardHeader>
+            
+            <CardContent className="text-center relative z-10 pb-8">
+              <LockEventButton colorPalette={colorPalette} />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

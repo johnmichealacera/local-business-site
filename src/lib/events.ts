@@ -21,7 +21,8 @@ export async function getEvents(filters: EventFilters = {}): Promise<Event[]> {
   // Build where clause
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const where: Record<string, any> = {
-    isActive: true
+    isActive: true,
+    isConfirmed: true,
   }
 
   if (city) {
