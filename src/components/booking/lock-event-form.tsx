@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Calendar, MapPin, Sparkles, Crown, Heart, CheckCircle, Send } from 'lucide-react'
+import { Calendar, MapPin, Crown, Heart, CheckCircle, Send } from 'lucide-react'
 import { generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
 
 interface LockEventFormProps {
