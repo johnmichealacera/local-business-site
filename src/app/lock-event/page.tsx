@@ -1,6 +1,6 @@
 import { getSiteInfo } from '@/lib/site'
 import { Calendar, Clock, Sparkles, Crown, Heart, CheckCircle } from 'lucide-react'
-import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
+import { parseColorPalette, generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
 import LockEventForm from '@/components/booking/lock-event-form'
 import Image from 'next/image'
 
@@ -66,7 +66,7 @@ export default async function LockEventPage() {
           
           <h1 
             className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-lg"
-            style={generateTextGradientStyle(colorPalette)}
+            style={generateBrightTextGradientStyle(colorPalette)}
           >
             Lock Your Event Details
           </h1>

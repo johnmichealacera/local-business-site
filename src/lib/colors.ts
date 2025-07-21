@@ -152,6 +152,18 @@ export function generateTextGradientStyle(colorPalette: ColorPalette): React.CSS
   }
 }
 
+export function generateBrightTextGradientStyle(colorPalette: ColorPalette): React.CSSProperties {
+  const { primary } = colorPalette
+  
+  return {
+    background: `linear-gradient(135deg, white 0%, ${primary} 100%)`,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+  }
+}
+
 export function generateButtonGradientStyle(colorPalette: ColorPalette): React.CSSProperties {
   const { primary, secondary, tertiary } = colorPalette
   

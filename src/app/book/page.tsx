@@ -1,7 +1,7 @@
 import { getSiteInfo } from '@/lib/site'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar, Clock, Sparkles, CheckCircle, Star, Crown, Heart } from 'lucide-react'
-import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
+import { parseColorPalette, generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
 import LockEventButton from '@/components/booking/lock-event-button'
 import { getContactInfo } from '@/lib/contact'
@@ -71,7 +71,7 @@ export default async function BookingPage() {
           
           <h1 
             className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-lg"
-            style={generateTextGradientStyle(colorPalette)}
+            style={generateBrightTextGradientStyle(colorPalette)}
           >
             Book Your Event
           </h1>
@@ -150,7 +150,7 @@ export default async function BookingPage() {
                 </div>
                 <CardTitle 
                   className="text-2xl font-bold bg-clip-text text-transparent"
-                  style={generateTextGradientStyle(colorPalette)}
+                  style={generateBrightTextGradientStyle(colorPalette)}
                 >
                   Choose Your Perfect Time
                 </CardTitle>
@@ -196,7 +196,7 @@ export default async function BookingPage() {
                   </div>
                   <span 
                     className="bg-clip-text text-transparent font-bold"
-                    style={generateTextGradientStyle(colorPalette)}
+                    style={generateBrightTextGradientStyle(colorPalette)}
                   >
                     What to Expect
                   </span>
@@ -268,7 +268,7 @@ export default async function BookingPage() {
                   </div>
                   <span 
                     className="bg-clip-text text-transparent font-bold"
-                    style={generateTextGradientStyle(colorPalette)}
+                    style={generateBrightTextGradientStyle(colorPalette)}
                   >
                     Alternative Contact
                   </span>
@@ -358,7 +358,7 @@ export default async function BookingPage() {
               </div>
               <CardTitle 
                 className="text-2xl font-bold bg-clip-text text-transparent"
-                style={generateTextGradientStyle(colorPalette)}
+                style={generateBrightTextGradientStyle(colorPalette)}
               >
                 Already Have a Plan?
               </CardTitle>

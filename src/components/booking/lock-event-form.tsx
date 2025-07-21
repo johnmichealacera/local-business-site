@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, MapPin, Sparkles, Crown, Heart, CheckCircle, Send } from 'lucide-react'
-import { generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
+import { generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
 
 interface LockEventFormProps {
   colorPalette: {
@@ -125,7 +125,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
           
           <h2 
             className="text-3xl font-bold bg-clip-text text-transparent mb-4"
-            style={generateTextGradientStyle(colorPalette)}
+            style={generateBrightTextGradientStyle(colorPalette)}
           >
             Event Details Locked! 🎉
           </h2>
@@ -160,17 +160,17 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
       ></div>
       
       <CardHeader className="text-center relative z-10">
-        <div className="flex items-center justify-center mb-4">
+        {/* <div className="flex items-center justify-center mb-4">
           <div 
             className="w-12 h-12 rounded-full flex items-center justify-center"
             style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
           >
             <Sparkles className="h-6 w-6 text-white" />
           </div>
-        </div>
+        </div> */}
         <CardTitle 
           className="text-2xl font-bold bg-clip-text text-transparent"
-          style={generateTextGradientStyle(colorPalette)}
+          style={generateBrightTextGradientStyle(colorPalette)}
         >
           Event Details
         </CardTitle>
