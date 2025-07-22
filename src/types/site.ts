@@ -5,6 +5,7 @@ export interface Site {
   subdomain?: string
   description?: string
   logoUrl?: string
+  googleAnalyticsTag?: string
   colorPalette: string[] // [primary, secondary, tertiary]
   isActive: boolean
   packageType: SitePackage

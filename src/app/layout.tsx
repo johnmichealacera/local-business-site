@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MainLayout } from "@/components/layout/main-layout";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { getSiteInfo } from "@/lib/site";
 
 const geistSans = Geist({
@@ -27,19 +28,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const siteInfo = await getSiteInfo();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MainLayout>
-          {children}
-        </MainLayout>
+        <GoogleAnalytics googleAnalyticsTag={siteInfo?.googleAnalyticsTag} />
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );

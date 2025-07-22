@@ -14,6 +14,7 @@ model Site {
   subdomain     String?        @unique
   description   String?
   logoUrl       String?
+  googleAnalyticsTag String?
   isActive      Boolean        @default(true)
   packageType   SitePackage    @default(BASIC)
   featuresOrder FeatureName[]

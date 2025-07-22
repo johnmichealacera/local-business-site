@@ -21,6 +21,7 @@ export async function getSiteInfo(): Promise<Site | null> {
         subdomain: true,
         logoUrl: true,
         description: true,
+        googleAnalyticsTag: true,
         isActive: true,
         features: { select: { siteId: true, name: true, description: true, zcalEnabled: true, zcalLink: true } },
         featuresOrder: true,
@@ -59,7 +60,35 @@ export async function getSiteById(id: string): Promise<Site | null> {
   
   try {
     const site = await prisma.site.findUnique({
-      where: { id }
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        domain: true,
+        subdomain: true,
+        logoUrl: true,
+        description: true,
+        googleAnalyticsTag: true,
+        isActive: true,
+        features: { select: { siteId: true, name: true, description: true, zcalEnabled: true, zcalLink: true } },
+        featuresOrder: true,
+        colorPalette: true,
+        packageType: true,
+        hero: {
+          select: {
+            id: true,
+            title: true,
+            subtitle: true,
+            description: true,
+            imageUrl: true,
+            videoUrl: true,
+            ctaButton: true,
+            ctaLink: true
+          }
+        },
+        updatedAt: true,
+        createdAt: true
+      }
     })
 
     console.log('✅ Fetched site:', site ? site.name : 'Not found')
@@ -75,7 +104,35 @@ export async function getSiteByDomain(domain: string): Promise<Site | null> {
   
   try {
     const site = await prisma.site.findUnique({
-      where: { domain }
+      where: { domain },
+      select: {
+        id: true,
+        name: true,
+        domain: true,
+        subdomain: true,
+        logoUrl: true,
+        description: true,
+        googleAnalyticsTag: true,
+        isActive: true,
+        features: { select: { siteId: true, name: true, description: true, zcalEnabled: true, zcalLink: true } },
+        featuresOrder: true,
+        colorPalette: true,
+        packageType: true,
+        hero: {
+          select: {
+            id: true,
+            title: true,
+            subtitle: true,
+            description: true,
+            imageUrl: true,
+            videoUrl: true,
+            ctaButton: true,
+            ctaLink: true
+          }
+        },
+        updatedAt: true,
+        createdAt: true
+      }
     })
 
     console.log('✅ Fetched site by domain:', site ? site.name : 'Not found')
@@ -91,7 +148,35 @@ export async function getSiteBySubdomain(subdomain: string): Promise<Site | null
   
   try {
     const site = await prisma.site.findUnique({
-      where: { subdomain }
+      where: { subdomain },
+      select: {
+        id: true,
+        name: true,
+        domain: true,
+        subdomain: true,
+        logoUrl: true,
+        description: true,
+        googleAnalyticsTag: true,
+        isActive: true,
+        features: { select: { siteId: true, name: true, description: true, zcalEnabled: true, zcalLink: true } },
+        featuresOrder: true,
+        colorPalette: true,
+        packageType: true,
+        hero: {
+          select: {
+            id: true,
+            title: true,
+            subtitle: true,
+            description: true,
+            imageUrl: true,
+            videoUrl: true,
+            ctaButton: true,
+            ctaLink: true
+          }
+        },
+        updatedAt: true,
+        createdAt: true
+      }
     })
 
     console.log('✅ Fetched site by subdomain:', site ? site.name : 'Not found')
