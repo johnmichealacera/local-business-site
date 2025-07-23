@@ -1,7 +1,7 @@
 import { getSiteInfo } from '@/lib/site'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar, Clock, Sparkles, CheckCircle, Star, Crown, Heart } from 'lucide-react'
-import { parseColorPalette, generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
+import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
 import LockEventButton from '@/components/booking/lock-event-button'
 import { getContactInfo } from '@/lib/contact'
@@ -69,12 +69,15 @@ export default async function BookingPage() {
             </div>
           </div>
           
-          <h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-lg"
-            style={generateBrightTextGradientStyle(colorPalette)}
-          >
-            Book Your Event
-          </h1>
+          {/* Crisp Header with Background Container */}
+          <div className="inline-block px-6 py-4 mb-6 rounded-lg bg-white/90 backdrop-blur-md shadow-lg border border-white/20">
+            <h1 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight"
+              style={{ color: colorPalette.secondary }}
+            >
+              Book Your Event
+            </h1>
+          </div>
           
           <p className="text-xl sm:text-2xl text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
             Schedule your consultation with our expert event planners. 
@@ -148,12 +151,14 @@ export default async function BookingPage() {
                     <Sparkles className="h-8 w-8 animate-pulse" style={{ color: colorPalette.primary }} />
                   </div>
                 </div>
-                <CardTitle 
-                  className="text-2xl font-bold bg-clip-text text-transparent"
-                  style={generateBrightTextGradientStyle(colorPalette)}
-                >
-                  Choose Your Perfect Time
-                </CardTitle>
+                <div className="inline-block px-4 py-2 mb-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                  <CardTitle 
+                    className="text-2xl font-bold"
+                    style={{ color: colorPalette.secondary }}
+                  >
+                    Choose Your Perfect Time
+                  </CardTitle>
+                </div>
                 <p className="mt-2" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
                   Select a time that works best for you. We&apos;ll send you a confirmation with all the details.
                 </p>
@@ -187,20 +192,22 @@ export default async function BookingPage() {
               }}
             >
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <div 
-                    className="w-8 h-8 rounded-full flex items-center justify-center mr-3"
-                    style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
-                  >
-                    <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
-                  <span 
-                    className="bg-clip-text text-transparent font-bold"
-                    style={generateBrightTextGradientStyle(colorPalette)}
-                  >
-                    What to Expect
-                  </span>
-                </CardTitle>
+                <div className="inline-block px-3 py-2 mb-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                  <CardTitle className="flex items-center">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center mr-3"
+                      style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
+                    >
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                    <span 
+                      className="font-bold"
+                      style={{ color: colorPalette.secondary }}
+                    >
+                      What to Expect
+                    </span>
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
@@ -259,20 +266,22 @@ export default async function BookingPage() {
               }}
             >
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <div 
-                    className="w-8 h-8 rounded-full flex items-center justify-center mr-3"
-                    style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
-                  >
-                    <Crown className="h-4 w-4 text-white" />
-                  </div>
-                  <span 
-                    className="bg-clip-text text-transparent font-bold"
-                    style={generateBrightTextGradientStyle(colorPalette)}
-                  >
-                    Alternative Contact
-                  </span>
-                </CardTitle>
+                <div className="inline-block px-3 py-2 mb-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                  <CardTitle className="flex items-center">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center mr-3"
+                      style={generateDynamicGradientStyle('to-br', colorPalette, 1, 'normal')}
+                    >
+                      <Crown className="h-4 w-4 text-white" />
+                    </div>
+                    <span 
+                      className="font-bold"
+                      style={{ color: colorPalette.secondary }}
+                    >
+                      Alternative Contact
+                    </span>
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
                 <p className="mb-4" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
@@ -356,12 +365,14 @@ export default async function BookingPage() {
                   <CheckCircle className="h-6 w-6 text-white" />
                 </div>
               </div>
-              <CardTitle 
-                className="text-2xl font-bold bg-clip-text text-transparent"
-                style={generateBrightTextGradientStyle(colorPalette)}
-              >
-                Already Have a Plan?
-              </CardTitle>
+              <div className="inline-block px-4 py-2 mb-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                <CardTitle 
+                  className="text-2xl font-bold"
+                  style={{ color: colorPalette.secondary }}
+                >
+                  Already Have a Plan?
+                </CardTitle>
+              </div>
               <p className="mt-2" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
                 Skip the call — submit your event details now.
               </p>

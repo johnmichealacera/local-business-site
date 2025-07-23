@@ -8,28 +8,28 @@ datasource db {
 }
 
 model Site {
-  id            String         @id @default(cuid())
-  name          String
-  domain        String         @unique
-  subdomain     String?        @unique
-  description   String?
-  logoUrl       String?
+  id                 String         @id @default(cuid())
+  name               String
+  domain             String         @unique
+  subdomain          String?        @unique
+  description        String?
+  logoUrl            String?
+  isActive           Boolean        @default(true)
+  packageType        SitePackage    @default(BASIC)
+  featuresOrder      FeatureName[]
+  colorPalette       String[]       @default(["#3B82F6", "#10B981", "#F59E0B"])
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
   googleAnalyticsTag String?
-  isActive      Boolean        @default(true)
-  packageType   SitePackage    @default(BASIC)
-  featuresOrder FeatureName[]
-  colorPalette  String[]       @default(["#3B82F6", "#10B981", "#F59E0B"])
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  features      SiteFeature[]
-  about         About[]
-  categories    Category[]
-  contact       Contact[]
-  eventServices EventService[]
-  events        Event[]
-  hero          Hero?
-  products      Product[]
-  users         UserSite[]
+  features           SiteFeature[]
+  about              About[]
+  categories         Category[]
+  contact            Contact[]
+  eventServices      EventService[]
+  events             Event[]
+  hero               Hero?
+  products           Product[]
+  users              UserSite[]
 
   @@map("sites")
 }
@@ -160,41 +160,60 @@ model Event {
   imageUrls    String[]  @default([])
   isActive     Boolean   @default(true)
   isFeatured   Boolean   @default(false)
-  isConfirmed  Boolean   @default(false)
   tags         String[]  @default([])
   contactEmail String?
   contactPhone String?
-  contactName  String?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   siteId       String
+  isConfirmed  Boolean   @default(false)
+  contactName  String?
   site         Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@map("events")
 }
 
 model EventService {
-  id           String   @id @default(cuid())
-  name         String
-  description  String?
-  basePrice    Float?   @default(0)
-  isActive     Boolean  @default(true)
-  isFeatured   Boolean  @default(false)
-  category     String?
-  duration     String?
-  inclusions   String[] @default([])
-  addOns       Json?
-  freebies     String[] @default([])
-  contactEmail String?
-  contactPhone String?
-  bookingUrl   String?
-  tags         String[] @default([])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  siteId       String
-  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id              String                @id @default(cuid())
+  name            String
+  description     String?
+  basePrice       Float?                @default(0)
+  isActive        Boolean               @default(true)
+  isFeatured      Boolean               @default(false)
+  duration        String?
+  inclusions      String[]              @default([])
+  addOns          Json?
+  freebies        String[]              @default([])
+  contactEmail    String?
+  contactPhone    String?
+  bookingUrl      String?
+  tags            String[]              @default([])
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  siteId          String
+  packages        String[]              @default([])
+  servicePackages EventServicePackage[]
+  site            Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@map("event_services")
+}
+
+model EventServicePackage {
+  id             String       @id @default(cuid())
+  name           String
+  description    String?
+  price          Float?       @default(0)
+  inclusions     String[]     @default([])
+  addOns         Json?
+  freebies       String[]     @default([])
+  isActive       Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  eventServiceId String
+  eventService   EventService @relation(fields: [eventServiceId], references: [id], onDelete: Cascade)
+
+  @@unique([eventServiceId, name])
+  @@map("event_service_packages")
 }
 
 model SiteFeature {

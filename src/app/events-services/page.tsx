@@ -1,9 +1,8 @@
-import { getEventServices, getEventServiceCategories } from '@/lib/event-services'
+import { getEventServices } from '@/lib/event-services'
 import { EventServiceCard } from '@/components/event-services/event-service-card'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Search, Filter, Star, Calendar, Users, Award, Sparkles, Crown, Zap, Heart, ArrowRight, CheckCircle } from 'lucide-react'
+import { Search, Filter, Star, Calendar, Award, Sparkles, Crown, Zap, Heart, CheckCircle } from 'lucide-react'
 import { getSiteInfo } from '@/lib/site'
 import { parseColorPalette, generateDynamicGradientStyle, generateTextGradientStyle } from '@/lib/colors'
 import { BookingButton } from '@/components/booking/booking-button'
@@ -15,9 +14,8 @@ import Image from "next/image"
 export const dynamic = 'force-dynamic'
 
 export default async function EventServicesPage() {
-  const [eventServices, categories, siteInfo] = await Promise.all([
+  const [eventServices, siteInfo] = await Promise.all([
     getEventServices(),
-    getEventServiceCategories(),
     getSiteInfo()
   ])
 
@@ -76,40 +74,37 @@ export default async function EventServicesPage() {
               }}
             ></div>
             {/* Additional overlay for better text readability */}
-            <div className="absolute inset-0 rounded-3xl bg-black/20"></div>
+            <div className="absolute inset-0 rounded-3xl bg-black/30"></div>
           </div>
 
           <div className="relative z-10">
-            <div className="flex items-center justify-center mb-6">
-              <div className="relative">
-                <Crown className="h-16 w-16 animate-bounce" style={{ color: colorPalette.primary }} />
-                <Sparkles className="h-6 w-6 absolute -top-2 -right-2 animate-ping" style={{ color: colorPalette.primary }} />
+            {/* Text Container with Background */}
+            <div className="inline-block p-4 sm:p-6 rounded-xl backdrop-blur-sm bg-white/85 shadow-xl border border-white/20">
+              <div className="flex items-center justify-center mb-4">
+                <div className="relative">
+                  <Crown className="h-12 w-12 animate-bounce" style={{ color: colorPalette.primary }} />
+                  <Sparkles className="h-4 w-4 absolute -top-1 -right-1 animate-ping" style={{ color: colorPalette.primary }} />
+                </div>
               </div>
-            </div>
-            <h1 
-              className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white"
-              style={{
-                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-                background: `linear-gradient(135deg, white 0%, ${colorPalette.primary} 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Event Services
-            </h1>
-            <div className="flex items-center justify-center mb-6">
-              <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
-              <p className="text-base sm:text-xl font-medium text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
-                Crafting Unforgettable Moments
+              <h1 
+                className="text-2xl sm:text-4xl md:text-6xl font-extrabold mb-4 leading-tight"
+                style={{ color: colorPalette.secondary }}
+              >
+                Event Services
+              </h1>
+              <div className="flex items-center justify-center mb-4">
+                <Heart className="h-3 w-3 sm:h-4 sm:w-4 mr-2" style={{ color: colorPalette.primary }} />
+                <p className="text-sm sm:text-lg font-semibold" style={{ color: colorPalette.secondary }}>
+                  Crafting Unforgettable Moments
+                </p>
+                <Heart className="h-3 w-3 sm:h-4 sm:w-4 ml-2" style={{ color: colorPalette.primary }} />
+              </div>
+              <p className="max-w-2xl mx-auto text-xs sm:text-base leading-relaxed px-2" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                Experience the pinnacle of event excellence with our services. From intimate celebrations to grand corporate gatherings, 
+                we transform your vision into extraordinary memories that sparkle with perfection.
               </p>
-              <Heart className="h-4 w-4 sm:h-5 sm:w-5 ml-2 text-white" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }} />
             </div>
-            <p className="max-w-4xl mx-auto text-sm sm:text-lg leading-relaxed text-white/95 px-4" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-              Experience the pinnacle of event excellence with our services. From intimate celebrations to grand corporate gatherings, 
-              we transform your vision into extraordinary memories that sparkle with perfection.
-            </p>
-            
+
             {/* Features Bar */}
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-8 mb-12">
               <div className="flex items-center bg-white/70 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg">
@@ -196,7 +191,7 @@ export default async function EventServicesPage() {
             </CardContent>
           </Card>
           
-          <Card className="group hover:shadow-2xl transition-all duration-500 border-0 hover:scale-105" style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}>
+          {/* <Card className="group hover:shadow-2xl transition-all duration-500 border-0 hover:scale-105" style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}>
             <CardContent className="pt-8 pb-6 text-center relative overflow-hidden">
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -218,7 +213,7 @@ export default async function EventServicesPage() {
                 <p className="font-medium" style={{ color: colorPalette.secondary }}>Service Categories</p>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
           
           <Card className="group hover:shadow-2xl transition-all duration-500 border-0 hover:scale-105" style={generateDynamicGradientStyle('to-br', colorPalette, 0.05, 'light')}>
             <CardContent className="pt-8 pb-6 text-center relative overflow-hidden">
@@ -245,8 +240,9 @@ export default async function EventServicesPage() {
           </Card>
         </div>
 
+{/* TODO: Change this to packages */}
         {/* Categories Section */}
-        {categories && categories.length > 0 && (
+        {/* {categories && categories.length > 0 && (
           <div className="mb-16">
             <div className="text-center mb-10">
               <h2 
@@ -287,7 +283,7 @@ export default async function EventServicesPage() {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Featured Services Section */}
         {featuredServices.length > 0 && (

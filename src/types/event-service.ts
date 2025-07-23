@@ -4,6 +4,19 @@ export interface EventServiceAddOn {
   description: string
 }
 
+export interface EventServicePackage {
+  id: string
+  name: string
+  description?: string
+  price: number
+  inclusions: string[]
+  addOns: EventServiceAddOn[]
+  freebies: string[]
+  isActive: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface EventService {
   id: string
   name: string
@@ -22,6 +35,8 @@ export interface EventService {
   contactPhone?: string
   bookingUrl?: string
   siteId: string
+  packages: string[]
+  servicePackages: EventServicePackage[]
   createdAt: Date
   updatedAt: Date
 }

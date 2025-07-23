@@ -6,8 +6,7 @@ import { parseColorPalette, generateDynamicGradientStyle } from "@/lib/colors";
 import { 
   Mail, 
   Phone, 
-  MapPin, 
-  Clock, 
+  MapPin,
   Building,
   Globe
 } from "lucide-react";
@@ -186,8 +185,9 @@ export default async function ContactPage() {
                   </Card>
                 )}
 
+{/* TODO: Add business hours */}
                 {/* Business Hours */}
-                <Card>
+                {/* <Card>
                   <CardHeader className="pb-3">
                     <div className="flex items-center space-x-3">
                       <Clock className="w-5 h-5 text-slate-600" />
@@ -203,7 +203,7 @@ export default async function ContactPage() {
                       </div>
                     </div>
                   </CardHeader>
-                </Card>
+                </Card> */}
               </div>
             </div>
 

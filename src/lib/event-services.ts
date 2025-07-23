@@ -61,11 +61,17 @@ export async function getEventServices(filters: EventServiceFilters = {}): Promi
   try {
     const eventServices = await prisma.eventService.findMany({
       where,
-      orderBy
+      orderBy,
+      include: {
+        servicePackages: {
+          where: { isActive: true },
+          orderBy: { price: 'asc' }
+        }
+      }
     })
 
     console.log(`✅ Fetched ${eventServices.length} event services from database`)
-    return eventServices as EventService[]
+    return eventServices as unknown as EventService[]
   } catch (error) {
     console.error('Error fetching event services:', error)
     return []
@@ -77,14 +83,17 @@ export async function getEventServiceById(id: string): Promise<EventService | nu
   
   try {
     const eventService = await prisma.eventService.findUnique({
-      where: { 
-        id, 
-        siteId: process.env.SITE_ID 
+      where: { id },
+      include: {
+        servicePackages: {
+          where: { isActive: true },
+          orderBy: { price: 'asc' }
+        }
       }
     })
 
     console.log('✅ Fetched event service:', eventService ? eventService.name : 'Not found')
-    return eventService as EventService
+    return eventService as unknown as EventService
   } catch (error) {
     console.error('Error fetching event service:', error)
     return null
@@ -103,37 +112,44 @@ export async function getFeaturedEventServices(): Promise<EventService[]> {
       },
       orderBy: {
         createdAt: 'desc'
+      },
+      include: {
+        servicePackages: {
+          where: { isActive: true },
+          orderBy: { price: 'asc' }
+        }
       }
     })
 
     console.log(`✅ Fetched ${featuredServices.length} featured event services from database`)
-    return featuredServices as EventService[]
+    return featuredServices as unknown as EventService[]
   } catch (error) {
     console.error('Error fetching featured event services:', error)
     return []
   }
 }
 
-export async function getEventServiceCategories(): Promise<string[] | null> {
-  console.log('🔄 Fetching event service categories from database...', new Date().toISOString())
+// TODO: Change this to packages
+// export async function getEventServiceCategories(): Promise<string[]> {
+//   console.log('🔄 Fetching event service categories from database...', new Date().toISOString())
   
-  try {
-    const categories = await prisma.eventService.findMany({
-      where: {
-        isActive: true,
-        siteId: process.env.SITE_ID
-      },
-      select: {
-        category: true
-      },
-      distinct: ['category']
-    })
+//   try {
+//     const categories = await prisma.eventService.findMany({
+//       where: {
+//         isActive: true,
+//         siteId: process.env.SITE_ID
+//       },
+//       select: {
+//         category: true
+//       },
+//       distinct: ['category']
+//     })
 
-    const categoryNames = categories.map(c => c.category).filter((c): c is string => c !== null)
-    console.log(`✅ Fetched ${categoryNames.length} event service categories from database`)
-    return categoryNames
-  } catch (error) {
-    console.error('Error fetching event service categories:', error)
-    return []
-  }
-} 
+//     const categoryList = categories.map(cat => cat.category).filter((cat): cat is string => cat !== null)
+//     console.log('✅ Fetched event service categories:', categoryList)
+//     return categoryList
+//   } catch (error) {
+//     console.error('Error fetching event service categories:', error)
+//     return []
+//   }
+// } 
