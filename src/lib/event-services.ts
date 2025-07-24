@@ -65,7 +65,7 @@ export async function getEventServices(filters: EventServiceFilters = {}): Promi
       include: {
         servicePackages: {
           where: { isActive: true },
-          orderBy: { price: 'asc' }
+          orderBy: { sortOrder: 'asc' }
         }
       }
     })
@@ -87,7 +87,7 @@ export async function getEventServiceById(id: string): Promise<EventService | nu
       include: {
         servicePackages: {
           where: { isActive: true },
-          orderBy: { price: 'asc' }
+          orderBy: { sortOrder: 'asc' }
         }
       }
     })
@@ -116,7 +116,7 @@ export async function getFeaturedEventServices(): Promise<EventService[]> {
       include: {
         servicePackages: {
           where: { isActive: true },
-          orderBy: { price: 'asc' }
+          orderBy: { sortOrder: 'asc' }
         }
       }
     })

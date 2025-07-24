@@ -51,13 +51,13 @@ export function EventServiceCard({ service }: EventServiceCardProps) {
         <div className="flex-1">
           <h4 className="font-semibold text-slate-900 mb-3">Available Packages:</h4>
           <div className="space-y-2">
-            {service.servicePackages.slice(0, 3).map((pkg, index) => (
+            {service.servicePackages.slice(0, 3).map((pkg) => (
               <div key={pkg.id} className="flex items-center p-2 bg-slate-50 rounded-lg">
                 <div className="flex items-center">
-                  <div className={`w-3 h-3 rounded-full mr-2 ${
-                    index === 0 ? 'bg-gray-400' : 
-                    index === 1 ? 'bg-yellow-500' : 'bg-purple-500'
-                  }`}></div>
+                  <div 
+                    className="w-3 h-3 rounded-full mr-2"
+                    style={{ backgroundColor: pkg.colorHexCode || '#3B82F6' }}
+                  ></div>
                   <span className="text-sm font-medium text-slate-700 capitalize">{pkg.name}</span>
                 </div>
               </div>

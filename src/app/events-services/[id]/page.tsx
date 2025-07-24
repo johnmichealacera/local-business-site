@@ -148,7 +148,7 @@ export default async function EventServiceDetailPage({ params }: EventServiceDet
                   Choose Your Package
                 </h2>
                 
-                {service.servicePackages.map((pkg, index) => (
+                {service.servicePackages.map((pkg) => (
                   <Card 
                     key={pkg.id}
                     className="border-2 shadow-xl group hover:shadow-2xl transition-all duration-500"
@@ -164,10 +164,10 @@ export default async function EventServiceDetailPage({ params }: EventServiceDet
                       ></div>
                       <div className="flex items-center justify-between relative z-10">
                         <div className="flex items-center">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
-                            index === 0 ? 'bg-gray-400' : 
-                            index === 1 ? 'bg-yellow-500' : 'bg-purple-500'
-                          }`}>
+                          <div 
+                            className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+                            style={{ backgroundColor: pkg.colorHexCode || '#3B82F6' }}
+                          >
                             <Crown className="h-6 w-6 text-white" />
                           </div>
                           <div>

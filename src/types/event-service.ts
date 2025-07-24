@@ -13,6 +13,8 @@ export interface EventServicePackage {
   addOns: EventServiceAddOn[]
   freebies: string[]
   isActive: boolean
+  colorHexCode?: string
+  sortOrder: number
   createdAt: Date
   updatedAt: Date
 }
@@ -34,6 +36,7 @@ export interface EventService {
   contactEmail?: string
   contactPhone?: string
   bookingUrl?: string
+  bgImage?: string
   siteId: string
   packages: string[]
   servicePackages: EventServicePackage[]

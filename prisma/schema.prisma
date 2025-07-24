@@ -188,6 +188,7 @@ model EventService {
   contactPhone    String?
   bookingUrl      String?
   tags            String[]              @default([])
+  bgImage         String?
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
   siteId          String
@@ -210,6 +211,8 @@ model EventServicePackage {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   eventServiceId String
+  colorHexCode   String?      @default("#3B82F6")
+  sortOrder      Int          @default(0)
   eventService   EventService @relation(fields: [eventServiceId], references: [id], onDelete: Cascade)
 
   @@unique([eventServiceId, name])

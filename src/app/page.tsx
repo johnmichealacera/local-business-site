@@ -488,12 +488,12 @@ export default async function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Start Your Journey?
             </h2>
-            <p className="mb-8 text-lg opacity-90">
+            {/* <p className="mb-8 text-lg opacity-90">
               {homepageFeatures.includes(SiteFeature.PRODUCTS) 
                 ? "Join thousands of fashion-conscious customers who've made the switch to sustainable style."
                 : "Join our community and discover what makes us special."
               }
-            </p>
+            </p> */}
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link href={primaryCTA.href}>
                 <Button size="lg" variant="outline" className="bg-[var(--color-tertiary)] text-[var(--color-secondary)] hover:bg-[var(--color-tertiary-light)] group border-[var(--color-tertiary)]">
