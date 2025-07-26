@@ -24,6 +24,7 @@ export default async function EventServicesPage() {
   const featuredServices = eventServices.filter(service => service.isFeatured)
   const regularServices = eventServices.filter(service => !service.isFeatured)
   const zcalUrl = siteInfo?.features.find(f => f.name === SiteFeature.EVENT_SERVICES)?.zcalLink
+  const zcalEnabled = siteInfo?.features.find(f => f.name === SiteFeature.EVENT_SERVICES)?.zcalEnabled
 
   return (
     <div 
@@ -152,7 +153,7 @@ export default async function EventServicesPage() {
                   </div>
                   
                   <BookingButton 
-                    zcalUrl={zcalUrl || "/book"}
+                    zcalUrl={zcalEnabled ? zcalUrl : "/lock-event"}
                     colorPalette={siteInfo?.colorPalette}
                     variant="primary"
                     size="lg"
@@ -448,32 +449,30 @@ export default async function EventServicesPage() {
               
               <div className="space-y-4">
                 <BookingButton 
-                  zcalUrl={zcalUrl || "/book"}
+                  zcalUrl={"/lock-event"}
                   colorPalette={siteInfo?.colorPalette}
                   variant="primary"
                   size="lg"
                   description="Free consultation • Instant booking • 24/7 availability"
                 />
                 
-                <CustomConsultationButton 
-                  zcalUrl={zcalUrl}
-                  colorPalette={colorPalette}
-                />
-                
-                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 text-xs sm:text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
-                    Free Consultation
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
-                    24/7 Support
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
-                    Satisfaction Guarantee
-                  </div>
-                </div>
+                {zcalEnabled && (
+                <><CustomConsultationButton
+                    zcalUrl={zcalUrl}
+                    colorPalette={colorPalette} /><div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 text-xs sm:text-sm" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
+                      <div className="flex items-center">
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                        Free Consultation
+                      </div>
+                      <div className="flex items-center">
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                        24/7 Support
+                      </div>
+                      <div className="flex items-center">
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" style={{ color: colorPalette.primary }} />
+                        Satisfaction Guarantee
+                      </div>
+                    </div></>)}
               </div>
             </CardContent>
           </Card>

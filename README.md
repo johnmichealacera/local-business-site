@@ -28,6 +28,8 @@ A modern, multi-tenant web application platform that dynamically adapts to serve
 - **Product Management**: Dynamic product catalog with database integration
 - **Event System**: Full event management with image carousels
 - **Event Services**: Service offerings and bookings
+- **Service Package Selection**: Cascading dropdown selection for services and packages
+- **Streamlined Booking**: Reduced-pressure booking forms with optional fields
 - **Advanced Filtering**: Category, price range, search, and sorting
 - **Image Galleries**: Multiple image support with carousel functionality
 - **Local Pickup Messaging**: Philippine market-optimized shipping information
@@ -49,6 +51,8 @@ A modern, multi-tenant web application platform that dynamically adapts to serve
 - **Prisma ORM**: Type-safe database operations with site scoping
 - **Server Components**: Optimized server-side rendering
 - **API Routes**: RESTful API endpoints with tenant isolation
+- **Event Service APIs**: Service and package management endpoints
+- **Enhanced Data Relationships**: Event-service package linking for better tracking
 
 ## 🚀 Quick Start
 
@@ -140,8 +144,13 @@ Visit [http://localhost:3000](http://localhost:3000) to see your application!
 ```
 src/
 ├── app/                    # Next.js 15 App Router
+│   ├── api/               # API routes
+│   │   ├── events/        # Event management APIs
+│   │   ├── event-services/ # Event service APIs
+│   │   └── products/      # Product management APIs
 │   ├── events/            # Event management pages
 │   ├── events-services/   # Event services pages
+│   ├── lock-event/        # Event booking form
 │   ├── products/          # Product management pages
 │   ├── about/             # About page
 │   ├── contact/           # Contact page
@@ -152,6 +161,7 @@ src/
 │   ├── layout/            # Layout components (Header, Footer)
 │   ├── products/          # Product-related components
 │   ├── events/            # Event-related components
+│   ├── booking/           # Booking form components
 │   ├── contact/           # Contact form components
 │   └── ui/                # Base UI components
 ├── lib/                   # Utility functions and data access
@@ -219,6 +229,8 @@ model Event {
   imageUrls String[] // Multi-image carousel support
   siteId    String   // Tenant isolation
   site      Site     @relation(fields: [siteId], references: [id])
+  eventServicePackageId String? // Optional service package linking
+  eventServicePackage   EventServicePackage? @relation(fields: [eventServicePackageId], references: [id])
   // ... other fields
 }
 ```
@@ -260,14 +272,15 @@ model Event {
 - Multi-location retailers
 
 ### **Event Companies**
-- Event planning services
-- Venue management
-- Service marketplaces
+- Event planning services with service package selection
+- Venue management with streamlined booking
+- Service marketplaces with reduced-pressure forms
+- Event service providers with package-based offerings
 
 ### **Service Providers**
-- Consulting firms
-- Professional services
-- Local businesses
+- Consulting firms with service packages
+- Professional services with flexible booking
+- Local businesses with optional field forms
 
 ## 📈 Scalability
 
@@ -280,6 +293,8 @@ model Event {
 - Modular feature system
 - Package-based feature unlocking
 - Custom feature development
+- Service package management
+- Flexible booking system scaling
 
 ## 🔧 Development Commands
 
@@ -308,12 +323,15 @@ npx prisma db seed --site-id=<site-id>  # Seed specific tenant
 3. Update tenant-specific documentation
 4. Follow semantic versioning
 5. Update CHANGELOG.md with changes
+6. Test booking flows and service package selection
 
 ### **Adding New Features**
 1. Consider multi-tenant implications
 2. Add feature flags to SiteFeature enum
 3. Update navigation logic
 4. Test across different package types
+5. Validate service package relationships
+6. Test optional field handling in forms
 
 ## 📞 Support
 

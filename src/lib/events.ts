@@ -80,7 +80,14 @@ export async function getEvents(filters: EventFilters = {}): Promise<Event[]> {
   try {
     const events = await prisma.event.findMany({
       where,
-      orderBy
+      orderBy,
+      include: {
+        eventServicePackage: {
+          include: {
+            eventService: true
+          }
+        }
+      }
     })
 
     console.log(`✅ Fetched ${events.length} events from database`)
@@ -96,7 +103,14 @@ export async function getEventById(id: string): Promise<Event | null> {
   
   try {
     const event = await prisma.event.findUnique({
-      where: { id, siteId: process.env.SITE_ID }
+      where: { id, siteId: process.env.SITE_ID },
+      include: {
+        eventServicePackage: {
+          include: {
+            eventService: true
+          }
+        }
+      }
     })
 
     console.log('✅ Fetched event:', event ? event.title : 'Not found')
@@ -117,6 +131,13 @@ export async function getFeaturedEvents(): Promise<Event[]> {
         isFeatured: true,
         isConfirmed: true,
         siteId: process.env.SITE_ID
+      },
+      include: {
+        eventServicePackage: {
+          include: {
+            eventService: true
+          }
+        }
       },
       orderBy: {
         startDate: 'asc'
@@ -142,6 +163,13 @@ export async function getUpcomingEvents(): Promise<Event[]> {
           gte: new Date()
         },
         siteId: process.env.SITE_ID
+      },
+      include: {
+        eventServicePackage: {
+          include: {
+            eventService: true
+          }
+        }
       },
       orderBy: {
         startDate: 'asc'

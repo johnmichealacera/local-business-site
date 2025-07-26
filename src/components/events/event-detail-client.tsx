@@ -183,6 +183,31 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Event Service Package Information */}
+              {event.eventServicePackage && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Selected Service Package</h4>
+                  <div className="space-y-2">
+                    {event.eventServicePackage.eventService && (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium text-blue-800">Service:</span>
+                        <span className="text-sm text-blue-700">{event.eventServicePackage.eventService.name}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-blue-800">Package:</span>
+                      <span className="text-sm text-blue-700">{event.eventServicePackage.name}</span>
+                    </div>
+                    {event.eventServicePackage.price && event.eventServicePackage.price > 0 && (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium text-blue-800">Package Price:</span>
+                        <span className="text-sm text-blue-700">${event.eventServicePackage.price}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">

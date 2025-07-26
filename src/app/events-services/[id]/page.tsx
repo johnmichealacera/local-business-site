@@ -244,20 +244,21 @@ export default async function EventServiceDetailPage({ params }: EventServiceDet
                         </div>
                       )}
 
-{/* TODO: Add package CTA */}
                       {/* Package CTA */}
-                      {/* <div className="pt-4 border-t" style={{ borderColor: colorPalette.primary + '30' }}>
-                        <Button 
-                          className="w-full group"
-                          size="lg"
-                          style={{
-                            background: generateDynamicGradientStyle('to-r', colorPalette, 1, 'normal').background
-                          }}
-                        >
-                          Choose {pkg.name} Package
-                          <ArrowLeft className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </div> */}
+                      <div className="pt-4 border-t" style={{ borderColor: colorPalette.primary + '30' }}>
+                        <Link href={`/lock-event?serviceId=${service.id}&serviceName=${encodeURIComponent(service.name)}&packageId=${pkg.id}&packageName=${encodeURIComponent(pkg.name)}`}>
+                          <Button 
+                            className="w-full group"
+                            size="lg"
+                            style={{
+                              background: generateDynamicGradientStyle('to-r', colorPalette, 1, 'normal').background
+                            }}
+                          >
+                            Choose {pkg.name} Package
+                            <ArrowLeft className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}

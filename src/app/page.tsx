@@ -354,7 +354,8 @@ export default async function HomePage() {
       <Hero 
         siteInfo={siteInfo} 
         defaultCTA={primaryCTA}
-        showBookingButton={siteInfo?.name?.includes('MD Events') || siteInfo?.name?.includes('Events')}
+        // TODO: Investigate if this is needed
+        showBookingButton={!primaryCTA}
         zcalUrl="/book"
       />
 
