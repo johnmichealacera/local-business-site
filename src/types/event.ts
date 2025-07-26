@@ -19,6 +19,28 @@ export interface Event {
   contactEmail?: string
   contactPhone?: string
   websiteUrl?: string
+  contactName?: string
+  isConfirmed?: boolean
+  eventServicePackageId?: string
+  eventServicePackage?: {
+    id: string
+    name: string
+    description?: string
+    price?: number
+    inclusions: string[]
+    addOns: unknown
+    freebies: string[]
+    isActive: boolean
+    colorHexCode?: string
+    sortOrder: number
+    createdAt: Date
+    updatedAt: Date
+    eventService?: {
+      id: string
+      name: string
+      description?: string
+    }
+  }
   createdAt: Date
   updatedAt: Date
 }

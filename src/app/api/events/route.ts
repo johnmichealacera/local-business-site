@@ -4,8 +4,8 @@ import { prisma } from '@/lib/prisma'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    const siteId = process.env.SITE_ID;
     const {
-      siteId,
       bookingTitle,
       description,
       startDate,
@@ -21,15 +21,14 @@ export async function POST(request: NextRequest) {
       maxAttendees,
       contactName,
       contactEmail,
-      contactPhone
+      contactPhone,
+      selectedPackageId
     } = body
 
     // Validate required fields
-    if (!siteId || !bookingTitle || !description || !startDate || !startTime || 
-        !endDate || !endTime || !venueName || !address || !city || !province || 
-        !country || !zipCode || !maxAttendees || !contactName || !contactPhone) {
+    if (!siteId || !bookingTitle || !description || !contactName || !contactPhone) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: Event title, description, contact name, and phone number are required' },
         { status: 400 }
       )
     }
@@ -40,18 +39,19 @@ export async function POST(request: NextRequest) {
         siteId,
         title: bookingTitle,
         description: `${description}\n\nContact: ${contactName}\nPhone: ${contactPhone}${contactEmail ? `\nEmail: ${contactEmail}` : ''}`,
-        startDate: new Date(`${startDate}T${startTime}`),
-        endDate: new Date(`${endDate}T${endTime}`),
-        location: venueName,
-        address,
-        city,
-        province,
-        country,
-        zipCode,
-        maxAttendees,
+        startDate: startDate && startTime ? new Date(`${startDate}T${startTime}`) : new Date(),
+        endDate: endDate && endTime ? new Date(`${endDate}T${endTime}`) : null,
+        location: venueName || null,
+        address: address || null,
+        city: city || null,
+        province: province || null,
+        country: country || null,
+        zipCode: zipCode || null,
+        maxAttendees: maxAttendees ? parseInt(maxAttendees) : null,
         contactEmail,
         contactName,
-        contactPhone
+        contactPhone,
+        eventServicePackageId: selectedPackageId || null
       }
     })
 
@@ -88,6 +88,13 @@ export async function GET() {
     const events = await prisma.event.findMany({
       where: {
         siteId
+      },
+      include: {
+        eventServicePackage: {
+          include: {
+            eventService: true
+          }
+        }
       },
       orderBy: {
         createdAt: 'desc'
