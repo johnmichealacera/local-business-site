@@ -1,6 +1,6 @@
 {
   "name": "localdevventures-multi-tenant-site",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
