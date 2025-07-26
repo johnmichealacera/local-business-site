@@ -110,7 +110,7 @@ export function BookingButton({
           <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 group-hover:scale-110 transition-transform duration-300" />
           
           <span className="font-bold text-base sm:text-lg">
-            {size === 'lg' ? 'Let\'s Plan an Unforgettable Day' : 'Book Now'}
+            {size === 'lg' ? 'Lock your event booking now' : 'Book Now'}
           </span>
           
           <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 ml-2 sm:ml-3 group-hover:animate-spin transition-transform duration-300" />
