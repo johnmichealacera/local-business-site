@@ -144,31 +144,33 @@ model Hero {
 }
 
 model Event {
-  id           String    @id @default(cuid())
-  title        String
-  description  String?
-  startDate    DateTime
-  endDate      DateTime?
-  location     String?
-  address      String?
-  city         String?
-  province     String?
-  zipCode      String?
-  country      String?
-  price        Float?    @default(0)
-  maxAttendees Int?
-  imageUrls    String[]  @default([])
-  isActive     Boolean   @default(true)
-  isFeatured   Boolean   @default(false)
-  tags         String[]  @default([])
-  contactEmail String?
-  contactPhone String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  siteId       String
-  isConfirmed  Boolean   @default(false)
-  contactName  String?
-  site         Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id                    String                @id @default(cuid())
+  title                 String
+  description           String?
+  startDate             DateTime
+  endDate               DateTime?
+  location              String?
+  address               String?
+  city                  String?
+  province              String?
+  zipCode               String?
+  country               String?
+  price                 Float?                @default(0)
+  maxAttendees          Int?
+  imageUrls             String[]              @default([])
+  isActive              Boolean               @default(true)
+  isFeatured            Boolean               @default(false)
+  tags                  String[]              @default([])
+  contactEmail          String?
+  contactPhone          String?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  siteId                String
+  isConfirmed           Boolean               @default(false)
+  contactName           String?
+  eventServicePackageId String?
+  site                  Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  eventServicePackage   EventServicePackage?  @relation(fields: [eventServicePackageId], references: [id], onDelete: SetNull)
 
   @@map("events")
 }
@@ -214,6 +216,7 @@ model EventServicePackage {
   colorHexCode   String?      @default("#3B82F6")
   sortOrder      Int          @default(0)
   eventService   EventService @relation(fields: [eventServiceId], references: [id], onDelete: Cascade)
+  events         Event[]
 
   @@unique([eventServiceId, name])
   @@map("event_service_packages")

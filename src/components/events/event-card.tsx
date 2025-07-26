@@ -70,7 +70,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
   }
 
   return (
-    <Card hover variant="elevated" className="group overflow-hidden">
+    <Card hover variant="elevated" className="group overflow-hidden h-full flex flex-col">
       <div className="relative aspect-video overflow-hidden">
         <Image
           src={images[currentImageIndex]}
@@ -140,6 +140,11 @@ export function EventCard({ event, priority = false }: EventCardProps) {
               Featured
             </Badge>
           )}
+          {event.eventServicePackage && (
+            <Badge variant="secondary" className="animate-fade-in">
+              Package
+            </Badge>
+          )}
           {!isUpcoming && (
             <Badge variant="outline" className="animate-fade-in">
               Past Event
@@ -169,7 +174,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
         )}
       </div>
 
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 flex-shrink-0">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <CardTitle className="text-lg line-clamp-2 group-hover:text-slate-600 transition-colors">
@@ -186,40 +191,46 @@ export function EventCard({ event, priority = false }: EventCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 flex-1 flex flex-col">
         {/* Booking details */}
-        <div className="space-y-2 mb-3">
-          {event.location && (
+        <div className="space-y-2 mb-3 flex-shrink-0">
+          {event.location ? (
             <div className="flex items-center space-x-2 text-sm text-slate-600">
               <MapPin className="h-4 w-4 flex-shrink-0" />
               <span className="line-clamp-1">{event.location}</span>
             </div>
+          ) : (
+            <div className="h-5"></div>
           )}
         </div>
 
-        {/* Tags */}
-        {event.tags && event.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-3">
-            {event.tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-            {event.tags.length > 3 && (
-              <Badge variant="outline" className="text-xs">
-                +{event.tags.length - 3}
-              </Badge>
-            )}
-          </div>
-        )}
+        {/* Tags - Always show this section to maintain consistent height */}
+        <div className="flex flex-wrap gap-1 mb-3 flex-shrink-0 min-h-[24px]">
+          {event.tags && event.tags.length > 0 ? (
+            <>
+              {event.tags.slice(0, 3).map((tag) => (
+                <Badge key={tag} variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+              {event.tags.length > 3 && (
+                <Badge variant="outline" className="text-xs">
+                  +{event.tags.length - 3}
+                </Badge>
+              )}
+            </>
+          ) : (
+            <div className="text-xs text-slate-400 italic">No tags</div>
+          )}
+        </div>
 
         {/* Description preview */}
-        <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+        <p className="text-sm text-slate-600 mb-4 line-clamp-2 flex-1">
           {event.description}
         </p>
 
         {/* Action buttons */}
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 flex-shrink-0">
           <Link href={`/bookings/${event.id}`} className="flex-1">
             <Button variant="outline" className="w-full hover-lift">
               View Details
@@ -235,7 +246,7 @@ export function EventCard({ event, priority = false }: EventCardProps) {
 
         {/* Booking duration */}
         {eventEndDate && (
-          <div className="mt-3 text-xs text-slate-500 text-center">
+          <div className="mt-3 text-xs text-slate-500 text-center flex-shrink-0">
             Until {formatEventDate(eventEndDate)} • {formatEventTime(eventEndDate)}
           </div>
         )}

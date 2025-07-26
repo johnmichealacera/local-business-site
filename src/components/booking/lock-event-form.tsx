@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, MapPin, Crown, Heart, CheckCircle, Send } from 'lucide-react'
 import { generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
+import ServicePackageSelector from './service-package-selector'
 
 interface LockEventFormProps {
   colorPalette: {
@@ -13,10 +14,15 @@ interface LockEventFormProps {
     tertiary: string
   }
   siteName: string
-  siteId: string
+  prefillData?: {
+    serviceId: string | null
+    serviceName: string | null
+    packageId: string | null
+    packageName: string | null
+  }
 }
 
-export default function LockEventForm({ colorPalette, siteName, siteId }: LockEventFormProps) {
+export default function LockEventForm({ colorPalette, siteName, prefillData }: LockEventFormProps) {
   const [formData, setFormData] = useState({
     bookingTitle: '',
     description: '',
@@ -33,7 +39,11 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
     maxAttendees: '',
     contactName: '',
     contactEmail: '',
-    contactPhone: ''
+    contactPhone: '',
+    selectedServiceId: prefillData?.serviceId || '',
+    selectedServiceName: prefillData?.serviceName || '',
+    selectedPackageId: prefillData?.packageId || '',
+    selectedPackageName: prefillData?.packageName || ''
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -47,13 +57,24 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
     }))
   }
 
+  const handleServicePackageSelection = (serviceId: string, serviceName: string, packageId: string, packageName: string) => {
+    setFormData(prev => ({
+      ...prev,
+      selectedServiceId: serviceId,
+      selectedServiceName: serviceName,
+      selectedPackageId: packageId,
+      selectedPackageName: packageName
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     
     try {
+      console.log('Form data:', formData)
+
       const eventData = {
-        siteId,
         bookingTitle: formData.bookingTitle,
         description: formData.description,
         startDate: formData.startDate,
@@ -70,9 +91,15 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
         contactName: formData.contactName,
         contactEmail: formData.contactEmail,
         contactPhone: formData.contactPhone,
+        selectedServiceId: formData.selectedServiceId,
+        selectedServiceName: formData.selectedServiceName,
+        selectedPackageId: formData.selectedPackageId,
+        selectedPackageName: formData.selectedPackageName,
         status: 'pending',
         createdAt: new Date().toISOString()
       }
+
+      console.log('Event data:', eventData)
 
       const response = await fetch('/api/events', {
         method: 'POST',
@@ -177,10 +204,58 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
         <p className="mt-2" style={{ color: colorPalette.secondary, opacity: 0.8 }}>
           Tell us about your perfect event
         </p>
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm" style={{ color: colorPalette.secondary }}>
+            💡 <strong>Quick & Easy:</strong> Only event title, description, and contact info are required. 
+            Other details can be discussed later for a smoother booking experience!
+          </p>
+        </div>
       </CardHeader>
       
       <CardContent className="relative z-10">
         <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Service & Package Selection */}
+          <ServicePackageSelector
+            colorPalette={colorPalette}
+            onSelectionChange={handleServicePackageSelection}
+            initialServiceId={prefillData?.serviceId || undefined}
+            initialPackageId={prefillData?.packageId || undefined}
+          />
+
+          {/* Selected Service & Package Information */}
+          {(formData.selectedServiceName || formData.selectedPackageName) && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold flex items-center" style={{ color: colorPalette.secondary }}>
+                <Crown className="h-5 w-5 mr-2" style={{ color: colorPalette.primary }} />
+                Selected Service & Package
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {formData.selectedServiceName && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
+                      Event Service
+                    </label>
+                    <div className="px-3 py-2 border-2 rounded-md bg-green-50 border-green-200">
+                      <span className="font-medium text-green-800">{formData.selectedServiceName}</span>
+                    </div>
+                  </div>
+                )}
+                
+                {formData.selectedPackageName && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
+                      Selected Package
+                    </label>
+                    <div className="px-3 py-2 border-2 rounded-md bg-blue-50 border-blue-200">
+                      <span className="font-medium text-blue-800">{formData.selectedPackageName}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Event Information */}
           <div className="space-y-6">
             <h3 className="text-lg font-semibold flex items-center" style={{ color: colorPalette.secondary }}>
@@ -212,7 +287,10 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="maxAttendees" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Maximum Attendees *
+                  Maximum Attendees
+                  <span className="text-xs ml-1" style={{ color: colorPalette.secondary, opacity: 0.7 }}>
+                    (Optional - helps us plan better)
+                  </span>
                 </label>
                 <input
                   id="maxAttendees"
@@ -221,7 +299,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., 150"
                   value={formData.maxAttendees}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -259,12 +336,15 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
             <h3 className="text-lg font-semibold flex items-center" style={{ color: colorPalette.secondary }}>
               <Calendar className="h-5 w-5 mr-2" style={{ color: colorPalette.primary }} />
               Date & Time
+              <span className="text-sm ml-2 font-normal" style={{ color: colorPalette.secondary, opacity: 0.7 }}>
+                (Optional - we can discuss timing later)
+              </span>
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="startDate" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Start Date *
+                  Start Date
                 </label>
                 <input
                   id="startDate"
@@ -272,7 +352,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   type="date"
                   value={formData.startDate}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -284,7 +363,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="startTime" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Start Time *
+                  Start Time
                 </label>
                 <input
                   id="startTime"
@@ -292,7 +371,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   type="time"
                   value={formData.startTime}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -304,7 +382,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="endDate" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  End Date *
+                  End Date
                 </label>
                 <input
                   id="endDate"
@@ -312,7 +390,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   type="date"
                   value={formData.endDate}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -324,7 +401,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="endTime" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  End Time *
+                  End Time
                 </label>
                 <input
                   id="endTime"
@@ -332,7 +409,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   type="time"
                   value={formData.endTime}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -349,12 +425,15 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
             <h3 className="text-lg font-semibold flex items-center" style={{ color: colorPalette.secondary }}>
               <MapPin className="h-5 w-5 mr-2" style={{ color: colorPalette.primary }} />
               Venue Information
+              <span className="text-sm ml-2 font-normal" style={{ color: colorPalette.secondary, opacity: 0.7 }}>
+                (Optional - helps us prepare better)
+              </span>
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="venueName" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Venue Name *
+                  Venue Name
                 </label>
                 <input
                   id="venueName"
@@ -363,7 +442,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., Grand Plaza Hotel"
                   value={formData.venueName}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -375,7 +453,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="address" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Street Address *
+                  Street Address
                 </label>
                 <input
                   id="address"
@@ -384,7 +462,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., 123 Main Street"
                   value={formData.address}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -396,7 +473,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="city" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  City *
+                  City
                 </label>
                 <input
                   id="city"
@@ -405,7 +482,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., Manila"
                   value={formData.city}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -417,7 +493,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="province" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Province/State *
+                  Province/State
                 </label>
                 <input
                   id="province"
@@ -426,7 +502,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., Metro Manila"
                   value={formData.province}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -438,7 +513,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="country" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  Country *
+                  Country
                 </label>
                 <input
                   id="country"
@@ -447,7 +522,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., Philippines"
                   value={formData.country}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',
@@ -459,7 +533,7 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
               
               <div className="space-y-2">
                 <label htmlFor="zipCode" className="text-sm font-medium block" style={{ color: colorPalette.secondary }}>
-                  ZIP/Postal Code *
+                  ZIP/Postal Code
                 </label>
                 <input
                   id="zipCode"
@@ -468,7 +542,6 @@ export default function LockEventForm({ colorPalette, siteName, siteId }: LockEv
                   placeholder="e.g., 1000"
                   value={formData.zipCode}
                   onChange={handleInputChange}
-                  required
                   className="w-full px-3 py-2 border-2 rounded-md focus:outline-none focus:border-opacity-100 transition-all duration-300"
                   style={{
                     borderColor: colorPalette.primary + '30',

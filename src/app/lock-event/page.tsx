@@ -1,14 +1,60 @@
-import { getSiteInfo } from '@/lib/site'
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
+
 import { Calendar, Clock, Sparkles, Crown, Heart, CheckCircle } from 'lucide-react'
 import { parseColorPalette, generateDynamicGradientStyle, generateBrightTextGradientStyle } from '@/lib/colors'
 import LockEventForm from '@/components/booking/lock-event-form'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
-export default async function LockEventPage() {
-  const siteInfo = await getSiteInfo()
+function LockEventPageContent() {
+  const searchParams = useSearchParams()
+  const [siteInfo, setSiteInfo] = useState<{ colorPalette?: string[]; name?: string } | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Extract URL parameters
+  const serviceId = searchParams.get('serviceId')
+  const serviceName = searchParams.get('serviceName')
+  const packageId = searchParams.get('packageId')
+  const packageName = searchParams.get('packageName')
+
+  useEffect(() => {
+    const fetchSiteInfo = async () => {
+      try {
+        const response = await fetch('/api/site')
+        if (!response.ok) {
+          throw new Error('Failed to fetch site info')
+        }
+        const data = await response.json()
+        setSiteInfo(data)
+      } catch (error) {
+        console.error('Error fetching site info:', error)
+        // Fallback to default values
+        setSiteInfo({
+          colorPalette: ['#3B82F6', '#10B981', '#F59E0B'],
+          name: 'MD Events & Services'
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchSiteInfo()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    )
+  }
+
   const colorPalette = parseColorPalette(siteInfo?.colorPalette || ['#3B82F6', '#10B981', '#F59E0B'])
   const siteName = siteInfo?.name || 'MD Events & Services'
 
@@ -75,6 +121,17 @@ export default async function LockEventPage() {
             Secure your perfect event with our comprehensive booking form. 
             Every detail matters, and we&apos;re here to make it exceptional.
           </p>
+
+          {/* Show selected service and package if available */}
+          {(serviceName || packageName) && (
+            <div className="mb-8 p-4 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
+              <p className="text-white/95 text-lg font-medium">
+                {serviceName && `Service: ${serviceName}`}
+                {serviceName && packageName && ' • '}
+                {packageName && `Package: ${packageName}`}
+              </p>
+            </div>
+          )}
 
           {/* Feature Icons */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
@@ -145,11 +202,28 @@ export default async function LockEventPage() {
         <div className="max-w-4xl mx-auto">
           <LockEventForm 
             colorPalette={colorPalette} 
-            siteName={siteName} 
-            siteId={process.env.SITE_ID || ''} 
+            siteName={siteName}
+            prefillData={{
+              serviceId,
+              serviceName,
+              packageId,
+              packageName
+            }}
           />
         </div>
       </div>
     </div>
   )
-} 
+}
+
+export default function LockEventPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    }>
+      <LockEventPageContent />
+    </Suspense>
+  )
+}
