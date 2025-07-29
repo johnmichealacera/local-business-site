@@ -36,6 +36,21 @@ export function getNavigationLinks(features: SiteFeature[], featuresOrder: SiteF
       name: 'Contact',
       href: '/contact',
       feature: SiteFeature.CONTACT
+    },
+    [SiteFeature.SERVICES]: {
+      name: 'Services',
+      href: '/services',
+      feature: SiteFeature.SERVICES
+    },
+    [SiteFeature.GALLERY]: {
+      name: 'Gallery',
+      href: '/gallery',
+      feature: SiteFeature.GALLERY
+    },
+    [SiteFeature.TESTIMONIALS]: {
+      name: 'Testimonials',
+      href: '/testimonials',
+      feature: SiteFeature.TESTIMONIALS
     }
   }
 

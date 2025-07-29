@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-01-27
+
+### 🎉 Added
+- **Services Feature**: Complete service management system with categories, icons, and featured services
+- **Gallery Feature**: Portfolio showcase with image grids, project dates, tags, and hover effects
+- **Testimonials Feature**: Client review system with star ratings, avatars, and project associations
+- **New Database Tables**: Service, GalleryItem, and Testimonial models with full CRUD operations
+- **Enhanced Navigation**: Dynamic menu items for new features with proper routing
+- **Homepage Integration**: Featured sections for services, gallery, and testimonials
+- **Search & Filtering**: UI components for searching and filtering across all new features
+- **Responsive Grid Layouts**: Beautiful card-based layouts for all new feature pages
+- **Multi-tenant Support**: All new features support site-specific data isolation
+
+### 🎨 Changed
+- **SiteFeature Enum**: Extended to include SERVICES, GALLERY, and TESTIMONIALS
+- **Homepage Rendering**: Updated to dynamically display new features based on site configuration
+- **Primary CTA Logic**: Enhanced to include new feature routes in call-to-action generation
+- **Navigation System**: Updated to include new features in menu generation
+
+### 🔧 Technical
+- **Database Schema**: Added three new models with proper relationships and constraints
+- **Type Definitions**: Created comprehensive TypeScript interfaces for all new entities
+- **API Layer**: Implemented full CRUD operations with multi-tenant support
+- **Component Architecture**: New reusable components for service cards, gallery items, and testimonials
+- **Prisma Client**: Regenerated to include new models with proper table mappings
+
+### 🐛 Fixed
+- **Type Safety**: Resolved TypeScript issues with new Prisma model integration
+- **HTML Entities**: Fixed accessibility issues with proper HTML entity encoding
+- **Component Props**: Ensured proper parameter passing for new feature components
+
 ## [0.3.0] - 2025-07-26
 
 ### 🎉 Added
@@ -62,7 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/username/thrifted-shoes-apparel/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/username/thrifted-shoes-apparel/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/username/thrifted-shoes-apparel/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/username/thrifted-shoes-apparel/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/username/thrifted-shoes-apparel/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/username/thrifted-shoes-apparel/releases/tag/v0.1.0 
+[0.1.0]: https://github.com/username/thrifted-shoes-apparel/releases/tag/v0.1.0
