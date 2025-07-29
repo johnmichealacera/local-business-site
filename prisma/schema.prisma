@@ -27,8 +27,11 @@ model Site {
   contact            Contact[]
   eventServices      EventService[]
   events             Event[]
+  galleryItems       GalleryItem[]
   hero               Hero?
   products           Product[]
+  services           Service[]
+  testimonials       Testimonial[]
   users              UserSite[]
 
   @@map("sites")
@@ -144,7 +147,7 @@ model Hero {
 }
 
 model Event {
-  id                    String                @id @default(cuid())
+  id                    String               @id @default(cuid())
   title                 String
   description           String?
   startDate             DateTime
@@ -155,22 +158,22 @@ model Event {
   province              String?
   zipCode               String?
   country               String?
-  price                 Float?                @default(0)
+  price                 Float?               @default(0)
   maxAttendees          Int?
-  imageUrls             String[]              @default([])
-  isActive              Boolean               @default(true)
-  isFeatured            Boolean               @default(false)
-  tags                  String[]              @default([])
+  imageUrls             String[]             @default([])
+  isActive              Boolean              @default(true)
+  isFeatured            Boolean              @default(false)
+  tags                  String[]             @default([])
   contactEmail          String?
   contactPhone          String?
-  createdAt             DateTime              @default(now())
-  updatedAt             DateTime              @updatedAt
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
   siteId                String
-  isConfirmed           Boolean               @default(false)
+  isConfirmed           Boolean              @default(false)
   contactName           String?
   eventServicePackageId String?
-  site                  Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  eventServicePackage   EventServicePackage?  @relation(fields: [eventServicePackageId], references: [id], onDelete: SetNull)
+  eventServicePackage   EventServicePackage? @relation(fields: [eventServicePackageId], references: [id])
+  site                  Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@map("events")
 }
@@ -190,11 +193,11 @@ model EventService {
   contactPhone    String?
   bookingUrl      String?
   tags            String[]              @default([])
-  bgImage         String?
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
   siteId          String
   packages        String[]              @default([])
+  bgImage         String?
   servicePackages EventServicePackage[]
   site            Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
@@ -220,6 +223,53 @@ model EventServicePackage {
 
   @@unique([eventServiceId, name])
   @@map("event_service_packages")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String
+  description String
+  category    String?
+  iconUrl     String?
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  siteId      String
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([slug, siteId])
+  @@map("services")
+}
+
+model GalleryItem {
+  id          String    @id @default(cuid())
+  title       String?
+  imageUrl    String
+  description String?
+  projectDate DateTime?
+  tags        String[]  @default([])
+  isFeatured  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  siteId      String
+  site        Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@map("gallery_items")
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  clientName  String
+  clientTitle String?
+  content     String
+  rating      Int?
+  avatarUrl   String?
+  projectId   String?
+  createdAt   DateTime @default(now())
+  siteId      String
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@map("testimonials")
 }
 
 model SiteFeature {
@@ -261,4 +311,7 @@ enum FeatureName {
   EVENT_SERVICES
   ABOUT
   CONTACT
+  SERVICES
+  GALLERY
+  TESTIMONIALS
 }

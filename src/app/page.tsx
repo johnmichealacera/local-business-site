@@ -12,6 +12,9 @@ import { getSiteInfo } from '@/lib/site'
 import { Suspense } from 'react'
 import { SiteFeature } from '@/types/site'
 import { Hero } from '@/components/hero/hero'
+import { getFeaturedServices } from '@/lib/services'
+import { getFeaturedGalleryItems } from '@/lib/gallery'
+import { getFeaturedTestimonials } from '@/lib/testimonials'
 
 // Force dynamic rendering for fresh product data on homepage
 export const dynamic = 'force-dynamic'
@@ -284,6 +287,269 @@ function FeaturedEventServicesSkeleton() {
   )
 }
 
+async function FeaturedServices() {
+  const services = await getFeaturedServices()
+  
+  if (services.length === 0) return null
+  
+  return (
+    <section 
+      className="py-16 px-4 sm:px-6 lg:px-8"
+      style={{
+        backgroundColor: 'var(--color-tertiary)',
+        backgroundImage: `linear-gradient(135deg, var(--color-primary)05, var(--color-tertiary))`
+      }}
+    >
+      <div className="container mx-auto">
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="flex items-center justify-center mb-4">
+            <Briefcase className="h-8 w-8 mr-3" style={{ color: 'var(--color-primary)' }} />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-secondary)' }}>
+            Our Services
+          </h2>
+          <p className="max-w-2xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
+            Professional services tailored to meet your needs and exceed your expectations.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.slice(0, 6).map((service, index) => (
+            <div key={service.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  {service.iconUrl && (
+                    <div className="w-12 h-12 mb-4">
+                      <img src={service.iconUrl} alt={service.title} className="w-full h-full object-contain" />
+                    </div>
+                  )}
+                  <CardTitle className="text-xl" style={{ color: 'var(--color-secondary)' }}>
+                    {service.title}
+                  </CardTitle>
+                  {service.category && (
+                    <div className="text-sm opacity-70" style={{ color: 'var(--color-secondary)' }}>
+                      {service.category}
+                    </div>
+                  )}
+                </CardHeader>
+                <CardDescription className="px-6 pb-6" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
+                  {service.description}
+                </CardDescription>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12 animate-fade-in">
+          <Link href="/services">
+            <Button size="lg" variant="outline" className="btn-secondary group">
+              View All Services
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturedServicesSkeleton() {
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="text-center mb-12">
+          <div className="h-8 w-8 bg-gray-200 rounded mx-auto mb-4"></div>
+          <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="h-48 bg-gray-200 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+async function FeaturedGallery() {
+  const galleryItems = await getFeaturedGalleryItems()
+  
+  if (galleryItems.length === 0) return null
+  
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="flex items-center justify-center mb-4">
+            <Grid3X3 className="h-8 w-8 mr-3" style={{ color: 'var(--color-primary)' }} />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-secondary)' }}>
+            Our Gallery
+          </h2>
+          <p className="max-w-2xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
+            Take a look at our latest work and projects that showcase our expertise and creativity.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {galleryItems.slice(0, 6).map((item, index) => (
+            <div key={item.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="aspect-square relative">
+                  <img 
+                    src={item.imageUrl} 
+                    alt={item.title || 'Gallery item'} 
+                    className="w-full h-full object-cover"
+                  />
+                  {item.title && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
+                      <h3 className="font-semibold">{item.title}</h3>
+                      {item.description && (
+                        <p className="text-sm opacity-90 mt-1">{item.description}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12 animate-fade-in">
+          <Link href="/gallery">
+            <Button size="lg" variant="outline" className="btn-secondary group">
+              View Full Gallery
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturedGallerySkeleton() {
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="text-center mb-12">
+          <div className="h-8 w-8 bg-gray-200 rounded mx-auto mb-4"></div>
+          <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="aspect-square bg-gray-200 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+async function FeaturedTestimonials() {
+  const testimonials = await getFeaturedTestimonials()
+  
+  if (testimonials.length === 0) return null
+  
+  return (
+    <section 
+      className="py-16 px-4 sm:px-6 lg:px-8"
+      style={{
+        backgroundColor: 'var(--color-tertiary)',
+        backgroundImage: `linear-gradient(135deg, var(--color-primary)05, var(--color-tertiary))`
+      }}
+    >
+      <div className="container mx-auto">
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-8 w-8 mr-3 flex items-center justify-center" style={{ color: 'var(--color-primary)' }}>
+              ★
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-secondary)' }}>
+            What Our Clients Say
+          </h2>
+          <p className="max-w-2xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied clients have to say about their experience.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.slice(0, 6).map((testimonial, index) => (
+            <div key={testimonial.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center mb-4">
+                    {testimonial.avatarUrl && (
+                      <img 
+                        src={testimonial.avatarUrl} 
+                        alt={testimonial.clientName}
+                        className="w-12 h-12 rounded-full mr-4 object-cover"
+                      />
+                    )}
+                    <div>
+                      <CardTitle className="text-lg" style={{ color: 'var(--color-secondary)' }}>
+                        {testimonial.clientName}
+                      </CardTitle>
+                      {testimonial.clientTitle && (
+                        <div className="text-sm opacity-70" style={{ color: 'var(--color-secondary)' }}>
+                          {testimonial.clientTitle}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {testimonial.rating && (
+                    <div className="flex mb-2">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <span key={i} className="text-yellow-400">
+                          {i < testimonial.rating! ? '★' : '☆'}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </CardHeader>
+                <CardDescription className="px-6 pb-6 italic" style={{ color: 'var(--color-secondary)', opacity: 0.8 }}>
+                  &quot;{testimonial.content}&quot;
+                </CardDescription>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12 animate-fade-in">
+          <Link href="/testimonials">
+            <Button size="lg" variant="outline" className="btn-secondary group">
+              View All Testimonials
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturedTestimonialsSkeleton() {
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <div className="text-center mb-12">
+          <div className="h-8 w-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+          <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="h-48 bg-gray-200 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default async function HomePage() {
   const siteInfo = await getSiteInfo()
   const features = siteInfo?.features || []
@@ -292,7 +558,7 @@ export default async function HomePage() {
   // Filter features that should appear on homepage based on featuresOrder and enabled features
   const homepageFeatures = featuresOrder.filter(feature => 
     features.some(f => f.name === feature) && 
-    [SiteFeature.PRODUCTS, SiteFeature.CATEGORIES, SiteFeature.EVENTS, SiteFeature.EVENT_SERVICES].includes(feature)
+    [SiteFeature.PRODUCTS, SiteFeature.CATEGORIES, SiteFeature.EVENTS, SiteFeature.EVENT_SERVICES, SiteFeature.SERVICES, SiteFeature.GALLERY, SiteFeature.TESTIMONIALS].includes(feature)
   )
 
 
@@ -324,6 +590,24 @@ export default async function HomePage() {
             <FeaturedEventServices />
           </Suspense>
         )
+      case SiteFeature.SERVICES:
+        return (
+          <Suspense key="services" fallback={<FeaturedServicesSkeleton />}>
+            <FeaturedServices />
+          </Suspense>
+        )
+      case SiteFeature.GALLERY:
+        return (
+          <Suspense key="gallery" fallback={<FeaturedGallerySkeleton />}>
+            <FeaturedGallery />
+          </Suspense>
+        )
+      case SiteFeature.TESTIMONIALS:
+        return (
+          <Suspense key="testimonials" fallback={<FeaturedTestimonialsSkeleton />}>
+            <FeaturedTestimonials />
+          </Suspense>
+        )
       default:
         return null
     }
@@ -341,6 +625,12 @@ export default async function HomePage() {
         return { text: "Our Services", href: "/events-services" }
       case SiteFeature.CATEGORIES:
         return { text: "Browse Categories", href: "/categories" }
+      case SiteFeature.SERVICES:
+        return { text: "Our Services", href: "/services" }
+      case SiteFeature.GALLERY:
+        return { text: "View Gallery", href: "/gallery" }
+      case SiteFeature.TESTIMONIALS:
+        return { text: "Read Reviews", href: "/testimonials" }
       default:
         return { text: "Get Started", href: "/about" }
     }
