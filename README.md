@@ -256,135 +256,6 @@ src/
 - **Feature Flags**: Conditional rendering based on tenant features
 - **Isolated Storage**: Complete data separation between tenants
 
-## �� Database Schema
-
-### **Multi-Tenant Core Models**
-```prisma
-model Site {
-  id          String      @id @default(cuid())
-  name        String
-  domain      String      @unique
-  subdomain   String?     @unique
-  logoUrl     String?     // Dynamic logo support
-  packageType SitePackage @default(BASIC)
-  features    SiteFeature[]
-  // ... relations to all tenant content
-}
-
-model Service {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String
-  description String
-  category    String?
-  iconUrl     String?
-  isFeatured  Boolean  @default(false)
-  siteId      String   // Tenant isolation
-  site        Site     @relation(fields: [siteId], references: [id])
-  // ... other fields
-}
-
-model GalleryItem {
-  id          String    @id @default(cuid())
-  title       String?
-  imageUrl    String
-  description String?
-  projectDate DateTime?
-  tags        String[]  @default([])
-  isFeatured  Boolean   @default(false)
-  siteId      String    // Tenant isolation
-  site        Site      @relation(fields: [siteId], references: [id])
-  // ... other fields
-}
-
-model Testimonial {
-  id          String   @id @default(cuid())
-  clientName  String
-  clientTitle String?
-  content     String
-  rating      Int?
-  avatarUrl   String?
-  projectId   String?
-  siteId      String   // Tenant isolation
-  site        Site     @relation(fields: [siteId], references: [id])
-  // ... other fields
-}
-
-model Product {
-  id        String   @id @default(cuid())
-  name      String
-  price     Float
-  siteId    String   // Tenant isolation
-  site      Site     @relation(fields: [siteId], references: [id])
-  // ... other fields
-}
-
-model Event {
-  id        String   @id @default(cuid())
-  title     String
-  imageUrls String[] // Multi-image carousel support
-  siteId    String   // Tenant isolation
-  site      Site     @relation(fields: [siteId], references: [id])
-  eventServicePackageId String? // Optional service package linking
-  eventServicePackage   EventServicePackage? @relation(fields: [eventServicePackageId], references: [id])
-  // ... other fields
-}
-```
-
-## 🔐 Security & Isolation
-
-### **Data Isolation**
-- All database queries automatically scoped to `SITE_ID`
-- Row-level security prevents cross-tenant data access
-- API endpoints validate tenant context
-
-### **Multi-Tenant Security**
-- Environment-based tenant identification
-- Secure site switching mechanisms
-- Isolated user sessions per tenant
-
-## 🚀 Deployment
-
-### **Single Tenant Deployment**
-1. Set `SITE_ID` environment variable
-2. Configure database connection
-3. Deploy to your preferred platform
-
-### **Multi-Tenant Deployment**
-1. Set up domain/subdomain routing
-2. Configure tenant detection middleware
-3. Implement tenant-specific environment management
-
-### **Recommended Platforms**
-- **Vercel**: Excellent for single-tenant deployments
-- **Railway**: Good for database and application hosting
-- **DigitalOcean**: VPS hosting with Docker support
-
-## �� Use Cases
-
-### **E-commerce Businesses**
-- Online stores with product catalogs
-- Service-based businesses
-- Multi-location retailers
-
-### **Event Companies**
-- Event planning services with service package selection
-- Venue management with streamlined booking
-- Service marketplaces with reduced-pressure forms
-- Event service providers with package-based offerings
-
-### **Professional Services**
-- Consulting firms with service portfolios
-- Creative agencies with project galleries
-- Service providers with client testimonials
-- Professional practices with service showcases
-
-### **Portfolio & Creative**
-- Design agencies with project galleries
-- Photographers with image portfolios
-- Creative professionals with work showcases
-- Service providers with client feedback
-
 ## 📈 Scalability
 
 ### **Tenant Scaling**
@@ -456,3 +327,13 @@ npx prisma db seed --site-id=<site-id>  # Seed specific tenant
 ---
 
 **Built for scalability, designed for flexibility, optimized for multi-tenant success.**
+
+## Recent Updates
+
+### v0.5.0 - Dynamic Metadata Implementation
+- ✨ Complete SEO overhaul with dynamic metadata for all pages
+- 📱 Enhanced social media sharing with OpenGraph/Twitter cards
+- ⚡ Performance optimized with concurrent database queries
+- 🛡️ Robust error handling with graceful fallbacks
+
+**Impact:** Improved search rankings, better social sharing, professional SEO presence
