@@ -5,9 +5,15 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Search, Filter, Calendar } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { generateGalleryMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering for fresh data
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateGalleryMetadata()
+}
 
 async function GalleryGrid() {
   const galleryItems = await getGalleryItems()

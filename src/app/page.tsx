@@ -15,9 +15,15 @@ import { Hero } from '@/components/hero/hero'
 import { getFeaturedServices } from '@/lib/services'
 import { getFeaturedGalleryItems } from '@/lib/gallery'
 import { getFeaturedTestimonials } from '@/lib/testimonials'
+import { generateHomepageMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering for fresh product data on homepage
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateHomepageMetadata()
+}
 
 // Individual feature section components
 async function FeaturedProducts() {

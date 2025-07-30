@@ -21,9 +21,15 @@ import {
   FaGlobe
 } from "react-icons/fa";
 import { SiteFeature } from "@/types/site";
+import { generateContactMetadata } from "@/lib/metadata";
+import type { Metadata } from "next";
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateContactMetadata()
+}
 
 export default async function ContactPage() {
   const [contactInfo, siteInfo] = await Promise.all([

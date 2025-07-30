@@ -4,9 +4,15 @@ import { getProducts, getCategories } from '@/lib/products'
 import { ProductFilters } from '@/types/product'
 import { Loader2 } from 'lucide-react'
 import { getSiteInfo } from '@/lib/site'
+import { generateProductsMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateProductsMetadata()
+}
 
 interface ProductsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>

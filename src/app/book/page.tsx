@@ -6,9 +6,15 @@ import { SiteFeature } from '@/types/site'
 import LockEventButton from '@/components/booking/lock-event-button'
 import { getContactInfo } from '@/lib/contact'
 import Image from 'next/image'
+import { generateBookMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateBookMetadata()
+}
 
 export default async function BookingPage() {
   const siteInfo = await getSiteInfo()
