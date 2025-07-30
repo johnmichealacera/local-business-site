@@ -9,9 +9,15 @@ import { BookingButton } from '@/components/booking/booking-button'
 import { CustomConsultationButton } from '@/components/booking/custom-consultation-button'
 import { SiteFeature } from '@/types/site'
 import Image from "next/image"
+import { generateEventsServicesMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateEventsServicesMetadata()
+}
 
 export default async function EventServicesPage() {
   const [eventServices, siteInfo] = await Promise.all([

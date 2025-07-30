@@ -3,9 +3,15 @@ import { EventsClient } from '@/components/events/events-client'
 import { getEvents } from '@/lib/events'
 import { EventFilters } from '@/types/event'
 import { Loader2 } from 'lucide-react'
+import { generateBookingsMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering - this prevents caching and ensures fresh data
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateBookingsMetadata()
+}
 
 interface EventsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>

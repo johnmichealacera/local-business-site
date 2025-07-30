@@ -4,9 +4,15 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Star, Search, Filter } from 'lucide-react'
 import Link from 'next/link'
+import { generateTestimonialsMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering for fresh data
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateTestimonialsMetadata()
+}
 
 async function TestimonialsList() {
   const testimonials = await getTestimonials()

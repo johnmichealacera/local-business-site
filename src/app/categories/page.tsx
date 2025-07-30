@@ -5,9 +5,15 @@ import { ArrowRight } from 'lucide-react'
 import { getSiteInfo } from '@/lib/site'
 import { parseColorPalette, generateDynamicGradientStyle } from '@/lib/colors'
 import { SiteFeature } from '@/types/site'
+import { generateCategoriesMetadata } from '@/lib/metadata'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateCategoriesMetadata()
+}
 
 export default async function CategoriesPage() {
   const [categories, siteInfo] = await Promise.all([

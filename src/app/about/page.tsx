@@ -12,9 +12,15 @@ import {
 import { getAboutInfo } from "@/lib/about";
 import Image from "next/image";
 import Link from "next/link";
+import { generateAboutMetadata } from "@/lib/metadata";
+import type { Metadata } from "next";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generateAboutMetadata()
+}
 
 export default async function AboutPage() {
   const siteInfo = await getSiteInfo();
